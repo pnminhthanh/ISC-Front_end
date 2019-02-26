@@ -12,7 +12,7 @@ export class LecturerAddComponent implements OnInit {
   lecturers: any = [];
 
   @Input() user = { IsStudent: false};
-  @Input() lecturer = {};
+  @Input() lecturer = { Use_UserId: 0};
 
   constructor(public lecService: LecturersService, private router: Router) { }
 
@@ -21,15 +21,26 @@ export class LecturerAddComponent implements OnInit {
   }
 
 
-  addLecturer() {
+  addUser() {
     this.lecService.addUser(this.user).subscribe((result) => {
       console.log(result);
+      this.lecturer.Use_UserId = result.id;
+      this.addLecturer();
     }, (err) => {
       console.log(err);
     });
 
+    // this.lecService.addLecturer(this.lecturer).subscribe((result) => {
+    //   this.router.navigate(['']);
+    // }, (err) => {
+    //   console.log(err);
+    // });
+  }
+
+  addLecturer() {
     this.lecService.addLecturer(this.lecturer).subscribe((result) => {
-      this.router.navigate(['']);
+      // this.router.navigate(['']);
+      console.log(result);
     }, (err) => {
       console.log(err);
     });
@@ -49,13 +60,13 @@ export class LecturerAddComponent implements OnInit {
     // if (this.lecturer.LecturerID === null) {
 
     // }
-    this.addLecturer();
+    this.addUser();
   }
 
   getLecturerForEdit(id) {
     this.lecService.getLecturer(id).subscribe((data: {}) => {
       console.log(data);
-      this.lecturer = data;
+      // this.lecturer = data;
     });
   }
 

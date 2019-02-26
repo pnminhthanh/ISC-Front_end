@@ -37,7 +37,7 @@ export class LecturersService {
     return this.http.post<any>(this.endpoint + 'users', JSON.stringify(user), this.httpOptions).pipe(
 // tslint:disable-next-line: no-shadowed-variable
       tap((user) => console.log(`added user w/ id=${user.id}`)),
-      catchError(this.handleError<any>('addUser'))
+      // catchError(this.handleError<any>('addUser'))
     );
   }
 
@@ -46,21 +46,21 @@ export class LecturersService {
     return this.http.post<any>(this.endpoint + 'lecturers', JSON.stringify(lecturer), this.httpOptions).pipe(
 // tslint:disable-next-line: no-shadowed-variable
       tap((lecturer) => console.log(`added lecturer w/ id=${lecturer.id}`)),
-      catchError(this.handleError<any>('addLecturer'))
+      // catchError(this.handleError<any>('addLecturer'))
     );
   }
 
   updateLecturer(id, product): Observable<any> {
     return this.http.put(this.endpoint + 'lecturers/' + id, JSON.stringify(product), this.httpOptions).pipe(
       tap(_ => console.log(`updated lecturer id=${id}`)),
-      catchError(this.handleError<any>('updateLecturer'))
+      // catchError(this.handleError<any>('updateLecturer'))
     );
   }
 
   deleteLecturer(id): Observable<any> {
     return this.http.delete<any>(this.endpoint + 'lecturers/' + id, this.httpOptions).pipe(
       tap(_ => console.log(`deleted lecturer id=${id}`)),
-      catchError(this.handleError<any>('deleteLecturer'))
+      // catchError(this.handleError<any>('deleteLecturer'))
     );
   }
 
