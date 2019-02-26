@@ -3,12 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './dashboard/user/user.component';
 import { LecturersComponent } from './lecturers/lecturers.component';
 import { LecturerAddComponent } from './lecturer-add/lecturer-add.component';
-import { LecturerEditComponent } from './lecturer-edit/lecturer-edit.component';
 
 @NgModule({
   declarations: [
@@ -17,12 +20,13 @@ import { LecturerEditComponent } from './lecturer-edit/lecturer-edit.component';
     LoginComponent,
     UserComponent,
     LecturersComponent,
-    LecturerAddComponent,
-    LecturerEditComponent
+    LecturerAddComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
