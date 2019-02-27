@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { LecturersService } from '../lecturers.service';
+import { LecturersService } from '../services/lecturers.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,7 +24,7 @@ export class LecturerAddComponent implements OnInit {
   addUser() {
     this.lecService.addUser(this.user).subscribe((result) => {
       console.log(result);
-      this.lecturer.Use_UserId = result.id;
+      this.lecturer.Use_UserId = result.lecturer.id;
       this.addLecturer();
     }, (err) => {
       console.log(err);

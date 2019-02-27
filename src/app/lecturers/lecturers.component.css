@@ -1,3 +1,8 @@
 #create-icon {
     background-image: "https://img.icons8.com/flat_round/30/000000/plus.png"
 }
+
+.modal-width {
+    width: 75%;
+    margin: 50px auto;
+}

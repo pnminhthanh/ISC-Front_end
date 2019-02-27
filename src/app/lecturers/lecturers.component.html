@@ -6,7 +6,9 @@
 <div class="box">
   <div class="box-header with-border">
       <h3 class="box-title">Lecturer Table</h3>
-      <button type="button" data-toggle="modal" data-target="#modalForm" class="btn btn-success" (click)="toggleFormInput()">Create</button>
+      <div class="offset-4">
+        <button type="button" class="btn btn-success" (click)="showModal()">Create</button>
+      </div>
   </div>
   <div class="box-body">
       <table class="table table-border">
@@ -57,27 +59,192 @@
                 <td>{{l.Email}}</td>
                 <td>{{l.Phone}}</td>
                 <td>
-                    <button class="btn btn-warning" (click)="getLecturerForEdit(l.LecturerID)">Edit</button>
-                    <button class="btn btn-danger" (click)="deleteLecturer(l.LecturerID)">Delete</button>
+                    <button class="btn btn-warning" (click)="showModal($event, l.id)">Edit</button>
+                    <button class="btn btn-danger" (click)="showDeleteModal($event, l.id)">Delete</button>
                 </td>
-            </tr>
-              <!-- <tr>
-                  <td>1</td>
-                  <td>Tran Nguyen Thanh</td>
-                  <td>Huy</td>
-                  <td>Dr. Phil</td>
-                  <td>Male</td>
-                  <td>05/05/1987</td>
-                  <td>23 CMT8, District 1, HCMC</td>
-                  <td>huytran87@gmail.com</td>
-                  <td>0123456789</td>
-                  <td>
-                      <button class="btn btn-warning">Edit</button>
-                      <button class="btn btn-danger">Delete</button>
-                  </td>
-              </tr> -->
+            </tr>              
           </tbody>
       </table>
+    </div>
+</div>
+
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog-centered modal-width">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>                
+                <h4 class="modal-title">Create new lecturer</h4>                
+            </div>
+            <div class="modal-body">
+                <form #lecturerForm="ngForm" (ngSubmit)="onSubmit()">
+                    <div class="box-body">
+                        <input id="id" hidden name="id" [(ngModel)]="user.UserID"/>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <p for="txtLastName" class="col-sm-2 col-md-3 col control-p">Last Name</p>
+                
+                                        <div class="col-sm-10 col-md-9">
+                                            <input type="text" class="form-control" id="txtLastName" placeholder="" [(ngModel)]="user.LastName" name="LastName">
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <p for="txtFirstName" class="col-sm-2 col-md-3 col control-p">First Name</p>
+                
+                                        <div class="col-sm-10 col-md-9">
+                                            <input type="text" class="form-control" id="txtFirstName" placeholder="" [(ngModel)]="user.FirstName" name="FirstName">
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <p for="gender" class="col-sm-2 col-md-3 col control-p">Gender</p>
+                
+                                        <div class="col-sm-10 col-md-9">
+                                            <input type="radio" name="gender" value="1" checked [(ngModel)]="user.Gender"> Male
+                                            <input type="radio" name="gender" value="2" [(ngModel)]="user.Gender"> Female
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <p for="txtIdentityNumber" class="col-sm-2 col-md-3 col control-p">Identity Number</p>
+                
+                                        <div class="col-sm-10 col-md-9">
+                                            <input type="text" class="form-control" id="txtIdentityNumber" placeholder="" [(ngModel)]="user.IdentityNumber" name="IdentityNumber">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <p for="datepicker" class="col-sm-2 col-md-3 control-p">Date of birth</p>
+                
+                                        <div class="col-sm-10 col-md-9">
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="date" class="form-control pull-left" id="dtpDateofBirth" style="width:242px" [(ngModel)]="user.DOB" name="DOB">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <p for="txtAddress" class="col-sm-2 col-md-3 control-p">Address</p>
+                
+                                        <div class="col-sm-10 col-md-9">
+                                            <input type="text" class="form-control" id="txtAddress" placeholder="" [(ngModel)]="user.Address" name="Address">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+            
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <p for="txtEmail" class="col-sm-2 col-md-3 control-p">Email</p>
+                
+                                        <div class="col-sm-10 col-md-9">
+                                            <input type="email" class="form-control" id="txtEmail" placeholder="" [(ngModel)]="user.Email" name="Email">
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <p for="txtPhone" class="col-sm-2 col-md-3 control-p">Phone</p>
+                
+                                        <div class="col-sm-10 col-md-9">
+                                            <input type="text" class="form-control" id="txtPhone" placeholder="" [(ngModel)]="user.Phone" name="Phone">
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <p for="drdownDegree" class="col-sm-2 col-md-3 control-p">Degree</p>
+                
+                                        <div class="col-sm-10 col-md-9">
+                                            <select class="form-control" id="drdownDegree"[(ngModel)]="lecturer.Degree" name="Degree">
+                                                <option value="1"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                        <div class="form-group col-sm-12 col-md-12">
+                                            <p for="drdownAcademic" class="col-sm-2 col-md-3 control-p">Academic</p>
+                                                
+                                            <div class="col-sm-10 col-md-9">
+                                                <select class="form-control" id="drdownAcademic"[(ngModel)]="lecturer.AcademicRank" name="AcademicRank">
+                                                    <option value="1"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <p for="dtpStartDate" class="col-sm-2 col-md-3 control-p">Start Date</p>
+                
+                                        <div class="col-sm-10 col-md-9">
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="date" class="form-control pull-left" id="dtpDateofBirth" style="width:242px" [(ngModel)]="lecturer.StartDay" name="StartDay">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="row justify-content-between">
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-default" id="btnClear">Clear</button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-success" id="btnSave" (click)="Save()">{{ (major.id === undefined || major.id === 0) ? 'Add':'Save'}}</button>
+                    </div>                    
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="deleteModal.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title pull-left">Confirm</h4>          
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="deleteModal.hide()">No</button>
+          <button type="button" (click)="delete()" class="btn btn-danger">Yes</button>
+        </div>
+      </div>
   </div>
 </div>
 
