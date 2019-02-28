@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective, BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Course, CourseService } from 'src/app/services/course.service';
+import { SpecialiazedTraining, SpecializedTrainingService } from 'src/app/services/specialized-training.service';
 
 @Component({
   selector: 'app-course',
@@ -13,31 +14,77 @@ export class CourseComponent implements OnInit {
   test: string;
   course: Course = {} as Course;
   courses: Course [] = [];
+  trainings: SpecialiazedTraining[] = [];
 
   @ViewChild('modal') modal: ModalDirective;
-  constructor(private courseService: CourseService, private modalService: BsModalService) { }
+  constructor(private courseService: CourseService, private modalService: BsModalService
+    , private trainingService: SpecializedTrainingService) { }
   ngOnInit() {
-  //   $(document).ready(function () {
-  //     $('#selectTrainingsinModal').select2({
-  //         dropdownParent: $("#addCourse")
-  //     });
-  //     $('#datepicker').datepicker({
-  //         autoclose: true
-  //     });
-  // });
-  //   $('#addCourse').on('shown.bs.modal', function () {
-  //       $('#datepicker').css('z-index', '2051');
-  //       $('#datepicker').datepicker({
-  //           autoclose: true
-  //       });
-  //   });
+    this.courseService.getAll().subscribe(
+      result => {
+        console.log(result);
+        this.courses = result.data;
+        console.log(this.courses);
+    });
+    this.trainingService.getAll().subscribe(
+      result => {
+        console.log(result);
+        this.trainings = result.data;
+        console.log(this.trainings);
+      }
+    )
   }
 
-  showModal(event = null, id: number = 0) {
+  loadData() {
+    this.courseService.getAll().subscribe(
+      result => {
+        console.log(result);
+        this.courses = result.data;
+    });
+  }
+
+  showModal(event = null, Id: number = 0) {
+    console.log(Id);
+    if (event) {
+      event.preventDefault();
+    }
+    if (Id > 0) {
+      this.courseService.get(Id).subscribe( result => {
+        this.course = result.data;
+        this.modal.show();
+      });
+    } else {
+      this.course = {} as Course;
+      this.modal.show();
+    }
     this.modal.show();
   }
 
   save() {
+    if (this.course.courseId === undefined || this.course.courseId === 0) {
+      this.courseService.add(this.course).subscribe(result => {
+        this.modal.hide();
+        this.loadData();
+      });
+    } else {
+      this.courseService.update(this.course, this.course.courseId).subscribe(result => {
+        this.modal.hide();
+        this.loadData();
+      });
+    }
+  }
 
+  delete(event = null, Id) {
+    event.preventDefault();
+    this.courseService.delete(Id).subscribe(result => {
+      const deletedMajor = this.courses.find(x => x.courseId === Id);
+      if (result.errorCode === 0) {
+        const index = this.courses.indexOf(deletedMajor);
+        if (deletedMajor) {
+          this.courses.splice(index);
+        }
+      }
+    });
+    this.loadData();
   }
 }

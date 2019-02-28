@@ -7,7 +7,7 @@
                       <h3 class="box-title">Courses Data Table</h3>
                   </div>
                   <div class="col-md-8 text-right">
-                      <a href="#addCourse" class="btn btn-success" (click)="showModal()"><i class="fa fa-plus"></i> <span>Add New</span>
+                      <a class="btn btn-success" (click)="showModal($event)"><i class="fa fa-plus"></i> <span>Add New</span>
                       </a>
                   </div>
               </div>
@@ -22,19 +22,22 @@
                               <th>Start Date</th>
                               <th>End Date</th>
                               <th>Specialized Trainings</th>
+                              <th>Note</th>
                               <th></th>
                           </tr>
                       </thead>
                       <tbody>
-                          <tr *ngFor="let row of courses">
-                              <td>{{$index}}</td>
+                          <tr *ngFor="let row of courses; let i = index">
+                              <td>{{ i + 1 }}</td>
                               <td>{{row.name}}</td>                                
-                              <td>{{row.id}}}</td>
-                              <td>{{row.startDate}}}</td>
-                              <td>{{row.endDate}}}</td>
+                              <td>{{row.courseId}}</td>
+                              <td>{{row.startdate}}</td>
+                              <td>{{row.enddate}}</td>
                               <td></td>
-                              <td>
-                                  <button class="btn btn-default" (click)="showModal()">Edit</button>
+                              <td>{{row.note}}</td>
+                              <td class="text-center">
+                                  <button class="btn btn-default" (click)="showModal($event, row.courseId)"><i class="fa fa-edit text-primary"></i></button>
+                                  <button class="btn btn-default" (click)="delete($event, row.courseId)"><i class="fa fa-trash-o text-danger"></i></button>
                               </td>
                           </tr>
                   </table>
@@ -52,8 +55,7 @@
     role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
       <div class="modal-content">
-          <form>
-              <div class="modal-header">
+            <div class="modal-header">
                   <button type="button" class="close" (click)="modal.hide()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -68,7 +70,7 @@
                                   <label for="lastName" class="col-sm-4 col control-label">Name</label>
 
                                   <div class="col-sm-10">
-                                      <input type="text" class="form-control" id="txtName" placeholder="">
+                                      <input [(ngModel)]="course.name" type="text" class="form-control" id="txtName" placeholder="">
                                   </div>
                               </div>
                           </div>
@@ -80,7 +82,7 @@
                                       <div class="input-group-addon">
                                           <i class="fa fa-calendar"></i>
                                       </div>
-                                      <input type="date" class="form-control" id="datepicker">
+                                      <input [(ngModel)]="course.startdate" type="date" class="form-control" id="datepicker">
                                   </div>
                               </div>
                           </div>
@@ -92,7 +94,7 @@
                                       <div class="input-group-addon">
                                           <i class="fa fa-calendar"></i>
                                       </div>
-                                      <input type="date" class="form-control" id="datepicker">
+                                      <input [(ngModel)]="course.enddate" type="date" class="form-control" id="datepicker">
                                   </div>
                               </div>
                           </div>
@@ -102,8 +104,8 @@
 
                                   <div class="col-sm-10">
                                       <div class="">
-                                          <textarea id="editor1" name="editor1" rows="0" cols="0" style="margin: 0px; width: 17em; height: 15em;"> ype your note here
-                        </textarea>
+                                          <textarea [(ngModel)]="course.note" id="editor1" rows="0" cols="0" style="margin: 0px; width: 17em; height: 15em;"> Type your note here
+                                        </textarea>
                                       </div>
                                   </div>
                               </div>
@@ -116,10 +118,11 @@
                               <div class="col-xs-12 col-md-10">
                                   <div class="form-group">
                                       <select class="form-control select2" multiple="multiple" data-placeholder="Select a training" id="selectTrainingsinModal" style="width: 100%;">                                              
-                                          <option>.NET</option>
+                                        <option *ngFor="let item of trainings" [value]="item.trainingId">{{item.name}}</option>
+                                        <!-- <option>.NET</option>
                                           <option>Java</option>
                                           <option>Android</option>
-                                          <option>iOS</option>
+                                          <option>iOS</option> -->
                                       </select>
                                   </div>
                               </div>
@@ -166,11 +169,10 @@
                       </div>
                   </div>                    
                   <div class="modal-footer">
-                      <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                      <button type="submit" class="btn btn-success" (click)="save()"></button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-eraser" aria-hidden="true"></i>Clear</button>
+                      <button type="submit" class="btn btn-success" (click)="save()">{{(course.courseId === undefined || course.courseId === 0) ? 'Add' : 'Save'}}</button>
                   </div>
-              </div>
-           </form>
+            </div>
       </div>
   </div>
 </div>

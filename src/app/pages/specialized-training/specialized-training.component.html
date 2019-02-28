@@ -4,7 +4,7 @@
             <div class="box">
                 <div class="box-header">
                     <div class="col-md-4">
-                        <h3 class="box-title">Traninings Data Table</h3>
+                        <h3 class="box-title">Trainings Data Table</h3>
                     </div>
                     <div class="col-md-8 text-right">
                         <a class="btn btn-success" (click)="showModal($event)">
@@ -25,30 +25,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    .NET
-                                </td>
-                                <td>ISC01</td>
-                                <td>10</td>
+                            <tr *ngFor="let item of specializedTrainings; let i = index">
+                                <td>{{ i + 1}}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.trainingId }}</td>
+                                <td>{{ item.numberweek }}</td>
                                 <td class="text-center">
-                                    <a href="#" (click)="showModal($event)"><i class="fa fa-edit text-primary"></i></a>
-                                    <a href="#" ><i class="fa fa-trash-o text-danger"></i></a>
+                                    <button class="btn btn-default" (click)="showModal($event, item.trainingId)"><i class="fa fa-edit text-primary"></i></button>
+                                    <button class="btn btn-default" (click)="delete($event, item.trainingId)"><i class="fa fa-trash-o text-danger"></i></button> 
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>
-                                    Java
-                                </td>
-                                <td>ISC01</td>
-                                <td>10</td>
-                                <td class="text-center">
-                                    <a href="#" (click)="showModal($event)"><i class="fa fa-edit text-primary"></i></a>
-                                    <a href="#" ><i class="fa fa-trash-o text-danger"></i></a>
-                                </td>
-                            </tr>
+                            </tr>              
                         <tfoot>
 
                         </tfoot>
@@ -67,7 +53,6 @@
   role="dialog" aria-labelledby="dialog-sizes-name1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form>
                 <div class="modal-header">
                     <button type="button" class="close" (click)="modal.hide()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -83,7 +68,7 @@
                                     <label for="lastName" class="col-sm-2 col control-label">Name</label>
 
                                     <div class="col-8">
-                                        <input type="text" class="form-control" id="txtName" placeholder="Type training's name here ...">
+                                        <input [(ngModel)]="specializedTraining.name" type="text" class="form-control" id="txtName" placeholder="Type training's name here ...">
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +77,7 @@
                                     <label for="gender" class="col-sm-4 col control-label">Duration </label>
 
                                     <div class="col-8">
-                                        <input type="number" class="form-control col-xs-6" id="txtNumber" style="border: 1px solid #ccc; width: 30%">
+                                        <input [(ngModel)]="specializedTraining.numberweek" type="number" class="form-control col-xs-6" id="txtNumber" style="border: 1px solid #ccc; width: 30%">
                                         <span class="col" style="margin-left: 0.75em">week(s)</span>
                                     </div>
                                 </div>
@@ -184,11 +169,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-info" value="Save">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-eraser" aria-hidden="true"></i>Clear</button>
+                    <button class="btn btn-success" (click)="save()">{{(specializedTraining.trainingId === undefined || specializedTraining.trainingId === 0) ? 'Add' : 'Save'}}</button>
                 </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
