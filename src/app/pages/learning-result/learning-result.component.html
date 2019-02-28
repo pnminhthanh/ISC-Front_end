@@ -1,0 +1,167 @@
+<link rel="stylesheet" href="/assets/css/dataTables.min.css" />
+<h2>Learning Result</h2>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Select option</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form>
+        <div class="container-fluid">
+            <div class="box-body">
+                <input id="id" hidden />
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Select Course</label>
+                            <select class="form-control" id="exampleFormControlSelect1">
+                                <option>Intake 02</option>
+                                <option>Intake 03</option>
+                                <option>Intake 04</option>
+                                <option>Intake 05</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Select Class</label>
+                            <select class="form-control" id="exampleFormControlSelect1">
+                                <option>Database</option>
+                                <option>Critical</option>
+                                <option>Onjob</option>
+                                <option>Front-end</option>
+                                <option>Back-end</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <br />
+                            <button type="button" class="btn btn-info" style="margin-top:5px;">
+                                <span class="glyphicon glyphicon-search"></span> Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Student Table</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form>
+        <div class="container-fluid">
+            <div class="box-body">
+                <input id="id" hidden />
+                <div class="row">
+                    <table id="datatable" class="display">
+                        <thead>
+                            <tr>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">#</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Class name</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">First name</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Last name</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Average score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="sorting_1">1</td>
+                                <td>Database</td>
+                                <td>Tien</td>
+                                <td>Thuan</td>
+                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td class="sorting_1">2</td>
+                                <td>Database</td>
+                                <td>Minh</td>
+                                <td>Thanh</td>
+                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td class="sorting_1">3</td>
+                                <td>Database</td>
+                                <td>Tien</td>
+                                <td>Thuan</td>
+                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td class="sorting_1">4</td>
+                                <td>Database</td>
+                                <td>Tien</td>
+                                <td>Thuan</td>
+                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td class="sorting_1">5</td>
+                                <td>Database</td>
+                                <td>Tien</td>
+                                <td>Thuan</td>
+                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td class="sorting_1">6</td>
+                                <td>Database</td>
+                                <td>Tien</td>
+                                <td>Thuan</td>
+                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row" style="margin-top:30px;">
+                    <div class="col-md-1" style="float:right">
+                        <button class="btn btn-warning">Cancel</button>
+                    </div>
+                    <div class="col-md-1" style="float:right">
+                        <button class="btn btn-success">Save </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Edit Modal HTML -->
+<div id="editScore" class="modal fade" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Employee</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Class name</label>
+                        <input type="text" class="form-control" required="">
+                    </div>
+                    <div class="form-group">
+                        <label>First name</label>
+                        <input type="text" class="form-control" required="">
+                    </div>
+                    <div class="form-group">
+                        <label>Last name</label>
+                        <input type="text" class="form-control" required="">
+                    </div>
+                    <div class="form-group">
+                        <label>Score</label>
+                        <input type="text" class="form-control" required="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="submit" class="btn btn-info" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

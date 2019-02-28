@@ -203,18 +203,18 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">HEADER</li>
       <!-- Optionally, you can add icons to the links -->
-      <li class="active"><a href="~/UsersView/Index"><i class="fa fa-link"></i> <span>User</span></a></li>
-      <li class="active"><a href="~/UsersView/Classes"><i class="fa fa-link"></i> <span>Classes</span></a></li>
-      <li class="active"><a href="~/UsersView/Companies"><i class="fa fa-link"></i> <span>Companies</span></a></li>
-      <li class="active"><a href="~/UsersView/Courses"><i class="fa fa-link"></i> <span>Courses</span></a></li>
+      <li class="active"><a ><i class="fa fa-link"></i> <span>User</span></a></li>
+      <li class="active"><a ><i class="fa fa-link"></i> <span>Classes</span></a></li>
+      <li class="active"><a ><i class="fa fa-link"></i> <span>Companies</span></a></li>
+      <li class="active"><a ><i class="fa fa-link"></i> <span>Courses</span></a></li>
       <li class="active"><a href="~/UsersView/Lecturers"><i class="fa fa-link"></i> <span>Lecturers</span></a></li>
       <li class="active"><a href="~/UsersView/SpecializedTrainings"><i class="fa fa-link"></i> <span>Specialized Trainings</span></a></li>
       <li class="active"><a href="~/UsersView/Students"><i class="fa fa-link"></i> <span>Students</span></a></li>
       <li class="active"><a href="~/UsersView/Subjects"><i class="fa fa-link"></i> <span>Subjects</span></a></li>
       <li class="active"><a href="~/UsersView/Universities"><i class="fa fa-link"></i> <span>Universities</span></a></li>
       <li class="active"><a href="~/UsersView/WorkTrack"><i class="fa fa-link"></i> <span>Work Track</span></a></li>
-      <li class="active"><a href="~/UsersView/ClassRoom"><i class="fa fa-link"></i> <span>Class Room</span></a></li>
-      <li class="active"><a href="~/UsersView/LearningResult"><i class="fa fa-link"></i> <span>Learning Results </span></a></li>
+      <li class="active"><a [routerLink]="['/classroom']"><i class="fa fa-link"></i> <span>Class Room</span></a></li>
+      <li class="active"><a [routerLink]="['/learnresult']"><i class="fa fa-link"></i> <span>Learning Results </span></a></li>
 
       <li class="treeview">
         <a href="~/UsersView/TimeTable">
@@ -224,8 +224,8 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="~/UsersView/TimeTable">Index</a></li>
-          <li><a href="~/UsersView/AddTimeTable">Add Time Table</a></li>
+          <li><a [routerLink]="['/timetable']">TimeTable</a></li>
+          <li><a [routerLink]="['/addtimetable']">Add Time Table</a></li>
         </ul>
       </li>
     </ul>
@@ -237,7 +237,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <!-- <section class="content-header">
             <h1>
                 Page Header
                 <small>Optional description</small>
@@ -246,7 +246,7 @@
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                 <li class="active">Here</li>
             </ol>
-        </section>
+        </section> -->
 
         <!-- Main content -->
         <section class="content container-fluid">
@@ -260,15 +260,6 @@
     </div>
     <!-- /.content-wrapper -->
     <!-- Main Footer -->
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-            Anything you want
-        </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2019 <a href="#">Team 1</a>.</strong> All rights reserved.
-    </footer>
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
