@@ -9,7 +9,7 @@ export interface UsersResponse {
 }
 export interface UserResponse {
   errorCode: number;
-  user: User;
+  data: User;
   errorMessage: string;
 }
 
@@ -21,7 +21,9 @@ export interface User {
   email: string;
   phone: string;
   identityNumber: string;
+  address: string;
   DoB: Date;
+  isStudent: boolean;
 }
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { LecturersService, Lecturer } from '../services/lecturers.service';
+import { LecturersService, Lecturer, LecturerFull } from '../services/lecturers.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserService, User } from '../services/user.service';
 
@@ -14,14 +14,15 @@ import { UserService, User } from '../services/user.service';
 export class LecturersComponent implements OnInit {
 
   user: User = {} as User;
-  lecturers: Lecturer[] = [];
+  lecturers: LecturerFull[] = [];
   lecturer: Lecturer = {} as Lecturer;
   test: string;
 
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
 
-  constructor(public lecturerService: LecturersService, public userService: UserService) { }
+  constructor(public lecturerService: LecturersService, public userService: UserService) {
+  }
 
   ngOnInit() {
     this.loadData();
@@ -34,7 +35,7 @@ export class LecturersComponent implements OnInit {
 
     if (id > 0) {
       this.lecturerService.getLecturer(id).subscribe(result => {
-        this.lecturer = result.lecturer;
+        this.lecturer = result.data;
         this.modal.show();
       });
     } else {
@@ -51,14 +52,15 @@ export class LecturersComponent implements OnInit {
 
   loadData() {
     this.lecturerService.getLecturers().subscribe(result => {
-      this.lecturers = result.lecturers;
+      this.lecturers = result.data;
     });
   }
 
   save() {
     if (this.lecturer.id === undefined || this.lecturer.id === 0) {
+      this.user.isStudent = false;
       this.userService.addUser(this.user).subscribe(result => {
-        this.lecturer.userId = result.user.id;
+        this.lecturer.use_userId = result.data.id;
         this.lecturerService.addLecturer(this.lecturer).subscribe(aresult => {
           this.modal.hide();
           this.loadData();
@@ -79,7 +81,7 @@ export class LecturersComponent implements OnInit {
   delete() {
     this.lecturerService.deleteLecturer(this.lecturer.id).subscribe(result => {
       if (result.errorCode === 0) {
-        const deleteLecturer = this.lecturers.find( x => x.id === this.lecturer.id);
+        const deleteLecturer = this.lecturers.find( x => x.userid === this.lecturer.id);
         if (deleteLecturer) {
           const index = this.lecturers.indexOf(deleteLecturer);
           this.lecturers.splice(index, 1);

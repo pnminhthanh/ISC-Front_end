@@ -12,7 +12,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './dashboard/user/user.component';
 import { LecturersComponent } from './lecturers/lecturers.component';
-import { LecturerAddComponent } from './lecturer-add/lecturer-add.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { LecturerAddComponent } from './lecturer-add/lecturer-add.component';
     DashboardComponent,
     LoginComponent,
     UserComponent,
-    LecturersComponent,
-    LecturerAddComponent
+    LecturersComponent
   ],
   imports: [
     BrowserModule,

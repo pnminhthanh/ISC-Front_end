@@ -1,37 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from './user.service';
+
+export interface LecturersFullResponse {
+  errorCode: number;
+  data: LecturerFull[];
+  errorMessage: string;
+}
 
 export interface LecturersResponse {
   errorCode: number;
-  lecturers: Lecturer[];
+  data: Lecturer[];
   errorMessage: string;
 }
 export interface LecturerResponse {
   errorCode: number;
-  lecturer: Lecturer;
+  data: Lecturer;
   errorMessage: string;
 }
 
 export interface LecturerFull {
-  id: number;
-  lastName: string;
-  firstName: string;
-  gender: boolean;
-  email: string;
-  phone: string;
-  identityNumber: string;
-  DoB: Date;
-  degree: string;
-  academic: string;
-  startDate: Date;
+  userid: number;
+  use_userId: number;
+  degreeid: number;
+  academicrank: number;
+  startdate: Date;
+  degree: object;
+  academic: object;
+  user: User;
 }
 
 export interface Lecturer {
   id: number;
-  userId: number;
-  degree: number;
-  academic: number;
+  use_userId: number;
+  degreeId: number;
+  academicRank: number;
   startDate: Date;
 }
 
@@ -49,17 +53,12 @@ export class LecturersService {
 
   constructor(private http: HttpClient) { }
 
-  getLecturers(): Observable<LecturersResponse> {
-    return this.http.get<LecturersResponse>(this.endpoint + 'lecturers');
+  getLecturers(): Observable<LecturersFullResponse> {
+    return this.http.get<LecturersFullResponse>(this.endpoint + 'lecturers');
   }
 
   getLecturer(id): Observable<LecturerResponse> {
     return this.http.get<LecturerResponse>(this.endpoint + 'lecturers/' + id);
-  }
-
-  addUser(user): Observable<LecturerResponse> {
-    console.log(user);
-    return this.http.post<LecturerResponse>(this.endpoint + 'users', JSON.stringify(user), this.httpOptions);
   }
 
   addLecturer(lecturer): Observable<LecturerResponse> {
