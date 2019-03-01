@@ -4,14 +4,13 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserService, User } from '../services/user.service';
 import { DegreeService, Degree } from '../services/degree.service';
 import { AcademicService, Academic } from '../services/academic.service';
+import { DatetimeService } from '../services/datetime.service';
 
 @Component({
   selector: 'app-lecturers',
   templateUrl: './lecturers.component.html',
   styleUrls: ['./lecturers.component.css']
 })
-
-
 
 export class LecturersComponent implements OnInit {
 
@@ -26,10 +25,18 @@ export class LecturersComponent implements OnInit {
   @ViewChild('deleteModal') deleteModal: ModalDirective;
 
 // tslint:disable-next-line: max-line-length
-  constructor(public academicService: AcademicService, public degreeService: DegreeService, public lecturerService: LecturersService, public userService: UserService) {
+  constructor(public datetimeService: DatetimeService, public academicService: AcademicService, public degreeService: DegreeService, public lecturerService: LecturersService, public userService: UserService) {
   }
 
   ngOnInit() {
+    this.degreeService.getDegrees().subscribe(result => {
+      this.degrees = result.data;
+      console.log(result.data);
+    });
+    this.academicService.getAcademics().subscribe(result => {
+      this.academics = result.data;
+      console.log(result.data);
+    });
     this.loadData();
   }
 
@@ -39,16 +46,13 @@ export class LecturersComponent implements OnInit {
     }
 
     if (id > 0) {
-      this.degreeService.getDegrees().subscribe(result => {
-        this.degrees = result.data;
-      });
-      this.academicService.getAcademics().subscribe(result => {
-        this.academics = result.data;
-      });
       this.lecturerService.getLecturer(id).subscribe(result => {
         this.lecturer = result.data;
+        this.lecturer.startday = this.datetimeService.formatDatetimeData(this.lecturer.startday);
         this.userService.getUser(this.lecturer.usE_USERID).subscribe(aresult => {
           this.user = aresult.data;
+          this.user.dob = this.datetimeService.formatDatetimeData(this.user.dob);
+          console.log(this.user);
           this.modal.show();
         });
       });
