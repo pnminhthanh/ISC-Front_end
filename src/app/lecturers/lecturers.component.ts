@@ -36,7 +36,10 @@ export class LecturersComponent implements OnInit {
     if (id > 0) {
       this.lecturerService.getLecturer(id).subscribe(result => {
         this.lecturer = result.data;
-        this.modal.show();
+        this.userService.getUser(this.lecturer.usE_USERID).subscribe(aresult => {
+          this.user = aresult.data;
+          this.modal.show();
+        });
       });
     } else {
       this.lecturer = {} as Lecturer;
@@ -45,7 +48,7 @@ export class LecturersComponent implements OnInit {
   }
 
   showDeleteModal(event, id) {
-    this.lecturer.id = id;
+    this.lecturer.userid = id;
     event.preventDefault();
     this.deleteModal.show();
   }
@@ -53,14 +56,15 @@ export class LecturersComponent implements OnInit {
   loadData() {
     this.lecturerService.getLecturers().subscribe(result => {
       this.lecturers = result.data;
+      console.log(this.lecturers);
     });
   }
 
   save() {
-    if (this.lecturer.id === undefined || this.lecturer.id === 0) {
+    if (this.lecturer.userid === undefined || this.lecturer.userid === 0) {
       this.user.isStudent = false;
       this.userService.addUser(this.user).subscribe(result => {
-        this.lecturer.use_userId = result.data.id;
+        this.lecturer.usE_USERID = result.data.id;
         this.lecturerService.addLecturer(this.lecturer).subscribe(aresult => {
           this.modal.hide();
           this.loadData();
@@ -68,6 +72,7 @@ export class LecturersComponent implements OnInit {
       });
 
     } else {
+      this.user.isStudent = false;
       this.userService.updateUser(this.user).subscribe( result => {
         this.lecturerService.updateLecturer(this.lecturer).subscribe(aresult => {
           this.modal.hide();
@@ -79,9 +84,9 @@ export class LecturersComponent implements OnInit {
   }
 
   delete() {
-    this.lecturerService.deleteLecturer(this.lecturer.id).subscribe(result => {
+    this.lecturerService.deleteLecturer(this.lecturer.userid).subscribe(result => {
       if (result.errorCode === 0) {
-        const deleteLecturer = this.lecturers.find( x => x.userid === this.lecturer.id);
+        const deleteLecturer = this.lecturers.find( x => x.userid === this.lecturer.userid);
         if (deleteLecturer) {
           const index = this.lecturers.indexOf(deleteLecturer);
           this.lecturers.splice(index, 1);

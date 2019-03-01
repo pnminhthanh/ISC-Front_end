@@ -4,25 +4,25 @@ import { Observable } from 'rxjs';
 
 export interface UsersResponse {
   errorCode: number;
-  users: User[];
-  errorMessage: string;
+  data: User[];
+  message: string;
 }
 export interface UserResponse {
   errorCode: number;
   data: User;
-  errorMessage: string;
+  message: string;
 }
 
 export interface User {
   id: number;
-  lastName: string;
-  firstName: string;
-  gender: boolean;
+  firstname: string;
+  lastname: string;
+  gender: number;
+  dob: Date;
+  identitynumber: string;
   email: string;
   phone: string;
-  identityNumber: string;
   address: string;
-  DoB: Date;
   isStudent: boolean;
 }
 
@@ -48,12 +48,13 @@ export class UserService {
     return this.http.get<UserResponse>(this.endpoint + 'users/' + id);
   }
 
-  addUser(user): Observable<UserResponse> {
+  addUser(user: User): Observable<UserResponse> {
     console.log(user);
     return this.http.post<UserResponse>(this.endpoint + 'users', JSON.stringify(user), this.httpOptions);
   }
 
   updateUser(user: User): Observable<UserResponse> {
+    console.log(user);
     return this.http.put<UserResponse>(this.endpoint + 'users/' + user.id, JSON.stringify(user), this.httpOptions);
   }
 

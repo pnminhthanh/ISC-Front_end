@@ -6,23 +6,23 @@ import { User } from './user.service';
 export interface LecturersFullResponse {
   errorCode: number;
   data: LecturerFull[];
-  errorMessage: string;
+  message: string;
 }
 
 export interface LecturersResponse {
   errorCode: number;
   data: Lecturer[];
-  errorMessage: string;
+  message: string;
 }
 export interface LecturerResponse {
   errorCode: number;
   data: Lecturer;
-  errorMessage: string;
+  message: string;
 }
 
 export interface LecturerFull {
   userid: number;
-  use_userId: number;
+  usE_USERID: number;
   degreeid: number;
   academicrank: number;
   startdate: Date;
@@ -32,11 +32,11 @@ export interface LecturerFull {
 }
 
 export interface Lecturer {
-  id: number;
-  use_userId: number;
-  degreeId: number;
-  academicRank: number;
-  startDate: Date;
+  userid: number;
+  usE_USERID: number;
+  degreeid: number;
+  academicrank: number;
+  startday: Date;
 }
 
 @Injectable({
@@ -61,13 +61,13 @@ export class LecturersService {
     return this.http.get<LecturerResponse>(this.endpoint + 'lecturers/' + id);
   }
 
-  addLecturer(lecturer): Observable<LecturerResponse> {
+  addLecturer(lecturer: Lecturer): Observable<LecturerResponse> {
     console.log(lecturer);
     return this.http.post<LecturerResponse>(this.endpoint + 'lecturers', JSON.stringify(lecturer), this.httpOptions);
   }
 
   updateLecturer(lecturer: Lecturer): Observable<LecturerResponse> {
-    return this.http.put<LecturerResponse>(this.endpoint + 'lecturers/' + lecturer.id, JSON.stringify(lecturer), this.httpOptions);
+    return this.http.put<LecturerResponse>(this.endpoint + 'lecturers/' + lecturer.userid, JSON.stringify(lecturer), this.httpOptions);
   }
 
   deleteLecturer(id): Observable<LecturerResponse> {
