@@ -2,6 +2,8 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { LecturersService, Lecturer, LecturerFull } from '../services/lecturers.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserService, User } from '../services/user.service';
+import { DegreeService, Degree } from '../services/degree.service';
+import { AcademicService, Academic } from '../services/academic.service';
 
 @Component({
   selector: 'app-lecturers',
@@ -13,6 +15,8 @@ import { UserService, User } from '../services/user.service';
 
 export class LecturersComponent implements OnInit {
 
+  degrees: Degree[] = [];
+  academics: Academic[] = [];
   user: User = {} as User;
   lecturers: LecturerFull[] = [];
   lecturer: Lecturer = {} as Lecturer;
@@ -21,7 +25,8 @@ export class LecturersComponent implements OnInit {
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
 
-  constructor(public lecturerService: LecturersService, public userService: UserService) {
+// tslint:disable-next-line: max-line-length
+  constructor(public academicService: AcademicService, public degreeService: DegreeService, public lecturerService: LecturersService, public userService: UserService) {
   }
 
   ngOnInit() {
@@ -34,6 +39,12 @@ export class LecturersComponent implements OnInit {
     }
 
     if (id > 0) {
+      this.degreeService.getDegrees().subscribe(result => {
+        this.degrees = result.data;
+      });
+      this.academicService.getAcademics().subscribe(result => {
+        this.academics = result.data;
+      });
       this.lecturerService.getLecturer(id).subscribe(result => {
         this.lecturer = result.data;
         this.userService.getUser(this.lecturer.usE_USERID).subscribe(aresult => {
