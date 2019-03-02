@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
 
 export interface AcademicsResponse {
   errorCode: number;
@@ -30,26 +31,29 @@ export class AcademicService {
     }),
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private apiService: ApiService) { }
 
   getAcademics(): Observable<AcademicsResponse> {
-    return this.http.get<AcademicsResponse>(this.endpoint + 'academics');
+    return this.http.get<AcademicsResponse>(this.apiService.apiUrl.academic);
   }
 
   getAcademic(id): Observable<AcademicResponse> {
-    return this.http.get<AcademicResponse>(this.endpoint + 'academics/' + id);
+    const url = `${this.apiService.apiUrl.academic}/${id}`;
+    return this.http.get<AcademicResponse>(url);
   }
 
   addAcademic(academic: Academic): Observable<AcademicResponse> {
     console.log(academic);
-    return this.http.post<AcademicResponse>(this.endpoint + 'academics', JSON.stringify(academic), this.httpOptions);
+    return this.http.post<AcademicResponse>(this.apiService.apiUrl.academic, JSON.stringify(academic), this.httpOptions);
   }
 
   updateAcademic(academic: Academic): Observable<AcademicResponse> {
-    return this.http.put<AcademicResponse>(this.endpoint + 'academics/' + academic.id, JSON.stringify(academic), this.httpOptions);
+    const url = `${this.apiService.apiUrl.academic}/${academic.id}`;
+    return this.http.put<AcademicResponse>(url, JSON.stringify(academic), this.httpOptions);
   }
 
   deleteAcademic(id): Observable<AcademicResponse> {
-    return this.http.delete<AcademicResponse>(this.endpoint + 'academics/' + id, this.httpOptions);
+    const url = `${this.apiService.apiUrl.academic}/${id}`;
+    return this.http.delete<AcademicResponse>(url, this.httpOptions);
   }
 }

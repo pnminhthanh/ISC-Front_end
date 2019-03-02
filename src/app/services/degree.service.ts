@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
 
 export interface DegreesResponse {
   errorCode: number;
@@ -30,26 +31,29 @@ export class DegreeService {
     }),
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private apiService: ApiService) { }
 
   getDegrees(): Observable<DegreesResponse> {
-    return this.http.get<DegreesResponse>(this.endpoint + 'degrees');
+    return this.http.get<DegreesResponse>(this.apiService.apiUrl.degree);
   }
 
   getDegree(id): Observable<DegreeResponse> {
-    return this.http.get<DegreeResponse>(this.endpoint + 'degrees/' + id);
+    const url = `${this.apiService.apiUrl.degree}/${id}`;
+    return this.http.get<DegreeResponse>(url);
   }
 
   addDegree(degree: Degree): Observable<DegreeResponse> {
     console.log(degree);
-    return this.http.post<DegreeResponse>(this.endpoint + 'degrees', JSON.stringify(degree), this.httpOptions);
+    return this.http.post<DegreeResponse>(this.apiService.apiUrl.degree, JSON.stringify(degree), this.httpOptions);
   }
 
   updateDegree(degree: Degree): Observable<DegreeResponse> {
-    return this.http.put<DegreeResponse>(this.endpoint + 'degrees/' + degree.id, JSON.stringify(degree), this.httpOptions);
+    const url = `${this.apiService.apiUrl.academic}/${degree.id}`;
+    return this.http.put<DegreeResponse>(url, JSON.stringify(degree), this.httpOptions);
   }
 
   deleteDegree(id): Observable<DegreeResponse> {
-    return this.http.delete<DegreeResponse>(this.endpoint + 'degrees/' + id, this.httpOptions);
+    const url = `${this.apiService.apiUrl.degree}/${id}`;
+    return this.http.delete<DegreeResponse>(url, this.httpOptions);
   }
 }

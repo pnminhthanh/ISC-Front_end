@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
@@ -14,7 +13,7 @@ import { UserComponent } from './dashboard/user/user.component';
 import { CourseComponent } from './pages/course/course.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SpecializedTrainingComponent } from './pages/specialized-training/specialized-training.component';
-import { LecturersComponent } from './lecturers/lecturers.component';
+import { LecturerComponent } from './pages/lecturer/lecturer.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +23,7 @@ import { LecturersComponent } from './lecturers/lecturers.component';
     UserComponent,
     CourseComponent,
     SpecializedTrainingComponent,
-    LecturersComponent
+    LecturerComponent
   ],
   imports: [
     BrowserModule,

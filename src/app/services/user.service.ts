@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
 
 export interface UsersResponse {
   errorCode: number;
@@ -38,27 +39,30 @@ export class UserService {
     }),
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private apiService: ApiService) { }
 
   getUsers(): Observable<UsersResponse> {
-    return this.http.get<UsersResponse>(this.endpoint + 'users');
+    return this.http.get<UsersResponse>(this.apiService.apiUrl.user);
   }
 
   getUser(id): Observable<UserResponse> {
-    return this.http.get<UserResponse>(this.endpoint + 'users/' + id);
+    const url = `${this.apiService.apiUrl.user}/${id}`;
+    return this.http.get<UserResponse>(url);
   }
 
   addUser(user: User): Observable<UserResponse> {
     console.log(user);
-    return this.http.post<UserResponse>(this.endpoint + 'users', JSON.stringify(user), this.httpOptions);
+    return this.http.post<UserResponse>(this.apiService.apiUrl.user, JSON.stringify(user), this.httpOptions);
   }
 
   updateUser(user: User): Observable<UserResponse> {
+    const url = `${this.apiService.apiUrl.academic}/${user.id}`;
     console.log(user);
-    return this.http.put<UserResponse>(this.endpoint + 'users/' + user.id, JSON.stringify(user), this.httpOptions);
+    return this.http.put<UserResponse>(url, JSON.stringify(user), this.httpOptions);
   }
 
   deleteUser(id): Observable<UserResponse> {
-    return this.http.delete<UserResponse>(this.endpoint + 'users/' + id, this.httpOptions);
+    const url = `${this.apiService.apiUrl.user}/${id}`;
+    return this.http.delete<UserResponse>(url, this.httpOptions);
   }
 }

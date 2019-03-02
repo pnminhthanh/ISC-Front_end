@@ -1,18 +1,18 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { LecturersService, Lecturer, LecturerFull } from '../services/lecturers.service';
+import { LecturersService, Lecturer, LecturerFull } from '../../services/lecturers.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { UserService, User } from '../services/user.service';
-import { DegreeService, Degree } from '../services/degree.service';
-import { AcademicService, Academic } from '../services/academic.service';
-import { DatetimeService } from '../services/datetime.service';
+import { UserService, User } from '../../services/user.service';
+import { DegreeService, Degree } from '../../services/degree.service';
+import { AcademicService, Academic } from '../../services/academic.service';
+import { DatetimeService } from '../../services/datetime.service';
 
 @Component({
-  selector: 'app-lecturers',
-  templateUrl: './lecturers.component.html',
-  styleUrls: ['./lecturers.component.css']
+  selector: 'app-lecturer',
+  templateUrl: './lecturer.component.html',
+  styleUrls: ['./lecturer.component.css']
 })
 
-export class LecturersComponent implements OnInit {
+export class LecturerComponent implements OnInit {
 
   degrees: Degree[] = [];
   academics: Academic[] = [];

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './user.service';
+import { ApiService } from './api.service';
 
 export interface LecturersFullResponse {
   errorCode: number;
@@ -23,10 +24,10 @@ export interface LecturerResponse {
 export interface LecturerFull {
   userid: number;
   usE_USERID: number;
-  degreeid: number;
+  lecturerid: number;
   academicrank: number;
   startdate: Date;
-  degree: object;
+  lecturer: object;
   academic: object;
   user: User;
 }
@@ -34,7 +35,7 @@ export interface LecturerFull {
 export interface Lecturer {
   userid: number;
   usE_USERID: number;
-  degreeid: number;
+  lecturerid: number;
   academicrank: number;
   startday: Date;
 }
@@ -51,26 +52,29 @@ export class LecturersService {
     }),
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private apiService: ApiService) { }
 
   getLecturers(): Observable<LecturersFullResponse> {
-    return this.http.get<LecturersFullResponse>(this.endpoint + 'lecturers');
+    return this.http.get<LecturersFullResponse>(this.apiService.apiUrl.lecturer);
   }
 
   getLecturer(id): Observable<LecturerResponse> {
-    return this.http.get<LecturerResponse>(this.endpoint + 'lecturers/' + id);
+    const url = `${this.apiService.apiUrl.lecturer}/${id}`;
+    return this.http.get<LecturerResponse>(url);
   }
 
   addLecturer(lecturer: Lecturer): Observable<LecturerResponse> {
     console.log(lecturer);
-    return this.http.post<LecturerResponse>(this.endpoint + 'lecturers', JSON.stringify(lecturer), this.httpOptions);
+    return this.http.post<LecturerResponse>(this.apiService.apiUrl.lecturer, JSON.stringify(lecturer), this.httpOptions);
   }
 
   updateLecturer(lecturer: Lecturer): Observable<LecturerResponse> {
-    return this.http.put<LecturerResponse>(this.endpoint + 'lecturers/' + lecturer.userid, JSON.stringify(lecturer), this.httpOptions);
+    const url = `${this.apiService.apiUrl.academic}/${lecturer.userid}`;
+    return this.http.put<LecturerResponse>(url, JSON.stringify(lecturer), this.httpOptions);
   }
 
   deleteLecturer(id): Observable<LecturerResponse> {
-    return this.http.delete<LecturerResponse>(this.endpoint + 'lecturers/' + id, this.httpOptions);
+    const url = `${this.apiService.apiUrl.lecturer}/${id}`;
+    return this.http.delete<LecturerResponse>(url, this.httpOptions);
   }
 }

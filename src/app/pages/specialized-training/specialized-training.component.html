@@ -1,0 +1,178 @@
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-md-4">
+                        <h3 class="box-title">Trainings Data Table</h3>
+                    </div>
+                    <div class="col-md-8 text-right">
+                        <a class="btn btn-success" (click)="showModal($event)">
+                            <i class="fa fa-plus"></i> <span>Add New</span>                       
+                        </a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example2" class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th style="width: 70px;">Duration (weeks)</th>
+                                <th style="width: 70px;"> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of specializedTrainings; let i = index">
+                                <td>{{ i + 1}}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.trainingId }}</td>
+                                <td>{{ item.numberweek }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-default" (click)="showModal($event, item.trainingId)"><i class="fa fa-edit text-primary"></i></button>
+                                    <button class="btn btn-default" (click)="delete($event, item.trainingId)"><i class="fa fa-trash-o text-danger"></i></button> 
+                                </td>
+                            </tr>              
+                        <tfoot>
+
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<div bsModal #modal='bs-modal' class="modal fade" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="modal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Create Specialized Trainings</h4>
+                </div>
+                <div class="modal-body" style="margin-left: 1em;">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <input id="id" hidden />
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label for="lastName" class="col-sm-2 col control-label">Name</label>
+
+                                    <div class="col-8">
+                                        <input [(ngModel)]="specializedTraining.name" type="text" class="form-control" id="txtName" placeholder="Type training's name here ...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label for="gender" class="col-sm-4 col control-label">Duration </label>
+
+                                    <div class="col-8">
+                                        <input [(ngModel)]="specializedTraining.numberweek" type="number" class="form-control col-xs-6" id="txtNumber" style="border: 1px solid #ccc; width: 30%">
+                                        <span class="col" style="margin-left: 0.75em">week(s)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="row" style="margin-top: 8rem;">
+                            <div class="col-12">
+                                <label>LIST OF SUBJECTS SELECTED</label>
+                                <table id="subjectsSelectedTable" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                               ID
+                                            </th>
+                                            <th>
+                                                Subject's Name
+                                            </th>
+                                            <th>
+                                                Number of Lessions
+                                            </th>
+                                            <th>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dataSubjectsSelectedTable">
+                                        <tr>
+                                            <td>1</td>
+                                            <td>ABC001</td>
+                                            <td>Front-end</td>
+                                            <td>60</td>
+                                            <td class="text-center">
+                                                <button class="fa fa-trash-o btn btn-danger" type="button"></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <label>LIST OF SUBJECTS</label>
+                        <table id="subjectsTable" class="table table-bordered table-hover">                           
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Subject's Name
+                                    </th>
+                                    <th>
+                                        Number of Lessions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataSubjectsTable">
+                                <tr>
+                                    <td>1</td>
+                                    <td>ABC001</td>
+                                    <td>Front-end</td>
+                                    <td>60</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>ABC002</td>
+                                    <td>Back-end</td>
+                                    <td>60</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>ABC002</td>
+                                    <td>Back-end</td>
+                                    <td>60</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>ABC002</td>
+                                    <td>Back-end</td>
+                                    <td>60</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-eraser" aria-hidden="true"></i>Clear</button>
+                    <button class="btn btn-success" (click)="save()">{{(specializedTraining.trainingId === undefined || specializedTraining.trainingId === 0) ? 'Add' : 'Save'}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
