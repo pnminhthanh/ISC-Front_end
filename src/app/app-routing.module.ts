@@ -6,7 +6,6 @@ import { CourseComponent } from './pages/course/course.component';
 import { SpecializedTrainingComponent } from './pages/specialized-training/specialized-training.component';
 import { from } from 'rxjs';
 import { LecturerComponent } from './pages/lecturer/lecturer.component';
-
 const routes: Routes = [
   {path: '', component: DashboardComponent,
   children: [
