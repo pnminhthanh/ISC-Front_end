@@ -7,14 +7,10 @@ import { LecturersComponent } from './lecturers/lecturers.component';
 const routes: Routes = [
   {path: '', component: DashboardComponent,
   children: [
-    {path: 'user', component: UserComponent}
-  ]
-},
-  {path: 'dashboard', component: DashboardComponent,
-  children: [
+    {path: 'user', component: UserComponent},
     {path: 'lecturers', component: LecturersComponent}
-  ]}
-
+  ]
+  }
 ];
 
 @NgModule({

@@ -16,7 +16,7 @@ export class LecturersComponent implements OnInit {
 
   degrees: Degree[] = [];
   academics: Academic[] = [];
-  user: User = {} as User;
+  user: User = { gender: 1} as User;
   lecturers: LecturerFull[] = [];
   lecturer: Lecturer = {} as Lecturer;
   test: string;
