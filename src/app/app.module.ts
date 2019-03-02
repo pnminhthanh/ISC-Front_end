@@ -11,6 +11,9 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './dashboard/user/user.component';
+import { CourseComponent } from './pages/course/course.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SpecializedTrainingComponent } from './pages/specialized-training/specialized-training.component';
 import { LecturersComponent } from './lecturers/lecturers.component';
 
 @NgModule({
@@ -19,13 +22,16 @@ import { LecturersComponent } from './lecturers/lecturers.component';
     DashboardComponent,
     LoginComponent,
     UserComponent,
+    CourseComponent,
+    SpecializedTrainingComponent,
     LecturersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    ModalModule,
     HttpClientModule,
+    FormsModule,
     ModalModule.forRoot()
   ],
   providers: [],
