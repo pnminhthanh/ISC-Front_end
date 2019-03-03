@@ -14,6 +14,7 @@ import { CourseComponent } from './pages/course/course.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SpecializedTrainingComponent } from './pages/specialized-training/specialized-training.component';
 import { LecturerComponent } from './pages/lecturer/lecturer.component';
+import { UniversitymajorComponent } from './pages/universitymajor/universitymajor.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LecturerComponent } from './pages/lecturer/lecturer.component';
     UserComponent,
     CourseComponent,
     SpecializedTrainingComponent,
-    LecturerComponent
+    LecturerComponent,
+    UniversitymajorComponent
   ],
   imports: [
     BrowserModule,
