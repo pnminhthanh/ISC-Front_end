@@ -21,8 +21,9 @@ import { EntranceTestComponent } from './pages/entrancetest/entrancetest.compone
 import { LecturerComponent } from './pages/lecturer/lecturer.component';
 import { UniversitymajorComponent } from './pages/universitymajor/universitymajor.component';
 import { StudentComponent } from './pages/student/student.component';
-
-
+import { CompanyComponent } from './pages/company/company.component';
+import { SubjectComponent } from './pages/subject/subject.component';
+import { WorktrackComponent } from './pages/worktrack/worktrack.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,10 @@ import { StudentComponent } from './pages/student/student.component';
 
     LecturerComponent,
     UniversitymajorComponent,
-    StudentComponent
+    StudentComponent,
+    CompanyComponent,
+    SubjectComponent,
+    WorktrackComponent
 
   ],
   imports: [

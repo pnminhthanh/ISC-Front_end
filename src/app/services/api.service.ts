@@ -6,23 +6,25 @@ import { Injectable } from '@angular/core';
 export class ApiService {
 
   constructor() { }
-  baseUrl = 'https://localhost:44324/api/';
+  baseUrl = 'https://localhost:44356/api/';
   apiUrl = {
-    classroom: this.baseUrl + 'classroom',
-    learnresult: this.baseUrl + 'LearResult',
-    course: this.baseUrl + 'courses',
-    specializedtraining: this.baseUrl + 'specializedtrainings',
-
-    examinationsubject: this.baseUrl + 'examinationsubjects',
-    entrancetest: this.baseUrl + 'entrancetests'
-
-    lecturer: this.baseUrl + 'lecturers',
     academic: this.baseUrl + 'academics',
+    companies: this.baseUrl + 'companies',
     degree: this.baseUrl + 'degrees',
+    examinationsubject: this.baseUrl + 'examinationsubjects',
+    entrancetest: this.baseUrl + 'entrancetests',
+
+    classroom: this.baseUrl + 'classroom',
+    course: this.baseUrl + 'courses',
+    learnresult: this.baseUrl + 'LearResult',
+    lecturer: this.baseUrl + 'lecturers',
+    
+    major: this.baseUrl + 'majors',
+    
+    specializedtraining: this.baseUrl + 'specializedtrainings',
+    subjects: this.baseUrl + 'subjects',
     user: this.baseUrl + 'users',
     university: this.baseUrl + 'universities',
-    major: this.baseUrl + 'majors'
-
-
+    worktracks: this.baseUrl + 'worktracks'
   };
 }

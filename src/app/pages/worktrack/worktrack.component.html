@@ -1,0 +1,144 @@
+<link rel="stylesheet" href="/assets/css/dataTables.min.css" />
+<h2>Worktrack</h2>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form>
+        <div class="container-fluid">
+            <div class="box-body">
+                <input id="id" hidden />
+                <div class="row" style="margin-bottom:30px;">
+                    <div class="col-md-1">
+                        <a class="btn btn-success" (click)="showModal($event,modalAdd)"><i class="fa fa-plus"></i> <span>Add New Worktrack</span></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <table id="datatable" class="display">
+                      <thead>
+                        <tr>
+                          <th>No.</th>
+                          <th>CompanyId</th>
+                          <th>IdStudent</th>
+                          <th>StartDate</th>
+                          <th>ContractDate</th>
+                          <th>Status</th>
+                          <th>Note</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let row of worktracks">
+                          <th>{{row.id}}</th>
+                          <th>{{row.companyid}}</th>
+                          <td>{{row.idstudent}}</td>
+                          <td>{{row.startdate}}</td>
+                          <td>{{row.contractdate}}</td>
+                          <td>{{row.status}}</td>
+                          <td>{{row.note}}</td>
+                          <td>
+                            <a class="edit" (click)="showModal($event,modalAdd,row.id)"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
+                            <a class="delete" (click)="showModal($event,modalDelete,row.id)" style="margin-left: 20px;"><i class="fa fa-trash-o" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Add, Edit-->
+<div bsModal #modalAdd="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 id="dialog-sizes-name1" class="modal-title">{{worktrack.id === undefined || worktrack.id === 0 ? 'Add New' : 'Edit'}}</h4>
+                  <button type="button" class="close pull-right" (click)="modalAdd.hide()" aria-label="Close">
+                    <span aria-hidden ="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-3 form-group">
+                      <label for="txtCompanyId">Company ID</label>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" id="txtCompanyId" placeholder="Enter company ID" [(ngModel)]="worktrack.companyid">
+                    </div>
+                  </div><!-- txtCompanyId -->
+                  <div class="row">
+                    <div class="col-md-3 form-group">
+                      <label for="txtIdStudent">ID Student</label>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" id="txtIdStudent" placeholder="Enter ID student" [(ngModel)]="worktrack.idstudent">
+                    </div>
+                  </div><!-- txtIdStudent -->
+                  <div class="row">
+                    <div class="col-md-3 form-group">
+                      <label for="txtStartDate">Start date</label>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="date" class="form-control" id="txtStartDate" placeholder="Enter start date" [(ngModel)]="worktrack.startdate">
+                    </div>
+                  </div><!-- txtStartDate -->
+                  <div class="row">
+                    <div class="col-md-3 form-group">
+                      <label for="txtContractDate">Contract date</label>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="date" class="form-control" id="txtContractDate" placeholder="Enter contract date" [(ngModel)]="worktrack.contractdate">
+                    </div>
+                  </div><!-- txtContractDate -->
+                  <div class="row">
+                    <div class="col-md-3 form-group">
+                      <label for="txtStatus">Status</label>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" id="txtStatus" placeholder="Enter status" [(ngModel)]="worktrack.status">
+                    </div>
+                  </div><!-- txtStatus -->
+                  <div class="row">
+                    <div class="col-md-3 form-group">
+                      <label for="txtNote">Note</label>
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" id="txtNote" placeholder="Enter note" [(ngModel)]="worktrack.note">
+                    </div>
+                  </div><!-- txtNote -->
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-success" (click)="save()" value="{{worktrack.id === undefined || worktrack.id === 0 ? 'Add' : 'Save'}}">
+                    <input type="submit" class="btn btn-default" (click)="modalAdd.hide()"  value="Cancel">
+                </div>
+              </div>
+            </div>
+          </div>
+<!-- Delete Modal HTML -->
+<div bsModal #modalDelete="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Company</h4>
+                    <button type="button" class="close" (click)="modalDelete.hide()" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete these Records?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" (click)="modalDelete.hide()" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="submit" (click)="delete($event,worktrack.id)" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+  $('.datepicker').datepicker();
+</script>
