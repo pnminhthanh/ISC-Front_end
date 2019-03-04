@@ -12,7 +12,7 @@ import { TimetableComponent } from './pages/timetable/timetable.component';
 import { AddtimetableComponent } from './pages/addtimetable/addtimetable.component';
 import { LearningResultComponent } from './pages/learning-result/learning-result.component';
 import { CourseComponent } from './pages/course/course.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpecializedTrainingComponent } from './pages/specialized-training/specialized-training.component';
 
 import { ExaminationSubjectComponent } from './pages/examinationsubject/examinationsubject.component';
@@ -24,6 +24,9 @@ import { StudentComponent } from './pages/student/student.component';
 import { CompanyComponent } from './pages/company/company.component';
 import { SubjectComponent } from './pages/subject/subject.component';
 import { WorktrackComponent } from './pages/worktrack/worktrack.component';
+import { AuthGuard } from './auth.guard';
+import { AuthInterceptor } from './services/auth.interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,15 @@ import { WorktrackComponent } from './pages/worktrack/worktrack.component';
     ModalModule.forRoot(),
     NgxPaginationModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    AuthGuard,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

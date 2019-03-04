@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Worktrack, WorktrackService } from 'src/app/services/worktrack.service';
-import { NgxDateTimePickerModule } from  'ngx-date-time-picker';
 
 @Component({
   selector: 'app-worktrack',

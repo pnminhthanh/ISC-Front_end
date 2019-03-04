@@ -18,6 +18,7 @@ export class ApiService {
     course: this.baseUrl + 'courses',
     learnresult: this.baseUrl + 'LearResult',
     lecturer: this.baseUrl + 'lecturers',
+    login: this.baseUrl + 'admin/login',
     
     major: this.baseUrl + 'majors',
     

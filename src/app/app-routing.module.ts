@@ -16,10 +16,16 @@ import { ClassroomComponent } from './pages/classroom/classroom.component';
 import { CompanyComponent } from './pages/company/company.component';
 import { SubjectComponent } from './pages/subject/subject.component';
 import { WorktrackComponent } from './pages/worktrack/worktrack.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent,
+  { path: '', component: LoginComponent, data: { title: 'Login Page' }},
+  {
+    path: '', component: DashboardComponent, data: { title: 'Home' },
+    canActivate: [AuthGuard], // linh canh DANG NHAP
   children: [
+    // {path: 'dashboard', component: DashboardComponent},
     {path: 'course', component: CourseComponent},
     {path: 'sptraining', component: SpecializedTrainingComponent},
     {path: 'examinationsubject', component: ExaminationSubjectComponent},
