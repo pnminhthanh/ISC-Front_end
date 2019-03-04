@@ -7,6 +7,7 @@ import { SpecializedTrainingComponent } from './pages/specialized-training/speci
 import { from } from 'rxjs';
 import { LecturerComponent } from './pages/lecturer/lecturer.component';
 import { UniversitymajorComponent } from './pages/universitymajor/universitymajor.component';
+import { StudentComponent } from './pages/student/student.component';
 
 const routes: Routes = [
   {path: '', component: DashboardComponent,
@@ -14,8 +15,9 @@ const routes: Routes = [
     {path: 'user', component: UserComponent},
     {path: 'course', component: CourseComponent},
     {path: 'sptraining', component: SpecializedTrainingComponent},
-    {path: 'lecturers', component: LecturerComponent},
-    {path: 'university', component: UniversitymajorComponent}
+    {path: 'lecturer', component: LecturerComponent},
+    {path: 'university', component: UniversitymajorComponent},
+    {path: 'student', component: StudentComponent}
   ]
   }
 ];

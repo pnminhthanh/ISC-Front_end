@@ -19,7 +19,6 @@ export class LecturerComponent implements OnInit {
   user: User = { gender: 1} as User;
   lecturers: LecturerFull[] = [];
   lecturer: Lecturer = {} as Lecturer;
-  test: string;
 
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;

@@ -4,9 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 
-import { FormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap';
-
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
@@ -16,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SpecializedTrainingComponent } from './pages/specialized-training/specialized-training.component';
 import { LecturerComponent } from './pages/lecturer/lecturer.component';
 import { UniversitymajorComponent } from './pages/universitymajor/universitymajor.component';
+import { StudentComponent } from './pages/student/student.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +24,8 @@ import { UniversitymajorComponent } from './pages/universitymajor/universitymajo
     CourseComponent,
     SpecializedTrainingComponent,
     LecturerComponent,
-    UniversitymajorComponent
+    UniversitymajorComponent,
+    StudentComponent
   ],
   imports: [
     BrowserModule,
