@@ -48,7 +48,7 @@
           </thead>
           
           <tbody id="dataTable">
-            <tr *ngFor="let l of lecturers; let i=index">
+            <tr *ngFor="let l of lecturers | paginate: {itemsPerPage: 10, currentPage: p }; let i=index">
                 <td>{{ i+1 }}</td>
                 <td>{{ l.user.lastname }}</td>
                 <td>{{ l.user.firstname }}</td>
@@ -65,9 +65,13 @@
                 <td>                    
                     <a href="#" (click)="showDeleteModal($event, l.userid)"><i class="fa fa-remove text-danger"></i></a>
                 </td>
-            </tr>              
+            </tr>             
           </tbody>
+                   
       </table>
+      <div class="text-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div> 
     </div>
 </div>
 
@@ -219,9 +223,9 @@
             </div>
             <div class="modal-footer">
                 <div class="row justify-content-between">
-                    <div class="col-sm-2">
+                    <!-- <div class="col-sm-2">
                         <button type="submit" class="btn btn-default" id="btnClear">Clear</button>
-                    </div>
+                    </div> -->
                     <div class="col-sm-4">
                         <button type="submit" class="btn btn-success" id="btnSave" (click)="save()">{{ (user.id === undefined || user.id === 0) ? 'Add':'Save'}}</button>
                     </div>                    

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { Major, MajorService } from '../../services/major.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { University, UniversityService } from 'src/app/services/university.service';
@@ -14,6 +14,10 @@ export class UniversitymajorComponent implements OnInit {
   university: University = {} as University;
   majors: Major[] = [];
   major: Major = {} as Major;
+
+  @Input() id: string;
+  @Input() maxSize: number;
+  @Output() pageChange: EventEmitter<number>;
 
   @ViewChild('uniModal') uniModal: ModalDirective;
   @ViewChild('majorModal') majorModal: ModalDirective;

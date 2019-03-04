@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { LecturersService, Lecturer, LecturerFull } from '../../services/lecturers.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserService, User } from '../../services/user.service';
@@ -19,6 +19,10 @@ export class LecturerComponent implements OnInit {
   user: User = { gender: 1} as User;
   lecturers: LecturerFull[] = [];
   lecturer: Lecturer = {} as Lecturer;
+
+  @Input() id: string;
+  @Input() maxSize: number;
+  @Output() pageChange: EventEmitter<number>;
 
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
