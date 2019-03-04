@@ -63,57 +63,21 @@
                     <table id="datatable" class="display">
                         <thead>
                             <tr>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">#</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Class name</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">First name</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Last name</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Average score</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >#</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Class name</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >First name</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Last name</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Average score</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="sorting_1">1</td>
-                                <td>Database</td>
-                                <td>Tien</td>
-                                <td>Thuan</td>
-                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
+                            <tr *ngFor="let row of learnResults">
+                                <td class="sorting_1">{{row.id}}</td>
+                                <td>{{row.className}}</td>
+                                <td>{{row.firstName}}</td>
+                                <td>{{row.lastName}}</td>
+                                <td>{{row.avgscore}}<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
                             </tr>
-                            <tr>
-                                <td class="sorting_1">2</td>
-                                <td>Database</td>
-                                <td>Minh</td>
-                                <td>Thanh</td>
-                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="sorting_1">3</td>
-                                <td>Database</td>
-                                <td>Tien</td>
-                                <td>Thuan</td>
-                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="sorting_1">4</td>
-                                <td>Database</td>
-                                <td>Tien</td>
-                                <td>Thuan</td>
-                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="sorting_1">5</td>
-                                <td>Database</td>
-                                <td>Tien</td>
-                                <td>Thuan</td>
-                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="sorting_1">6</td>
-                                <td>Database</td>
-                                <td>Tien</td>
-                                <td>Thuan</td>
-                                <td>7.0<a href="#editScore" class="edit" style="margin-left:20px;" data-toggle="modal"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a></td>
-                            </tr>
-
                         </tbody>
                     </table>
                 </div>

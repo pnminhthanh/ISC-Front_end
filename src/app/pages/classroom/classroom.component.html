@@ -43,7 +43,7 @@
                                 <td>{{row.addedperson}}</td>
                                 <td>
                                     <a class="edit" (click)="showModal($event,modalAdd,row.id)"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
-                                    <a  class="delete" (click)="delete($event,row.id)" ><i class="fa fa-trash-o" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
+                                    <a  class="delete" (click)="showModal($event,modalDelete,row.id)" style="margin-left: 20px;"><i class="fa fa-trash-o" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="button" (click)="modalDelete.hide()" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit"  class="btn btn-danger" value="Delete">
+                    <input type="submit" (click)="delete($event,classroom.id)" class="btn btn-danger" value="Delete">
                 </div>
             </form>
         </div>
