@@ -31,8 +31,7 @@ export class CourseComponent implements OnInit {
         console.log(result);
         this.trainings = result.data;
         console.log(this.trainings);
-      }
-    )
+      });
   }
 
   loadData() {

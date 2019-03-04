@@ -14,9 +14,14 @@ import { LearningResultComponent } from './pages/learning-result/learning-result
 import { CourseComponent } from './pages/course/course.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SpecializedTrainingComponent } from './pages/specialized-training/specialized-training.component';
+
+import { ExaminationSubjectComponent } from './pages/examinationsubject/examinationsubject.component';
+import { EntranceTestComponent } from './pages/entrancetest/entrancetest.component';
+
 import { LecturerComponent } from './pages/lecturer/lecturer.component';
 import { UniversitymajorComponent } from './pages/universitymajor/universitymajor.component';
 import { StudentComponent } from './pages/student/student.component';
+
 
 
 @NgModule({
@@ -30,9 +35,14 @@ import { StudentComponent } from './pages/student/student.component';
     LearningResultComponent,
     CourseComponent,
     SpecializedTrainingComponent,
+
+    ExaminationSubjectComponent,
+    EntranceTestComponent,
+
     LecturerComponent,
     UniversitymajorComponent,
     StudentComponent
+
   ],
   imports: [
     BrowserModule,

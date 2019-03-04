@@ -1,0 +1,73 @@
+<h4>Examination Subjects</h4>
+<div class="text-right mb-2" style="margin-bottom: 10px;">
+  <button type="button" class="btn btn-success" (click)="showModal()"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
+</div>
+<table class="table table-light table-hover table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Examination Subject Name</th>
+      <th style="width: 70px;">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of examinationsubjects">
+      <td>{{row.name}}</td>
+      <td>
+        <div class="row">
+          <div class="col-md-3 text-center">
+          <a href="#" (click)="showModal($event, row.id)"><i class="fa fa-edit text-primary"></i></a>
+          </div>
+          <div class="col-md-3 text-center">
+          <a href="#" (click)="showDeleteModal($event, row.id)"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+          </div>
+    </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Confirm</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="deleteModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p> You want to delete this subject ?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="deleteModal.hide()">Cancel</button>
+          <button type="button" (click)="delete()" class="btn btn-success">OK</button>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">New Examination Subject</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label" style="margin-top: 7px;">Examination Subject Name : </label>
+          <div class="col-sm-7">
+              <input type="text" class="form-control" [(ngModel)]="examinationsubject.name" placeholder="Enter Name">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="save()" class="btn btn-success">{{ (examinationsubject.id === undefined || examinationsubject.id === 0) ? 'Add':'Save'}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
