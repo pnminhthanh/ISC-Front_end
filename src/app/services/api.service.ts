@@ -10,5 +10,14 @@ export class ApiService {
   apiUrl = {
     classroom: this.baseUrl + 'classroom',
     learnresult: this.baseUrl + 'LearResult'
+    course: this.baseUrl + 'courses',
+    specializedtraining: this.baseUrl + 'specializedtrainings',
+    lecturer: this.baseUrl + 'lecturers',
+    academic: this.baseUrl + 'academics',
+    degree: this.baseUrl + 'degrees',
+    user: this.baseUrl + 'users',
+    university: this.baseUrl + 'universities',
+    major: this.baseUrl + 'majors'
+
   };
 }

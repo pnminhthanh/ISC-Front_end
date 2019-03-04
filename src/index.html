@@ -32,7 +32,21 @@
     $(document).ready(function () {
         $('#datatable').DataTable();
     });
-  </script>
+    $(document).ready(function () {
+      $('#selectTrainingsinModal').select2({
+          dropdownParent: $("#addCourse")
+      });
+      $('#datepicker').datepicker({
+          autoclose: true
+      });
+  });
+    $('#addCourse').on('shown.bs.modal', function () {
+        $('#datepicker').css('z-index', '2051');
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
+    });
+</script>
 </body>
 
 </html>
