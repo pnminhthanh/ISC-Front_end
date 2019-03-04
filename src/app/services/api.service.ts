@@ -14,7 +14,7 @@ export class ApiService {
     specializedtraining: this.baseUrl + 'specializedtrainings',
 
     examinationsubject: this.baseUrl + 'examinationsubjects',
-    entrancetest: this.baseUrl + 'entrancetests'
+    entrancetest: this.baseUrl + 'entrancetests',
 
     lecturer: this.baseUrl + 'lecturers',
     academic: this.baseUrl + 'academics',

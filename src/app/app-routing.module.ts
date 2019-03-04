@@ -20,7 +20,7 @@ const routes: Routes = [
     {path: 'course', component: CourseComponent},
     {path: 'sptraining', component: SpecializedTrainingComponent},
     {path: 'examinationsubject', component: ExaminationSubjectComponent},
-    {path: 'entrancetest', component: EntranceTestComponent}
+    {path: 'entrancetest', component: EntranceTestComponent},
     {path: 'lecturer', component: LecturerComponent},
     {path: 'university', component: UniversitymajorComponent},
     {path: 'student', component: StudentComponent},

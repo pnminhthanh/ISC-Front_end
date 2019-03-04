@@ -12,7 +12,7 @@ export class EntranceTestComponent implements OnInit {
   entrancetests: EntranceTest[] = [];
   entrancetest: EntranceTest = {} as EntranceTest;
   test: string;
-  courses: Course[];
+  courses: Course[] = [];
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   constructor(private entrancetestService: EntranceTestService, private courseService: CourseService)  {  }
@@ -35,6 +35,9 @@ export class EntranceTestComponent implements OnInit {
     this.entrancetestService.getAll().subscribe(result => {
       this.entrancetests = result.data;
     });
+    this.courseService.getAll().subscribe(result => {
+      this.courses = result.data;
+    });
   }
   showModal(event = null, id: number = 0) {
     if (event) {
@@ -42,6 +45,7 @@ export class EntranceTestComponent implements OnInit {
     }
     if (id > 0) {
       this.entrancetestService.get(id).subscribe(result => {
+        this.entrancetest = result.data;
         this.modal.show();
       });
     } else {
