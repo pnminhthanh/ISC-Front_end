@@ -8,6 +8,8 @@ export class ApiService {
   constructor() { }
   baseUrl = 'https://localhost:44324/api/';
   apiUrl = {
+    classroom: this.baseUrl + 'classroom',
+    learnresult: this.baseUrl + 'LearResult'
     course: this.baseUrl + 'courses',
     specializedtraining: this.baseUrl + 'specializedtrainings',
     lecturer: this.baseUrl + 'lecturers',
@@ -16,5 +18,6 @@ export class ApiService {
     user: this.baseUrl + 'users',
     university: this.baseUrl + 'universities',
     major: this.baseUrl + 'majors'
+
   };
 }
