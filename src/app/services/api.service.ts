@@ -9,6 +9,8 @@ export class ApiService {
   baseUrl = 'https://localhost:44324/api/';
   apiUrl = {
     course: this.baseUrl + 'courses',
-    specializedtraining: this.baseUrl + 'specializedtrainings'
+    specializedtraining: this.baseUrl + 'specializedtrainings',
+    examinationsubject: this.baseUrl + 'examinationsubjects',
+    entrancetest: this.baseUrl + 'entrancetests'
   };
 }

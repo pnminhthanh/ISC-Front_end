@@ -10,6 +10,8 @@ import { UserComponent } from './dashboard/user/user.component';
 import { CourseComponent } from './pages/course/course.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SpecializedTrainingComponent } from './pages/specialized-training/specialized-training.component';
+import { ExaminationSubjectComponent } from './pages/examinationsubject/examinationsubject.component';
+import { EntranceTestComponent } from './pages/entrancetest/entrancetest.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { SpecializedTrainingComponent } from './pages/specialized-training/speci
     UserComponent,
     CourseComponent,
     SpecializedTrainingComponent,
+    ExaminationSubjectComponent,
+    EntranceTestComponent,
   ],
   imports: [
     BrowserModule,
