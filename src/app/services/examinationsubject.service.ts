@@ -6,12 +6,12 @@ import { ApiService } from './api.service';
 export interface ExaminationSubjectsResponse {
   errorCode: number;
   data: ExaminationSubject[];
-  errorMessage: string;
+  Message: string;
 }
 export interface ExaminationSubjectResponse {
   errorCode: number;
   data: ExaminationSubject;
-  errorMessage: string;
+  Message: string;
 }
 export interface ExaminationSubject {
   id: number;
