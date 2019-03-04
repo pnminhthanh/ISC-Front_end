@@ -3,9 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
-
-import { FormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -15,6 +13,8 @@ import { CourseComponent } from './pages/course/course.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SpecializedTrainingComponent } from './pages/specialized-training/specialized-training.component';
 import { LecturerComponent } from './pages/lecturer/lecturer.component';
+import { UniversitymajorComponent } from './pages/universitymajor/universitymajor.component';
+import { StudentComponent } from './pages/student/student.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,9 @@ import { LecturerComponent } from './pages/lecturer/lecturer.component';
     UserComponent,
     CourseComponent,
     SpecializedTrainingComponent,
-    LecturerComponent
+    LecturerComponent,
+    UniversitymajorComponent,
+    StudentComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import { LecturerComponent } from './pages/lecturer/lecturer.component';
     ModalModule,
     HttpClientModule,
     FormsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

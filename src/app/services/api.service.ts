@@ -13,6 +13,8 @@ export class ApiService {
     lecturer: this.baseUrl + 'lecturers',
     academic: this.baseUrl + 'academics',
     degree: this.baseUrl + 'degrees',
-    user: this.baseUrl + 'users'
+    user: this.baseUrl + 'users',
+    university: this.baseUrl + 'universities',
+    major: this.baseUrl + 'majors'
   };
 }
