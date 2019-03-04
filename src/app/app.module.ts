@@ -11,10 +11,6 @@ import { ClassroomComponent} from './pages/classroom/classroom.component';
 import { TimetableComponent } from './pages/timetable/timetable.component';
 import { AddtimetableComponent } from './pages/addtimetable/addtimetable.component';
 import { LearningResultComponent } from './pages/learning-result/learning-result.component';
-import {HttpClientModule} from "@angular/common/http";
-import { ModalModule } from 'ngx-bootstrap';
-import { FormsModule } from '@angular/forms';
-import { UserComponent } from './dashboard/user/user.component';
 import { CourseComponent } from './pages/course/course.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SpecializedTrainingComponent } from './pages/specialized-training/specialized-training.component';
@@ -32,7 +28,6 @@ import { StudentComponent } from './pages/student/student.component';
     TimetableComponent,
     AddtimetableComponent,
     LearningResultComponent,
-    UserComponent,
     CourseComponent,
     SpecializedTrainingComponent,
     LecturerComponent,
