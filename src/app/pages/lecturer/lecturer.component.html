@@ -8,7 +8,7 @@
       <button type="button" class="btn btn-success pull-right" (click)="showModal()">Create</button>      
   </div>
   <div class="box-body">
-      <table datatable class="row-border hover" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
           <thead>
                 <tr>
                     <th>
@@ -47,7 +47,7 @@
                 </tr>
           </thead>
           
-          <tbody id="dataTable">
+          <tbody>
             <tr *ngFor="let l of lecturers; let i=index">
                 <td>{{ i+1 }}</td>
                 <td>{{ l.user.lastname }}</td>
@@ -66,12 +66,8 @@
                     <a href="#" (click)="showDeleteModal($event, l.userid)"><i class="fa fa-remove text-danger"></i></a>
                 </td>
             </tr>             
-          </tbody>
-                   
-      </table>
-      <!-- <div class="text-center">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </div>  -->
+          </tbody>                   
+      </table>      
     </div>
 </div>
 

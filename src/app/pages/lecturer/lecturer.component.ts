@@ -39,7 +39,7 @@ export class LecturerComponent implements OnInit {
   ngOnInit() {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 1
+      pageLength: 10
     };
     this.degreeService.getDegrees().subscribe(result => {
       this.degrees = result.data;
