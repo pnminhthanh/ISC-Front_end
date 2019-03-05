@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/assets/css/dataTables.min.css" />
 <div class="container">
   <div class="row">
     <div class="col-lg-6 col-md-6">
@@ -7,7 +8,7 @@
                 <button type="button" class="btn btn-success pull-right" (click)="showModal('university')">Create</button>      
             </div>
             <div class="box-body">
-                <table class="table table-border">
+                <table datatable class="row-border hover">
                     <thead>
                           <tr>
                               <th>
@@ -23,7 +24,8 @@
                     </thead>
                     
                     <tbody id="dataTable">
-                      <tr *ngFor="let u of universities | paginate: { itemsPerPage: 10, currentPage: p1, id: 'university' }; let i=index">
+                      <tr *ngFor="let u of universities; let i=index">
+                          <!-- <tr *ngFor="let u of universities | paginate: { itemsPerPage: 10, currentPage: p1, id: 'university' }; let i=index"> -->
                           <td>{{ i+1 }}</td>
                           <td>{{ u.name }}</td>
                           <td>                    
@@ -35,9 +37,9 @@
                       </tr>              
                     </tbody>
                 </table>
-                <div class="text-center">
+                <!-- <div class="text-center">
                   <pagination-controls (pageChange)="p1 = $event" id="university"></pagination-controls>
-                </div> 
+                </div>  -->
               </div>
           </div>
                             
@@ -72,7 +74,7 @@
                 <button type="button" class="btn btn-success pull-right" (click)="showModal('major')">Create</button>      
             </div>
             <div class="box-body">
-                <table class="table table-border">
+                <table datatable class="row-border hover">
                     <thead>
                           <tr>
                               <th>
@@ -88,7 +90,7 @@
                     </thead>
                     
                     <tbody id="dataTable">
-                      <tr *ngFor="let m of majors | paginate: { itemsPerPage: 1, currentPage: p2, id: 'major' }; let i=index">
+                      <tr *ngFor="let m of majors; let i=index">
                           <td>{{ i+1 }}</td>
                           <td>{{ m.name }}</td>
                           <td>                    
@@ -100,9 +102,9 @@
                       </tr>              
                     </tbody>
                 </table>
-                <div class="text-center">
+                <!-- <div class="text-center">
                   <pagination-controls (pageChange)="p2 = $event" id="major"></pagination-controls>
-                </div>
+                </div> -->
               </div>
           </div>
 

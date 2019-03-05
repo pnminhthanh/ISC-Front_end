@@ -24,13 +24,6 @@ export interface University {
 })
 export class UniversityService {
 
-  endpoint = 'https://localhost:44324/api/';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    }),
-  };
-
   constructor(private http: HttpClient, private apiService: ApiService) { }
 
   getUniversities(): Observable<UniversitysResponse> {
@@ -43,16 +36,16 @@ export class UniversityService {
   }
 
   addUniversity(university: University): Observable<UniversityResponse> {
-    return this.http.post<UniversityResponse>(this.apiService.apiUrl.university, JSON.stringify(university), this.httpOptions);
+    return this.http.post<UniversityResponse>(this.apiService.apiUrl.university, university);
   }
 
   updateUniversity(university: University): Observable<UniversityResponse> {
     const url = `${this.apiService.apiUrl.university}/${university.id}`;
-    return this.http.put<UniversityResponse>(url, JSON.stringify(university), this.httpOptions);
+    return this.http.put<UniversityResponse>(url, university);
   }
 
   deleteUniversity(id): Observable<UniversityResponse> {
     const url = `${this.apiService.apiUrl.university}/${id}`;
-    return this.http.delete<UniversityResponse>(url, this.httpOptions);
+    return this.http.delete<UniversityResponse>(url);
   }
 }

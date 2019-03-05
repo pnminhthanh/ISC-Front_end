@@ -18,8 +18,8 @@ export class CourseComponent implements OnInit {
   trainings: SpecialiazedTraining[] = [];
 
   @ViewChild('modal') modal: ModalDirective;
-  constructor(private courseService: CourseService, private modalService: BsModalService
-    , private trainingService: SpecializedTrainingService, private datetimeService: DatetimeService) { }
+  constructor(private courseService: CourseService, private modalService: BsModalService,
+              private trainingService: SpecializedTrainingService, private datetimeService: DatetimeService) { }
   ngOnInit() {
     this.courseService.getAll().subscribe(
       result => {

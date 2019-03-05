@@ -8,7 +8,7 @@
       <button type="button" class="btn btn-success pull-right" (click)="showModal()">Create</button>      
   </div>
   <div class="box-body">
-      <table class="table table-border">
+      <table datatable class="row-border hover" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
           <thead>
                 <tr>
                     <th>
@@ -48,7 +48,7 @@
           </thead>
           
           <tbody id="dataTable">
-            <tr *ngFor="let l of lecturers | paginate: {itemsPerPage: 10, currentPage: p }; let i=index">
+            <tr *ngFor="let l of lecturers; let i=index">
                 <td>{{ i+1 }}</td>
                 <td>{{ l.user.lastname }}</td>
                 <td>{{ l.user.firstname }}</td>
@@ -69,9 +69,9 @@
           </tbody>
                    
       </table>
-      <div class="text-center">
+      <!-- <div class="text-center">
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </div> 
+      </div>  -->
     </div>
 </div>
 

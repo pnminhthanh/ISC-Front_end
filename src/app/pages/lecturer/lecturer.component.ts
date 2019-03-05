@@ -5,6 +5,7 @@ import { UserService, User } from '../../services/user.service';
 import { DegreeService, Degree } from '../../services/degree.service';
 import { AcademicService, Academic } from '../../services/academic.service';
 import { DatetimeService } from '../../services/datetime.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-lecturer',
@@ -14,15 +15,19 @@ import { DatetimeService } from '../../services/datetime.service';
 
 export class LecturerComponent implements OnInit {
 
+  dtOptions: DataTables.Settings = {};
+
   degrees: Degree[] = [];
   academics: Academic[] = [];
   user: User = { gender: 1} as User;
   lecturers: LecturerFull[] = [];
   lecturer: Lecturer = {} as Lecturer;
 
-  @Input() id: string;
-  @Input() maxSize: number;
-  @Output() pageChange: EventEmitter<number>;
+  dtTrigger: Subject<any> = new Subject();
+
+  // @Input() id: string;
+  // @Input() maxSize: number;
+  // @Output() pageChange: EventEmitter<number>;
 
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
@@ -32,6 +37,10 @@ export class LecturerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 1
+    };
     this.degreeService.getDegrees().subscribe(result => {
       this.degrees = result.data;
       console.log(result.data);
@@ -41,6 +50,12 @@ export class LecturerComponent implements OnInit {
       console.log(result.data);
     });
     this.loadData();
+  }
+
+// tslint:disable-next-line: use-life-cycle-interface
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 
   showModal(event = null, id: number = 0) {
@@ -74,6 +89,7 @@ export class LecturerComponent implements OnInit {
   loadData() {
     this.lecturerService.getLecturers().subscribe(result => {
       this.lecturers = result.data;
+      this.dtTrigger.next();
       console.log(this.lecturers);
     });
   }
@@ -82,6 +98,7 @@ export class LecturerComponent implements OnInit {
     if (this.lecturer.userid === undefined || this.lecturer.userid === 0) {
       this.user.isStudent = false;
       this.userService.addUser(this.user).subscribe(result => {
+        console.log(result);
         this.lecturer.usE_USERID = result.data.id;
         this.lecturerService.addLecturer(this.lecturer).subscribe(aresult => {
           this.modal.hide();
