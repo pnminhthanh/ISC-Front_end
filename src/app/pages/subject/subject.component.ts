@@ -19,6 +19,7 @@ export class SubjectComponent implements OnInit {
     this.loadData();
   }
   loadData() { this.subjectService.getAll().subscribe(result => { this.subjects = result.data; }); }
+
   showModal(event = null, modal: ModalDirective, id: number = 0) {
     if (event) {
       event.preventDefault();
@@ -33,8 +34,15 @@ export class SubjectComponent implements OnInit {
       modal.show();
     }
   }
+
+  showDeleteModal(event, id) {
+    this.subject.subjectId = id;
+    event.preventDefault();
+    this.modalDelete.show();
+  }
+
   save() {
-    if (this.subject.subjectid === undefined || this.subject.subjectid === 0) {
+    if (this.subject.subjectId === undefined || this.subject.subjectId === 0) {
       this.subjectService.add(this.subject).subscribe(result => {
         this.modalAdd.hide();
         this.loadData();
@@ -46,11 +54,12 @@ export class SubjectComponent implements OnInit {
       });
     }
   }
-  delete(event = null, id) {
+  delete(event = null) {
     event.preventDefault();
-    this.subjectService.delete(id).subscribe(result => {
+    console.log(this.subject);
+    this.subjectService.delete(this.subject.subjectId).subscribe(result => {
       if (result.errorCode === 0) {
-        const deleteSubject = this.subjects.find(x => x.subjectid === id);
+        const deleteSubject = this.subjects.find(x => x.subjectId === this.subject.subjectId);
         if (deleteSubject) {
           const index = this.subjects.indexOf(deleteSubject);
           this.subjects.splice(index, 1);

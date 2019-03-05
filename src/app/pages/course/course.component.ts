@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective, BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Course, CourseService } from 'src/app/services/course.service';
 import { SpecialiazedTraining, SpecializedTrainingService } from 'src/app/services/specialized-training.service';
+import { DatetimeService } from 'src/app/services/datetime.service';
 
 @Component({
   selector: 'app-course',
@@ -18,7 +19,7 @@ export class CourseComponent implements OnInit {
 
   @ViewChild('modal') modal: ModalDirective;
   constructor(private courseService: CourseService, private modalService: BsModalService
-    , private trainingService: SpecializedTrainingService) { }
+    , private trainingService: SpecializedTrainingService, private datetimeService: DatetimeService) { }
   ngOnInit() {
     this.courseService.getAll().subscribe(
       result => {
@@ -50,6 +51,8 @@ export class CourseComponent implements OnInit {
     if (Id > 0) {
       this.courseService.get(Id).subscribe( result => {
         this.course = result.data;
+        this.course.enddate = this.datetimeService.formatDatetimeData(this.course.enddate);
+        this.course.startdate = this.datetimeService.formatDatetimeData(this.course.startdate);
         this.modal.show();
       });
     } else {

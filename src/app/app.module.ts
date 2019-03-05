@@ -27,6 +27,8 @@ import { WorktrackComponent } from './pages/worktrack/worktrack.component';
 import { AuthGuard } from './auth.guard';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { CookieService } from 'ngx-cookie-service';
+import { DataTablesModule } from 'angular-datatables';
+import { Select2Module } from 'ng2-select2';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { CookieService } from 'ngx-cookie-service';
     HttpClientModule,
     FormsModule,
     ModalModule.forRoot(),
-    NgxPaginationModule
+    NgxPaginationModule,
+    DataTablesModule,
+    Select2Module
   ],
   providers: [
     {

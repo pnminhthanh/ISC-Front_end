@@ -14,7 +14,7 @@ export interface SubjectResponse {
   errorMessage: string;
 }
 export interface Subject {
-  subjectid: number;
+  subjectId: number;
   subjectname: string;
   numberlesson: number;
 }
@@ -31,11 +31,12 @@ export class SubjectService {
     return this.http.get<SubjectResponse>(`${this.api.apiUrl.subjects}/${id}`);
   }
   add(data: Subject): Observable<SubjectResponse> {
+    console.log(data);
     return this.http.post<SubjectResponse>(this.api.apiUrl.subjects, data);
   }
   update(data: Subject): Observable<SubjectResponse> {
     // const url = this.api.apiUrl.major + '?id=' + data.id;
-    const url = `${this.api.apiUrl.subjects}/${data.subjectid}`;
+    const url = `${this.api.apiUrl.subjects}/${data.subjectId}`;
     return this.http.put<SubjectResponse>(url, data);
   }
   delete(id): Observable<SubjectResponse> {
