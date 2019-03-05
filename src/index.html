@@ -29,16 +29,14 @@
   <script type="text/javascript" src="/assets/admin-lte/bower_component/select2/dist/js/select2.js"></script>
   <script src="/assets/js/dataTables.min.js"></script>
   <script>
-    $(document).ready(function () {
-        $('#datatable').DataTable();
-    });
+    // $(document).ready(function () {
+    //     $('#datatable').DataTable();
+    // });
     $(document).ready(function () {
       $('#selectTrainingsinModal').select2({
           dropdownParent: $("#addCourse")
       });
-      $('#datepicker').datepicker({
-          autoclose: true
-      });
+      
   });
     $('#addCourse').on('shown.bs.modal', function () {
         $('#datepicker').css('z-index', '2051');
