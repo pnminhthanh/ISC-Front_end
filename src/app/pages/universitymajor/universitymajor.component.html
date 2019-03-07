@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="/assets/css/dataTables.min.css" />
 <div class="container">
   <div class="row">
     <div class="col-lg-6 col-md-6">
@@ -8,7 +7,7 @@
                 <button type="button" class="btn btn-success pull-right" (click)="showModal('university', uniForm)"><i class="fa fa-plus"></i> <span>Add new university</span></button>      
             </div>
             <div class="box-body">
-                <table id="uniDatatable" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" datatable class="row-border hover">
+                <table id="uniDatatable" [dtOptions]="dtOptions[0]" [dtTrigger]="dtTriggers[0]" datatable class="row-border hover">
                     <thead>
                           <tr>
                               <th>
@@ -75,7 +74,7 @@
                 <button type="button" class="btn btn-success pull-right" (click)="showModal('major', majorForm)"><i class="fa fa-plus"></i> <span>Add new major</span></button>      
             </div>
             <div class="box-body">
-                <table id="majorDatatable" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" datatable class="row-border hover">
+                <table id="majorDatatable" [dtOptions]="dtOptions[1]" [dtTrigger]="dtTriggers[1]" datatable class="row-border hover">
                     <thead>
                           <tr>
                               <th>

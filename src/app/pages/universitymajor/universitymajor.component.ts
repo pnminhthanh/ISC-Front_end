@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { Major, MajorService } from '../../services/major.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { University, UniversityService } from 'src/app/services/university.service';
@@ -18,9 +18,9 @@ export class UniversitymajorComponent implements OnInit {
   majors: Major[] = [];
   major: Major = {} as Major;
 
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
-  @ViewChild(DataTableDirective) dtElements: QueryList<DataTableDirective>;
+  dtOptions: DataTables.Settings[] = [];
+  dtTriggers: Subject<any>[] = [];
+  @ViewChildren(DataTableDirective) dtElements: DataTableDirective[] = [];
 
   @ViewChild('uniModal') uniModal: ModalDirective;
   @ViewChild('majorModal') majorModal: ModalDirective;
@@ -30,28 +30,37 @@ export class UniversitymajorComponent implements OnInit {
   constructor(private majorService: MajorService, private universityService: UniversityService) { }
 
   ngOnInit() {
-    this.dtOptions = {
+    this.dtOptions[0] = {
       pagingType: 'full_numbers',
       pageLength: 10
     };
+    this.dtOptions[1] = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+    this.dtTriggers[0] = new Subject();
+    this.dtTriggers[1] = new Subject();
     this.loadData();
   }
 
   // tslint:disable-next-line: use-life-cycle-interface
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
+    this.dtTriggers.forEach((dtTrigger: Subject<any>, index: number) => {
+      dtTrigger.unsubscribe();
+    });
   }
 
   loadData() {
     this.universityService.getUniversities().subscribe(result => {
-      console.log(this.universities);
       this.universities = result.data;
+      this.rerender();
     });
     this.majorService.getMajors().subscribe(result => {
       this.majors = result.data;
+      this.rerender();
     });
-    this.rerender();
+    // this.rerender();
   }
 
   showModal(kind: string, form: NgForm, event = null, id: number = 0) {
@@ -151,13 +160,18 @@ export class UniversitymajorComponent implements OnInit {
     this.object.nativeElement.value = '';
   }
 
-  // tslint:disable-next-line: use-life-cycle-interface
-  ngAfterViewInit(): void {this.dtTrigger.next(); }
+// tslint:disable-next-line: use-life-cycle-interface
+  ngAfterViewInit(): void {
+    this.dtTriggers.forEach((dtTrigger: Subject<any>, index: number) => {
+      dtTrigger.next();
+    });
+  }
 
   rerender(): void {
-    this.dtElements.forEach((dtElement: DataTableDirective, index: number) => {dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.dtTrigger.next();
+    this.dtElements.forEach((dtElement: DataTableDirective, index: number) => {
+      dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTriggers[index].next();
       });
     });
   }
