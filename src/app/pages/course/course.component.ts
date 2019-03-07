@@ -18,6 +18,8 @@ export class CourseComponent implements OnInit {
   trainings: SpecialiazedTraining[] = [];
 
   @ViewChild('modal') modal: ModalDirective;
+  @ViewChild('deleteModal') deleteModal: ModalDirective;
+  
   constructor(private courseService: CourseService, private modalService: BsModalService
     , private trainingService: SpecializedTrainingService, private datetimeService: DatetimeService) { }
   ngOnInit() {
@@ -76,17 +78,24 @@ export class CourseComponent implements OnInit {
     }
   }
 
-  delete(event = null, Id) {
+  showDeleteModal(event, id) {
+    this.course.courseId = id;
     event.preventDefault();
-    this.courseService.delete(Id).subscribe(result => {
-      const deletedMajor = this.courses.find(x => x.courseId === Id);
+    this.deleteModal.show();
+  }
+
+  delete(event = null) {
+    event.preventDefault();
+    this.courseService.delete(this.course.courseId).subscribe(result => {
+      const deletedCourse = this.courses.find(x => x.courseId === this.course.courseId);
       if (result.errorCode === 0) {
-        const index = this.courses.indexOf(deletedMajor);
-        if (deletedMajor) {
+        const index = this.courses.indexOf(deletedCourse);
+        if (deletedCourse) {
           this.courses.splice(index);
         }
       }
     });
+    this.deleteModal.hide();
     this.loadData();
   }
 }
