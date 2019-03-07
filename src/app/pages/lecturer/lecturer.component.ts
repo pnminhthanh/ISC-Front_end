@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LecturersService, Lecturer, LecturerFull } from '../../services/lecturers.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserService, User } from '../../services/user.service';
@@ -6,6 +6,8 @@ import { DegreeService, Degree } from '../../services/degree.service';
 import { AcademicService, Academic } from '../../services/academic.service';
 import { DatetimeService } from '../../services/datetime.service';
 import { Subject } from 'rxjs';
+import { NgForm } from '@angular/forms';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-lecturer',
@@ -15,19 +17,15 @@ import { Subject } from 'rxjs';
 
 export class LecturerComponent implements OnInit {
 
-  dtOptions: DataTables.Settings = {};
-
   degrees: Degree[] = [];
   academics: Academic[] = [];
-  user: User = { gender: 1} as User;
+  user: User = {} as User;
   lecturers: LecturerFull[] = [];
   lecturer: Lecturer = {} as Lecturer;
 
+  dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
-
-  // @Input() id: string;
-  // @Input() maxSize: number;
-  // @Output() pageChange: EventEmitter<number>;
+  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
 
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
@@ -58,10 +56,11 @@ export class LecturerComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  showModal(event = null, id: number = 0) {
+  showModal(form: NgForm, event = null, id: number = 0) {
     if (event) {
       event.preventDefault();
     }
+    form.reset();
 
     if (id > 0) {
       this.lecturerService.getLecturer(id).subscribe(result => {
@@ -76,6 +75,7 @@ export class LecturerComponent implements OnInit {
       });
     } else {
       this.lecturer = {} as Lecturer;
+      this.user = {gender: 1} as User;
       this.modal.show();
     }
   }
@@ -89,8 +89,7 @@ export class LecturerComponent implements OnInit {
   loadData() {
     this.lecturerService.getLecturers().subscribe(result => {
       this.lecturers = result.data;
-      this.dtTrigger.next();
-      console.log(this.lecturers);
+      this.rerender();
     });
   }
 
@@ -113,8 +112,7 @@ export class LecturerComponent implements OnInit {
           this.modal.hide();
           this.loadData();
         });
-      }
-      );
+      });
     }
   }
 
@@ -129,5 +127,15 @@ export class LecturerComponent implements OnInit {
         this.deleteModal.hide();
       }
     });
+  }
+
+// tslint:disable-next-line: use-life-cycle-interface
+  ngAfterViewInit(): void {this.dtTrigger.next(); }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+       dtInstance.destroy();
+       this.dtTrigger.next();
+   });
   }
 }

@@ -5,7 +5,7 @@
 <div class="box">
   <div class="box-header with-border">
       <h3 class="box-title">Lecturer Table</h3>
-      <button type="button" class="btn btn-success pull-right" (click)="showModal()">Create</button>      
+      <button type="button" class="btn btn-success pull-right" (click)="showModal(lecturerForm)"><i class="fa fa-plus"></i> <span>Add new lecturer</span></button>      
   </div>
   <div class="box-body">
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
@@ -44,6 +44,9 @@
                     <th>
         
                     </th>
+                    <th>
+
+                    </th>
                 </tr>
           </thead>
           
@@ -60,7 +63,7 @@
                 <td>{{ l.user.email }}</td>
                 <td>{{ l.user.phone }}</td>
                 <td>                    
-                    <a href="#" (click)="showModal($event, l.userid)"><i class="fa fa-edit text-primary"></i></a>
+                    <a href="#" (click)="showModal(lecturerForm, $event, l.userid)"><i class="fa fa-edit text-primary"></i></a>
                 </td>
                 <td>                    
                     <a href="#" (click)="showDeleteModal($event, l.userid)"><i class="fa fa-remove text-danger"></i></a>
@@ -72,7 +75,7 @@
 </div>
 
 <div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog-centered modal-width">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                     <button type="button" class="close pull-right" aria-label="Close" (click)="modal.hide()">
@@ -111,7 +114,7 @@
                                         <label for="gender" class="col-sm-2 col-md-3 col control-p">Gender</label>
                 
                                         <div class="col-sm-10 col-md-9">
-                                            <input type="radio" name="gender" [value]="1" [(ngModel)]="user.gender" checked="checked"> Male
+                                            <input type="radio" name="gender" [value]="1" [(ngModel)]="user.gender"> Male
                                             <input type="radio" name="gender" [value]="2" [(ngModel)]="user.gender"> Female
                                         </div>
                                     </div>
@@ -218,14 +221,13 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <div class="row justify-content-between">
-                    <!-- <div class="col-sm-2">
+                <!-- <div class="row justify-content-between">
+                    <div class="col-sm-2">
                         <button type="submit" class="btn btn-default" id="btnClear">Clear</button>
-                    </div> -->
-                    <div class="col-sm-4">
-                        <button type="submit" class="btn btn-success" id="btnSave" (click)="save()">{{ (user.id === undefined || user.id === 0) ? 'Add':'Save'}}</button>
-                    </div>                    
-                </div>                
+                    </div>
+                    
+                </div>                 -->
+                <button type="submit" class="btn btn-success" id="btnSave" (click)="save()">{{ (user.id === undefined || user.id === 0) ? 'Add':'Save'}}</button>                   
             </div>
         </div>
     </div>
@@ -244,8 +246,8 @@
           <p>Are you sure you want to delete?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" (click)="deleteModal.hide()">No</button>
-          <button type="button" (click)="delete()" class="btn btn-danger">Yes</button>
+          <button type="button" class="btn btn-danger btn-cancel" (click)="deleteModal.hide()">Cancel</button>
+          <button type="button" class="btn btn-success" (click)="delete()">Delete</button>
         </div>
       </div>
   </div>

@@ -1,7 +1,10 @@
-import { Component, OnInit, TemplateRef, ViewChild, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, QueryList } from '@angular/core';
 import { Major, MajorService } from '../../services/major.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { University, UniversityService } from 'src/app/services/university.service';
+import { Subject } from 'rxjs';
+import { NgForm } from '@angular/forms';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-universitymajor',
@@ -15,9 +18,9 @@ export class UniversitymajorComponent implements OnInit {
   majors: Major[] = [];
   major: Major = {} as Major;
 
-  @Input() id: string;
-  @Input() maxSize: number;
-  @Output() pageChange: EventEmitter<number>;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  @ViewChild(DataTableDirective) dtElements: QueryList<DataTableDirective>;
 
   @ViewChild('uniModal') uniModal: ModalDirective;
   @ViewChild('majorModal') majorModal: ModalDirective;
@@ -27,7 +30,17 @@ export class UniversitymajorComponent implements OnInit {
   constructor(private majorService: MajorService, private universityService: UniversityService) { }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
     this.loadData();
+  }
+
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 
   loadData() {
@@ -38,12 +51,15 @@ export class UniversitymajorComponent implements OnInit {
     this.majorService.getMajors().subscribe(result => {
       this.majors = result.data;
     });
+    this.rerender();
   }
 
-  showModal(kind: string, event = null, id: number = 0) {
+  showModal(kind: string, form: NgForm, event = null, id: number = 0) {
     if (event) {
       event.preventDefault();
     }
+    form.reset();
+
     if (id > 0) {
       if (kind === 'university') {
         this.universityService.getUniversity(id).subscribe(result => {
@@ -133,5 +149,16 @@ export class UniversitymajorComponent implements OnInit {
     }
     this.deleteModal.hide();
     this.object.nativeElement.value = '';
+  }
+
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngAfterViewInit(): void {this.dtTrigger.next(); }
+
+  rerender(): void {
+    this.dtElements.forEach((dtElement: DataTableDirective, index: number) => {dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
+      });
+    });
   }
 }
