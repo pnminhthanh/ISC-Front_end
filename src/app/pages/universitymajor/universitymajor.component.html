@@ -4,10 +4,10 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">University Table</h3>
-                <button type="button" class="btn btn-success pull-right" (click)="showModal('university')">Create</button>      
+                <button type="button" class="btn btn-success pull-right" (click)="showModal('university', uniForm)"><i class="fa fa-plus"></i> <span>Add new university</span></button>      
             </div>
             <div class="box-body">
-                <table class="table table-border">
+                <table id="uniDatatable" [dtOptions]="dtOptions[0]" [dtTrigger]="dtTriggers[0]" datatable class="row-border hover">
                     <thead>
                           <tr>
                               <th>
@@ -19,11 +19,14 @@
                               <th>
                   
                               </th>
+                              <th>
+
+                              </th>
                           </tr>
                     </thead>
                     
-                    <tbody id="dataTable">
-                      <tr *ngFor="let u of universities | paginate: { itemsPerPage: 10, currentPage: p1, id: 'university' }; let i=index">
+                    <tbody>
+                      <tr *ngFor="let u of universities; let i=index">
                           <td>{{ i+1 }}</td>
                           <td>{{ u.name }}</td>
                           <td>                    
@@ -35,9 +38,6 @@
                       </tr>              
                     </tbody>
                 </table>
-                <div class="text-center">
-                  <pagination-controls (pageChange)="p1 = $event" id="university"></pagination-controls>
-                </div> 
               </div>
           </div>
                             
@@ -51,12 +51,14 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">University name</label>
-                <div class="col-sm-9">
-                  <input required type="text" class="form-control" [(ngModel)]="university.name" placeholder="name">
+              <form #uniForm="ngForm">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">University name</label>
+                  <div class="col-sm-9">
+                    <input required type="text" class="form-control" [(ngModel)]="university.name" name="name" placeholder="name">
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
             <div class="modal-footer">
               <button type="button" (click)="save('university')" class="btn btn-success">{{ (university.id === undefined || university.id === 0) ? 'Add':'Save'}}</button>
@@ -69,10 +71,10 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Major Table</h3>
-                <button type="button" class="btn btn-success pull-right" (click)="showModal('major')">Create</button>      
+                <button type="button" class="btn btn-success pull-right" (click)="showModal('major', majorForm)"><i class="fa fa-plus"></i> <span>Add new major</span></button>      
             </div>
             <div class="box-body">
-                <table class="table table-border">
+                <table id="majorDatatable" [dtOptions]="dtOptions[1]" [dtTrigger]="dtTriggers[1]" datatable class="row-border hover">
                     <thead>
                           <tr>
                               <th>
@@ -84,11 +86,14 @@
                               <th>
                   
                               </th>
+                              <th>
+
+                              </th>
                           </tr>
                     </thead>
                     
-                    <tbody id="dataTable">
-                      <tr *ngFor="let m of majors | paginate: { itemsPerPage: 1, currentPage: p2, id: 'major' }; let i=index">
+                    <tbody>
+                      <tr *ngFor="let m of majors; let i=index">
                           <td>{{ i+1 }}</td>
                           <td>{{ m.name }}</td>
                           <td>                    
@@ -100,9 +105,6 @@
                       </tr>              
                     </tbody>
                 </table>
-                <div class="text-center">
-                  <pagination-controls (pageChange)="p2 = $event" id="major"></pagination-controls>
-                </div>
               </div>
           </div>
 
@@ -120,8 +122,8 @@
               <p>Are you sure you want to delete?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" (click)="deleteModal.hide()">No</button>
-              <button type="button" (click)="delete()" class="btn btn-danger">Yes</button>
+              <button type="button" class="btn btn-danger btn-cancel" (click)="deleteModal.hide()">Cancel</button>
+              <button type="button" class="btn btn-success" (click)="delete()">Delete</button>
             </div>
           </div>
         </div>
@@ -137,12 +139,14 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Major name</label>
-                <div class="col-sm-9">
-                  <input required type="text" class="form-control" [(ngModel)]="major.name" placeholder="name">
+              <form #majorForm="ngForm">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Major name</label>
+                  <div class="col-sm-9">
+                    <input required type="text" class="form-control" [(ngModel)]="major.name" name="name" placeholder="name">
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
             <div class="modal-footer">
               <button type="button" (click)="save('major')" class="btn btn-success">{{ (major.id === undefined || major.id === 0) ? 'Add':'Save'}}</button>

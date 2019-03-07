@@ -44,16 +44,16 @@ export class DegreeService {
 
   addDegree(degree: Degree): Observable<DegreeResponse> {
     console.log(degree);
-    return this.http.post<DegreeResponse>(this.apiService.apiUrl.degree, JSON.stringify(degree), this.httpOptions);
+    return this.http.post<DegreeResponse>(this.apiService.apiUrl.degree, degree);
   }
 
   updateDegree(degree: Degree): Observable<DegreeResponse> {
     const url = `${this.apiService.apiUrl.academic}/${degree.id}`;
-    return this.http.put<DegreeResponse>(url, JSON.stringify(degree), this.httpOptions);
+    return this.http.put<DegreeResponse>(url, degree);
   }
 
   deleteDegree(id): Observable<DegreeResponse> {
     const url = `${this.apiService.apiUrl.degree}/${id}`;
-    return this.http.delete<DegreeResponse>(url, this.httpOptions);
+    return this.http.delete<DegreeResponse>(url);
   }
 }

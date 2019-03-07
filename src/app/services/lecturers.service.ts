@@ -65,16 +65,16 @@ export class LecturersService {
 
   addLecturer(lecturer: Lecturer): Observable<LecturerResponse> {
     console.log(lecturer);
-    return this.http.post<LecturerResponse>(this.apiService.apiUrl.lecturer, JSON.stringify(lecturer), this.httpOptions);
+    return this.http.post<LecturerResponse>(this.apiService.apiUrl.lecturer, lecturer);
   }
 
   updateLecturer(lecturer: Lecturer): Observable<LecturerResponse> {
     const url = `${this.apiService.apiUrl.academic}/${lecturer.userid}`;
-    return this.http.put<LecturerResponse>(url, JSON.stringify(lecturer), this.httpOptions);
+    return this.http.put<LecturerResponse>(url, lecturer);
   }
 
   deleteLecturer(id): Observable<LecturerResponse> {
     const url = `${this.apiService.apiUrl.lecturer}/${id}`;
-    return this.http.delete<LecturerResponse>(url, this.httpOptions);
+    return this.http.delete<LecturerResponse>(url);
   }
 }
