@@ -44,16 +44,16 @@ export class MajorService {
 
   addMajor(major: Major): Observable<MajorResponse> {
     console.log(major);
-    return this.http.post<MajorResponse>(this.apiService.apiUrl.major, JSON.stringify(major), this.httpOptions);
+    return this.http.post<MajorResponse>(this.apiService.apiUrl.major, major);
   }
 
   updateMajor(major: Major): Observable<MajorResponse> {
     const url = `${this.apiService.apiUrl.major}/${major.id}`;
-    return this.http.put<MajorResponse>(url, JSON.stringify(major), this.httpOptions);
+    return this.http.put<MajorResponse>(url, major);
   }
 
   deleteMajor(id): Observable<MajorResponse> {
     const url = `${this.apiService.apiUrl.major}/${id}`;
-    return this.http.delete<MajorResponse>(url, this.httpOptions);
+    return this.http.delete<MajorResponse>(url);
   }
 }
