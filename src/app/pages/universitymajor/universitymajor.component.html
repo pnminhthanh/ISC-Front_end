@@ -30,7 +30,7 @@
                         <td>{{ i+1 }}</td>
                         <td>{{ u.name }}</td>
                         <td>                    
-                            <a href="#" (click)="showModal('university', $event, u.id)"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="#" (click)="showModal('university', uniForm, $event, u.id)"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                         <td>                    
                             <a href="#" (click)="showDeleteModal('university', $event, u.id)"><i class="fa fa-remove text-danger"></i></a>
@@ -97,7 +97,7 @@
                         <td>{{ i+1 }}</td>
                         <td>{{ m.name }}</td>
                         <td>                    
-                            <a href="#" (click)="showModal('major', $event, m.id)"><i class="fa fa-edit text-primary"></i></a>
+                            <a href="#" (click)="showModal('major', majorForm, $event, m.id)"><i class="fa fa-edit text-primary"></i></a>
                         </td>
                         <td>                    
                             <a href="#" (click)="showDeleteModal('major', $event, m.id)"><i class="fa fa-remove text-danger"></i></a>
@@ -122,8 +122,8 @@
             <p>Are you sure you want to delete?</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger btn-cancel" (click)="deleteModal.hide()">Cancel</button>
-            <button type="button" class="btn btn-success" (click)="delete()">Delete</button>
+            <button type="button" class="btn btn-light btn-cancel" (click)="deleteModal.hide()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
           </div>
         </div>
       </div>
