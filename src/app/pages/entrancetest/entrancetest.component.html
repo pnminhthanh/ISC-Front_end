@@ -2,17 +2,19 @@
 <div class="text-right mb-2" style="margin-bottom: 10px;">
   <button type="button" class="btn btn-success" (click)="showModal()"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
 </div>
-<table class="table table-light table-hover table-bordered table-striped">
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
   <thead>
     <tr>
       <th>Course ID</th>
+      <th>Course Name</th>
       <th>Test Date</th>
       <th style="width: 70px;">Options</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let row of entrancetests">
-      <td>{{row.coureName}}</td>
+      <td>{{row.courseid}}</td>
+      <td>{{row.courseName}}</td>
       <td>{{row.testdate | date : 'dd-MM-yyyy'}}</td>
       <td>
         <div class="row">

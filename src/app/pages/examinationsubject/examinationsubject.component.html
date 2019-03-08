@@ -2,7 +2,7 @@
 <div class="text-right mb-2" style="margin-bottom: 10px;">
   <button type="button" class="btn btn-success" (click)="showModal()"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
 </div>
-<table class="table table-light table-hover table-bordered table-striped">
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
   <thead>
     <tr>
       <th>Examination Subject Name</th>
@@ -64,10 +64,9 @@
         </div>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.hide()">Cancel</button>
         <button type="button" (click)="save()" class="btn btn-success">{{ (examinationsubject.id === undefined || examinationsubject.id === 0) ? 'Add':'Save'}}</button>
       </div>
     </div>
   </div>
 </div>
-
-

@@ -17,7 +17,7 @@ export interface EntranceTest {
   id: number;
   courseid: number;
   testdate: Date;
-  coureName: string;
+  courseName: string;
 }
 @Injectable({
   providedIn: 'root'
