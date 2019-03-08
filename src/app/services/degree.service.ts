@@ -48,7 +48,7 @@ export class DegreeService {
   }
 
   updateDegree(degree: Degree): Observable<DegreeResponse> {
-    const url = `${this.apiService.apiUrl.academic}/${degree.id}`;
+    const url = `${this.apiService.apiUrl.degree}/${degree.id}`;
     return this.http.put<DegreeResponse>(url, degree);
   }
 
