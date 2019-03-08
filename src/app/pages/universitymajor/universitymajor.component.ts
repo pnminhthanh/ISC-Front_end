@@ -5,6 +5,7 @@ import { University, UniversityService } from 'src/app/services/university.servi
 import { Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-universitymajor',
@@ -18,6 +19,9 @@ export class UniversitymajorComponent implements OnInit {
   majors: Major[] = [];
   major: Major = {} as Major;
 
+  private alert = new Subject<string>();
+  successMessage: string;
+
   dtOptions: DataTables.Settings[] = [];
   dtTriggers: Subject<any>[] = [];
   @ViewChildren(DataTableDirective) dtElements: DataTableDirective[] = [];
@@ -30,6 +34,10 @@ export class UniversitymajorComponent implements OnInit {
   constructor(private majorService: MajorService, private universityService: UniversityService) { }
 
   ngOnInit() {
+    this.alert.subscribe((message) => this.successMessage = message);
+    this.alert.pipe(
+      debounceTime(3000)
+    ).subscribe(() => this.successMessage = null);
     this.dtOptions[0] = {
       pagingType: 'full_numbers',
       pageLength: 10
@@ -60,7 +68,6 @@ export class UniversitymajorComponent implements OnInit {
       this.majors = result.data;
       this.rerender();
     });
-    // this.rerender();
   }
 
   showModal(kind: string, form: NgForm, event = null, id: number = 0) {
@@ -99,11 +106,13 @@ export class UniversitymajorComponent implements OnInit {
         this.universityService.addUniversity(this.university).subscribe(result => {
           this.uniModal.hide();
           this.loadData();
+          this.alertMessage(result.message);
         });
       } else {
         this.universityService.updateUniversity(this.university).subscribe(result => {
           this.uniModal.hide();
           this.loadData();
+          this.alertMessage(result.message);
         });
       }
     } else if (kind === 'major') {
@@ -111,11 +120,13 @@ export class UniversitymajorComponent implements OnInit {
         this.majorService.addMajor(this.major).subscribe(result => {
           this.majorModal.hide();
           this.loadData();
+          this.alertMessage(result.message);
         });
       } else {
         this.majorService.updateMajor(this.major).subscribe(result => {
           this.majorModal.hide();
           this.loadData();
+          this.alertMessage(result.message);
         });
       }
     }
@@ -144,6 +155,8 @@ export class UniversitymajorComponent implements OnInit {
             this.universities.splice(index, 1);
           }
         }
+        this.deleteModal.hide();
+        this.alertMessage(result.message);
       });
     } else if (this.object.nativeElement.value === 'major') {
       this.majorService.deleteMajor(this.major.id).subscribe(result => {
@@ -154,9 +167,11 @@ export class UniversitymajorComponent implements OnInit {
             this.majors.splice(index, 1);
           }
         }
+
+        this.deleteModal.hide();
+        this.alertMessage(result.message);
       });
     }
-    this.deleteModal.hide();
     this.object.nativeElement.value = '';
   }
 
@@ -174,5 +189,8 @@ export class UniversitymajorComponent implements OnInit {
         this.dtTriggers[index].next();
       });
     });
+  }
+  alertMessage(message) {
+    this.alert.next(message);
   }
 }
