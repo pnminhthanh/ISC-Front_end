@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AdminService } from '../services/admin.service';
 
+// declare var $;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,13 +17,16 @@ export class LoginComponent implements OnInit {
   username = '';
   password = '';
   constructor(private authService: AuthService, private cookieService: CookieService,
-    private adminService: AdminService, private router: Router) {}
+              private adminService: AdminService, private router: Router) {}
+  // loginFrm(form) {
+  //   console.log(form.value);
+  // }
   login() {
     this.adminService.login(this.username, this.password)
     .subscribe(result => {
       if (result.errorCode === 1) {
-        this.message = result.errorMessage;
-        console.log(this.message);
+        this.message = result.message;
+        // console.log(result, this.message);
       } else {
         this.message = '';
         this.authService.setLoggIn(true);

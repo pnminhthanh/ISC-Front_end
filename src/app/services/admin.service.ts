@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 export interface LoginRespone {
   errorCode: number;
   data: LoginInfo;
-  errorMessage: string;
+  message: string;
 }
 export interface LoginInfo {
   adminid: number;

@@ -6,15 +6,15 @@ import { ApiService } from './api.service';
 export interface SubjectsResponse {
   data: Subject[];
   errorCode: number;
-  errorMessage: string;
+  message: string;
 }
 export interface SubjectResponse {
   data: Subject;
   errorCode: number;
-  errorMessage: string;
+  message: string;
 }
 export interface Subject {
-  subjectId: number;
+  subjectid: number;
   subjectname: string;
   numberlesson: number;
 }
@@ -36,7 +36,7 @@ export class SubjectService {
   }
   update(data: Subject): Observable<SubjectResponse> {
     // const url = this.api.apiUrl.major + '?id=' + data.id;
-    const url = `${this.api.apiUrl.subjects}/${data.subjectId}`;
+    const url = `${this.api.apiUrl.subjects}/${data.subjectid}`;
     return this.http.put<SubjectResponse>(url, data);
   }
   delete(id): Observable<SubjectResponse> {

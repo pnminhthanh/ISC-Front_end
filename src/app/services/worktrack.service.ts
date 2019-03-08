@@ -15,12 +15,12 @@ export interface Worktrack {
 export interface WorktrackResponse {
   data: Worktrack;
   errorCode: number;
-  errorMessage: string;
+  message: string;
 }
 export interface WorktracksResponse {
   data: Worktrack[];
   errorCode: number;
-  errorMessage: string;
+  message: string;
 }
 @Injectable({
   providedIn: 'root'
