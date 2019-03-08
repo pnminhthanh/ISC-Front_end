@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <table id="datatable" class="display">
+                    <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" datatable class="display" >
                         <thead>
                             <tr>
                                 <th>
@@ -38,8 +38,8 @@
                                 </td>
                                 <td>{{row.name}}</td>
                                 <td>{{row.capacity}}</td>
-                                <td>{{row.dateadded}}</td>
-                                <td>{{row.addedperson}}</td>
+                                <td>{{row.dateadded | date : 'dd-MM-yyyy' }}</td>
+                                <td>{{row.person}}</td>
                                 <td>
                                     <a class="edit" (click)="showModal($event,modalAdd,row.id)"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
                                     <a  class="delete" (click)="showModal($event,modalDelete,row.id)" style="margin-left: 20px;"><i class="fa fa-trash-o" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
@@ -94,6 +94,25 @@
                 <div class="modal-footer">
                     <input type="button" (click)="modalDelete.hide()" class="btn btn-default" data-dismiss="modal" value="Cancel">
                     <input type="submit" (click)="delete($event,classroom.id)" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div bsModal #modalMessage="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Message</h4>
+                    <button type="button" class="close" (click)="modalMessage.hide()" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-warning">Data can be null!</p>
+                    <p class="text-bold">Please Fill all item.</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" (click)="modalMessage.hide()" class="btn btn-default" data-dismiss="modal" value="Cancel">
                 </div>
             </form>
         </div>

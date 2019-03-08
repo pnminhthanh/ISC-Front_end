@@ -29,8 +29,8 @@ export class LearnresultService {
 
   constructor(private http:HttpClient, private api:ApiService) { }
 
-  getall():Observable<LearnResultsRespone>{
+  getall(couseiId : number, classId: number):Observable<LearnResultsRespone>{
     
-    return this.http.get<LearnResultsRespone>(this.api.apiUrl.learnresult);
+    return this.http.get<LearnResultsRespone>(this.api.apiUrl.learnresult + "?ClassId=" + classId + "&CourseId=" + couseiId);
   }
 }

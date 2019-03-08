@@ -13,6 +13,7 @@ export class EntranceTestComponent implements OnInit {
   entrancetest: EntranceTest = {} as EntranceTest;
   test: string;
   courses: Course[] = [];
+  course: Course = {} as Course;
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   constructor(private entrancetestService: EntranceTestService, private courseService: CourseService)  {  }
