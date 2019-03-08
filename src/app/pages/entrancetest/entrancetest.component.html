@@ -12,8 +12,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let row of entrancetests">
-      <td>{{row.courseid}}</td>
-      <td>{{row.testdate}}</td>
+      <td>{{row.coureName}}</td>
+      <td>{{row.testdate | date : 'dd-MM-yyyy'}}</td>
       <td>
         <div class="row">
           <div class="col-md-3 text-center">

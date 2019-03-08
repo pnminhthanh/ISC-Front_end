@@ -13,15 +13,6 @@ export interface ClassroomsRespone{
   data:Classroom [];
   Message:string;
 }
-export interface UserRespone{
-  errorCode:number;
-  data:User;
-  Message:string;
-}
-export interface User{
-  firstname: string;
-  lastname: string;
-}
 export interface Classroom{
   id:number;
   name:string;
@@ -46,11 +37,7 @@ export class ClassroomService {
   get(id):Observable<ClassroomRespone>{
     return this.http.get<ClassroomRespone>(this.api.apiUrl.classroom + '/' + id);
   }
-
-  getUser(id):Observable<UserRespone>{
-    return this.http.get<UserRespone>(this.api.apiUrl.classroom + '/user?id=' + id);
-  }
-
+  
   delete(id):Observable<ClassroomRespone>{
     const url = this.api.apiUrl.classroom + '/' + id;
     return this.http.delete<ClassroomRespone>(url);

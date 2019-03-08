@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Classroom, ClassroomService, User} from 'src/app/services/classroom.service';
+import { Classroom, ClassroomService} from 'src/app/services/classroom.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { userInfo } from 'os';
 import { stringify } from 'querystring';
@@ -14,11 +14,9 @@ export class ClassroomComponent implements OnInit {
 
   classrooms : Classroom[];
   classroom: Classroom = {} as Classroom;
-  user: User = {} as User;
    @ViewChild('modalAdd') modalAdd : ModalDirective;
    @ViewChild('modalDelete') modalDelete : ModalDirective;
    today : Date;
-   person : string;
 
   constructor(private classroomservice: ClassroomService) { }
 
@@ -29,16 +27,6 @@ export class ClassroomComponent implements OnInit {
   loadData() {
     this.classroomservice.getall().subscribe(result => {
        this.classrooms = result.data;
-       //this.classrooms.forEach(x=>{
-            //this.getUser(x.addedperson);
-            //x.person = this.user.firstname + this.user.lastname;
-         //});
-    });
-  }
-
-  getUser(id : number) {
-    this.classroomservice.getUser(id).subscribe(result =>{
-      this.user = result.data;
     });
   }
   
