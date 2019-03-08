@@ -2,6 +2,8 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { EntranceTest, EntranceTestService } from 'src/app/services/entrancetest.service';
 import { Course, CourseService } from 'src/app/services/course.service';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-entracetest',
@@ -14,23 +16,22 @@ export class EntranceTestComponent implements OnInit {
   test: string;
   courses: Course[] = [];
   course: Course = {} as Course;
+<<<<<<< HEAD
+=======
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
+>>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   constructor(private entrancetestService: EntranceTestService, private courseService: CourseService)  {  }
 
   ngOnInit() {
-    this.entrancetestService.getAll().subscribe(
-      result => {
-        console.log(result);
-        this.entrancetests = result.data;
-        console.log(this.entrancetests);
-    });
-    this.courseService.getAll().subscribe(
-      result => {
-        console.log(result);
-        this.courses = result.data;
-        console.log(this.courses);
-      });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+    this.loadData();
   }
   loadData() {
     this.entrancetestService.getAll().subscribe(result => {
@@ -39,6 +40,7 @@ export class EntranceTestComponent implements OnInit {
     this.courseService.getAll().subscribe(result => {
       this.courses = result.data;
     });
+    this.rerender();
   }
   showModal(event = null, id: number = 0) {
     if (event) {
@@ -85,6 +87,14 @@ export class EntranceTestComponent implements OnInit {
         this.deleteModal.hide();
       }
     });
+  }
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngAfterViewInit(): void {this.dtTrigger.next(); }
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+       dtInstance.destroy();
+       this.dtTrigger.next();
+   });
   }
 }
 

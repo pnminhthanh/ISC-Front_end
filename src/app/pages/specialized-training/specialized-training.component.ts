@@ -69,7 +69,11 @@ export class SpecializedTrainingComponent implements OnInit {
         this.sptrainingService.getTheLast().subscribe(result => {
           if (this.selectedSubjects.length > 0) {
             this.selectedSubjects.forEach(item => {
+<<<<<<< HEAD
               this.trainingSubject.subjectId = item.subjectid;
+=======
+              this.trainingSubject.subjectId = item.subjectId;
+>>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
               this.trainingSubject.trainingId = result.data.trainingId;
               console.log(this.trainingSubject);
               this.trainingSubjectService.add(this.trainingSubject).subscribe();
@@ -92,7 +96,11 @@ export class SpecializedTrainingComponent implements OnInit {
         if (this.selectedSubjects.length > 0) {
           this.selectedSubjects.forEach(item => {
             const addSubject = {} as TrainingSubject;
+<<<<<<< HEAD
             addSubject.subjectId = item.subjectid;
+=======
+            addSubject.subjectId = item.subjectId;
+>>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
             addSubject.trainingId = this.specializedTraining.trainingId;
             console.log(addSubject);
             this.trainingSubjectService.getTrainingSubject(this.trainingSubject).subscribe(result => {
@@ -145,7 +153,11 @@ export class SpecializedTrainingComponent implements OnInit {
 
   // Xoa mon hoc khoi danh sach mon hoc cua chuong trinh hoc tren modal
   removeFromSelectedSubjects(index) {
+<<<<<<< HEAD
     const deleteSubjectId = this.selectedSubjects[index].subjectid;
+=======
+    const deleteSubjectId = this.selectedSubjects[index].subjectId;
+>>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
     const item = {} as TrainingSubject;
     item.subjectId = deleteSubjectId;
     item.trainingId = this.specializedTraining.trainingId;
@@ -169,7 +181,11 @@ export class SpecializedTrainingComponent implements OnInit {
       result => {
         console.log(result.data);
         const index = this.selectedSubjects.filter(function(el) {
+<<<<<<< HEAD
           if (el.subjectid === id) {
+=======
+          if (el.subjectId === id) {
+>>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
             return el;
           }
         });

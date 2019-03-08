@@ -1,6 +1,8 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ExaminationSubject, ExaminationSubjectService } from '../../services/examinationsubject.service';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-examinationsubject',
@@ -11,16 +13,29 @@ export class ExaminationSubjectComponent implements OnInit {
   examinationsubjects: ExaminationSubject[] = [];
   examinationsubject: ExaminationSubject = {} as ExaminationSubject;
   test: string;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   constructor(private examinationsubjectService: ExaminationSubjectService) {  }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
     this.loadData();
+  }
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
   loadData() {
     this.examinationsubjectService.getAll().subscribe(result => {
       this.examinationsubjects = result.data;
+      this.rerender();
     });
   }
   showModal(event = null, id: number = 0) {
@@ -67,6 +82,14 @@ export class ExaminationSubjectComponent implements OnInit {
         this.deleteModal.hide();
       }
     });
+  }
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngAfterViewInit(): void {this.dtTrigger.next(); }
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+       dtInstance.destroy();
+       this.dtTrigger.next();
+   });
   }
 }
 
