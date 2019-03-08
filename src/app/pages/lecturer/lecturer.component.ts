@@ -8,6 +8,7 @@ import { DatetimeService } from '../../services/datetime.service';
 import { Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-lecturer',
@@ -19,9 +20,12 @@ export class LecturerComponent implements OnInit {
 
   degrees: Degree[] = [];
   academics: Academic[] = [];
-  user: User = {} as User;
+  user: User = {gender: 1} as User;
   lecturers: LecturerFull[] = [];
   lecturer: Lecturer = {} as Lecturer;
+
+  private alert = new Subject<string>();
+  successMessage: string;
 
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
@@ -35,6 +39,12 @@ export class LecturerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = {gender: 1} as User;
+
+    this.alert.subscribe((message) => this.successMessage = message);
+    this.alert.pipe(
+      debounceTime(3000)
+    ).subscribe(() => this.successMessage = null);
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10
@@ -102,6 +112,7 @@ export class LecturerComponent implements OnInit {
         this.lecturerService.addLecturer(this.lecturer).subscribe(aresult => {
           this.modal.hide();
           this.loadData();
+          this.alertMessage(aresult.message);
         });
       });
 
@@ -111,6 +122,7 @@ export class LecturerComponent implements OnInit {
         this.lecturerService.updateLecturer(this.lecturer).subscribe(aresult => {
           this.modal.hide();
           this.loadData();
+          this.alertMessage(aresult.message);
         });
       });
     }
@@ -125,6 +137,7 @@ export class LecturerComponent implements OnInit {
           this.lecturers.splice(index, 1);
         }
         this.deleteModal.hide();
+        this.alertMessage(result.message);
       }
     });
   }
@@ -137,5 +150,9 @@ export class LecturerComponent implements OnInit {
        dtInstance.destroy();
        this.dtTrigger.next();
    });
+  }
+
+  alertMessage(message) {
+    this.alert.next(message);
   }
 }

@@ -69,7 +69,7 @@ export class LecturersService {
   }
 
   updateLecturer(lecturer: Lecturer): Observable<LecturerResponse> {
-    const url = `${this.apiService.apiUrl.academic}/${lecturer.userid}`;
+    const url = `${this.apiService.apiUrl.lecturer}/${lecturer.userid}`;
     return this.http.put<LecturerResponse>(url, lecturer);
   }
 
