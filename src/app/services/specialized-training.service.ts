@@ -2,11 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
+import { Subject } from 'src/app/services/subject.service';
 
 export interface SpecialiazedTraining {
   trainingId: number;
   name: string;
-  numberweek: number;
+  numberofWeeks: number;
+  listSubjects: Subject[];
+}
+
+export interface TrainingSubjectInfo {
+  TrainingId: number;
+  SubjectId: number;
+  listSubjects: string;
 }
 
 export interface SpecialiazedTrainingsResponse {
@@ -35,6 +43,11 @@ export class SpecializedTrainingService {
 
   get(TrainingId): Observable<SpecialiazedTrainingResponse> {
     const url = this.api.apiUrl.specializedtraining + '/' + TrainingId;
+    return this.http.get<SpecialiazedTrainingResponse>(url);
+  }
+
+  getTheLast(): Observable<SpecialiazedTrainingResponse> {
+    const url = this.api.apiUrl.specializedtraining + '/getthelast';
     return this.http.get<SpecialiazedTrainingResponse>(url);
   }
 
