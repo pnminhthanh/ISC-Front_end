@@ -104,7 +104,7 @@
                                             <td>{{item.subjectname}}</td>
                                             <td>{{item.numberlesson}}</td>
                                             <td class="text-center">
-                                                <button class="fa fa-trash-o btn btn-danger" (click)="removeFromSelectedSubjects(item.subjectId)"></button>
+                                                <button class="fa fa-trash-o btn btn-danger" (click)="removeFromSelectedSubjects(i)"></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -129,7 +129,7 @@
                                     <td>{{item.subjectname}}</td>
                                     <td>{{item.numberlesson}}</td>
                                     <td class="text-center">
-                                        <button class="btn btn-success" (click)="addSubjectToTraining(item.subjectId)"><i class="fa fa-plus text-default"></i></button>
+                                        <button class="btn btn-success" (click)="checkSelectedSubject(item.subjectId)"><i class="fa fa-plus text-default"></i></button>
                                     </td>
                                 </tr>                               
                             </tbody>

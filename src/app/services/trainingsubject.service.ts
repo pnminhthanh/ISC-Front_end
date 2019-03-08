@@ -47,13 +47,13 @@ export class TrainingsubjectService {
     return this.http.post<TrainingSubjectResponse>(url, data);
   }
 
-  delete(TrainingId, SubjectId): Observable<TrainingSubjectResponse> {
-    const url = this.api.apiUrl.trainingsubject + '/' + TrainingId;
+  delete(id): Observable<TrainingSubjectResponse> {
+    const url = this.api.apiUrl.trainingsubject + '/DeleteTrainingSubject/' + id;
     return this.http.delete<TrainingSubjectResponse>(url);
   }
 
   deleteAllByTrainingId(TrainingId): Observable<TrainingSubjectResponse> {
-    const url = this.api.apiUrl.trainingsubject + '/' + TrainingId;
+    const url = this.api.apiUrl.trainingsubject + '/DeleteAllByTrainingId/' + TrainingId;
     return this.http.delete<TrainingSubjectResponse>(url);
   }
 }

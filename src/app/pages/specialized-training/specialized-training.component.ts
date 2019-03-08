@@ -18,6 +18,8 @@ export class SpecializedTrainingComponent implements OnInit {
   subject: Subject = {} as Subject;
   selectedSubjects: Subject[] = [];
   trainingSubject: TrainingSubject = {} as TrainingSubject;
+  listTrainingSubjectsDeleted: number[] = [];
+  
 
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
@@ -43,7 +45,6 @@ export class SpecializedTrainingComponent implements OnInit {
   }
 
   showModal(event = null, TrainingId: number = 0) {
-    console.log(TrainingId);
     if (event) {
       event.preventDefault();
     }
@@ -51,12 +52,14 @@ export class SpecializedTrainingComponent implements OnInit {
       this.sptrainingService.get(TrainingId).subscribe( result => {
         this.specializedTraining = result.data;
         this.selectedSubjects = this.specializedTraining.listSubjects;
+        console.log(this.selectedSubjects);
         this.modal.show();
       });
     } else {
       this.specializedTraining = {} as SpecialiazedTraining;
       this.modal.show();
     }
+    console.log(this.listTrainingSubjectsDeleted);
     this.modal.show();
   }
 
@@ -79,18 +82,23 @@ export class SpecializedTrainingComponent implements OnInit {
     } else {
       this.sptrainingService.update(this.specializedTraining, this.specializedTraining.trainingId).subscribe(result => {
         console.log(this.specializedTraining);
+        if (this.listTrainingSubjectsDeleted.length > 0) {
+          this.listTrainingSubjectsDeleted.forEach(item => {
+            this.deleteSelectedSubject(item);
+            console.log(this.selectedSubjects);
+          });
+          this.listTrainingSubjectsDeleted = null;
+        }
         if (this.selectedSubjects.length > 0) {
           this.selectedSubjects.forEach(item => {
-            console.log(item);
-            this.trainingSubject.subjectId = item.subjectId;
-            this.trainingSubject.trainingId = this.specializedTraining.trainingId;
-            console.log(this.trainingSubject);
-            // Kiem tra Training Subject da duoc tao trong Training chua
+            const addSubject = {} as TrainingSubject;
+            addSubject.subjectId = item.subjectId;
+            addSubject.trainingId = this.specializedTraining.trainingId;
+            console.log(addSubject);
             this.trainingSubjectService.getTrainingSubject(this.trainingSubject).subscribe(result => {
-              console.log(result.data);
-              if (result.data == null)
-              {
-                this.trainingSubjectService.add(this.trainingSubject).subscribe();
+              if (result.data === undefined) {
+                console.log(result.data);
+                this.trainingSubjectService.add(addSubject).subscribe();
               }
             });
           });
@@ -131,19 +139,47 @@ export class SpecializedTrainingComponent implements OnInit {
     this.loadData();
   }
 
-  addSubjectToTraining(id) {
-    this.subjectService.get(id).subscribe(
-      result => {
-        console.log(result);
-        this.selectedSubjects.push(result.data);
-        console.log(this.selectedSubjects);
-      }
-    );
+  addSubjectToTraining(data: Subject) {
+      this.selectedSubjects.push(data);
   }
 
-  removeFromSelectedSubjects(id) {
-    const deletedSubject = this.selectedSubjects.find(x => x.subjectId === id);
-    const index = this.selectedSubjects.indexOf(deletedSubject);
-    this.selectedSubjects.splice(index);
+  // Xoa mon hoc khoi danh sach mon hoc cua chuong trinh hoc tren modal
+  removeFromSelectedSubjects(index) {
+    const deleteSubjectId = this.selectedSubjects[index].subjectId;
+    const item = {} as TrainingSubject;
+    item.subjectId = deleteSubjectId;
+    item.trainingId = this.specializedTraining.trainingId;
+    this.selectedSubjects.splice(index, 1);
+    this.trainingSubjectService.getTrainingSubject(item).subscribe(result => {
+      if(result.data !== null) {
+        this.listTrainingSubjectsDeleted.push(result.data.trainingSubjectId);
+      }
+      console.log(this.selectedSubjects);
+      console.log(this.listTrainingSubjectsDeleted);
+    });
+  }
+
+  deleteSelectedSubject(TrainingSubjectId) {
+    this.trainingSubjectService.delete(TrainingSubjectId).subscribe();
+  }
+
+  checkSelectedSubject(id) {
+    console.log(this.selectedSubjects);
+    this.subjectService.get(id).subscribe(
+      result => {
+        console.log(result.data);
+        const index = this.selectedSubjects.filter(function(el) {
+          if (el.subjectId === id) {
+            return el;
+          }
+        });
+        console.log(index);
+        if(index.length > 0){
+          alert('Subject has existed in list selected subjects!');
+        } else {
+          this.addSubjectToTraining(result.data);
+        }
+      }
+    );
   }
 }
