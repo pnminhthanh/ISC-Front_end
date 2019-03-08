@@ -50,13 +50,9 @@ export class WorktrackComponent implements OnInit {
       this.modal.show();
     }
   }
-  onChangeCourse(id) {
-    this.company.companyid = id;
-    this.companyService.get(id).subscribe(result => {
-    // this.classess = result.data;
-  });
-  // this.classes.id = undefined;
-}
+  selectCompanyName() {
+    this.companyService.getAll().subscribe(result => { this.companies = result.data; });
+  }
   showDeleteModal(event = null, id) {
     if (event) {
       event.preventDefault();

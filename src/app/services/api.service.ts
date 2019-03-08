@@ -13,19 +13,20 @@ export class ApiService {
     degree: this.baseUrl + 'degrees',
     examinationsubject: this.baseUrl + 'examinationsubjects',
     entrancetest: this.baseUrl + 'entrancetests',
-
     classroom: this.baseUrl + 'classroom',
     course: this.baseUrl + 'courses',
     learnresult: this.baseUrl + 'LearResult',
     lecturer: this.baseUrl + 'lecturers',
     login: this.baseUrl + 'admin/login',
-    
+
+    trainingsubject: this.baseUrl + 'trainingsubjects',
+
     major: this.baseUrl + 'majors',
-    
     specializedtraining: this.baseUrl + 'specializedtrainings',
     subjects: this.baseUrl + 'subjects',
     user: this.baseUrl + 'users',
     university: this.baseUrl + 'universities',
-    worktracks: this.baseUrl + 'worktracks'
+    worktracks: this.baseUrl + 'worktracks',
+    classes: this.baseUrl + 'classes'
   };
 }

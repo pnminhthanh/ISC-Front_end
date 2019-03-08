@@ -29,6 +29,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { CookieService } from 'ngx-cookie-service';
 import { DataTablesModule } from 'angular-datatables';
 import { Select2Module } from 'ng2-select2';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap' ;
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { Select2Module } from 'ng2-select2';
     ModalModule.forRoot(),
     NgxPaginationModule,
     DataTablesModule,
-    Select2Module
+    Select2Module,
+    NgbModule.forRoot()
   ],
   providers: [
     {

@@ -44,16 +44,16 @@ export class AcademicService {
 
   addAcademic(academic: Academic): Observable<AcademicResponse> {
     console.log(academic);
-    return this.http.post<AcademicResponse>(this.apiService.apiUrl.academic, JSON.stringify(academic), this.httpOptions);
+    return this.http.post<AcademicResponse>(this.apiService.apiUrl.academic, academic);
   }
 
   updateAcademic(academic: Academic): Observable<AcademicResponse> {
     const url = `${this.apiService.apiUrl.academic}/${academic.id}`;
-    return this.http.put<AcademicResponse>(url, JSON.stringify(academic), this.httpOptions);
+    return this.http.put<AcademicResponse>(url, academic);
   }
 
   deleteAcademic(id): Observable<AcademicResponse> {
     const url = `${this.apiService.apiUrl.academic}/${id}`;
-    return this.http.delete<AcademicResponse>(url, this.httpOptions);
+    return this.http.delete<AcademicResponse>(url);
   }
 }

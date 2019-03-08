@@ -14,12 +14,12 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table id="example2" class="table table-bordered table-hover table-striped">
+                    <table datatable class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
-                                <th>ID</th>
+                                <th>Subjects</th>
                                 <th style="width: 70px;">Duration (weeks)</th>
                                 <th style="width: 100px;"> </th>
                             </tr>
@@ -28,11 +28,15 @@
                             <tr *ngFor="let item of specializedTrainings; let i = index">
                                 <td>{{ i + 1}}</td>
                                 <td>{{ item.name }}</td>
-                                <td>{{ item.trainingId }}</td>
-                                <td>{{ item.numberweek }}</td>
+                                <td>
+                                    <ul>
+                                        <li *ngFor="let row of item.listSubjects"> {{row.subjectname}}</li>
+                                    </ul>
+                                </td>
+                                <td>{{ item.numberofWeeks }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-default" (click)="showModal($event, item.trainingId)"><i class="fa fa-edit text-primary"></i></button>
-                                    <button class="btn btn-default" (click)="delete($event, item.trainingId)"><i class="fa fa-trash-o text-danger"></i></button> 
+                                    <button class="btn btn-default" (click)="showDeleteModal($event, item.trainingId)"><i class="fa fa-trash-o text-danger"></i></button> 
                                 </td>
                             </tr>              
                         <tfoot>
@@ -77,7 +81,7 @@
                                     <label for="gender" class="col-sm-4 col control-label">Duration </label>
 
                                     <div class="col-8">
-                                        <input [(ngModel)]="specializedTraining.numberweek" type="number" class="form-control col-xs-6" id="txtNumber" style="border: 1px solid #ccc; width: 30%">
+                                        <input [(ngModel)]="specializedTraining.numberofWeeks" type="number" class="form-control col-xs-6" id="txtNumber" style="border: 1px solid #ccc; width: 30%">
                                         <span class="col" style="margin-left: 0.75em">week(s)</span>
                                     </div>
                                 </div>
@@ -88,31 +92,19 @@
                                 <table id="subjectsSelectedTable" class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                               ID
-                                            </th>
-                                            <th>
-                                                Subject's Name
-                                            </th>
-                                            <th>
-                                                Number of Lessions
-                                            </th>
-                                            <th>
-
-                                            </th>
+                                            <th>#</th>
+                                            <th>Subject's Name</th>
+                                            <th>Number of Lessions</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody id="dataSubjectsSelectedTable">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>ABC001</td>
-                                            <td>Front-end</td>
-                                            <td>60</td>
+                                        <tr *ngFor="let item of selectedSubjects; let i = index">
+                                            <td>{{ i + 1}}</td>
+                                            <td>{{item.subjectname}}</td>
+                                            <td>{{item.numberlesson}}</td>
                                             <td class="text-center">
-                                                <button class="fa fa-trash-o btn btn-danger" type="button"></button>
+                                                <button class="fa fa-trash-o btn btn-danger" (click)="removeFromSelectedSubjects(i)"></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -125,45 +117,21 @@
                         <table id="subjectsTable" class="table table-bordered table-hover">                           
                             <thead>
                                 <tr>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>
-                                        ID
-                                    </th>
-                                    <th>
-                                        Subject's Name
-                                    </th>
-                                    <th>
-                                        Number of Lessions
-                                    </th>
+                                    <th>#</th>
+                                    <th>Subject's Name</th>
+                                    <th>Number of Lessions</th>
+                                    <th></th>   
                                 </tr>
                             </thead>
                             <tbody id="dataSubjectsTable">
-                                <tr>
-                                    <td>1</td>
-                                    <td>ABC001</td>
-                                    <td>Front-end</td>
-                                    <td>60</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>ABC002</td>
-                                    <td>Back-end</td>
-                                    <td>60</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>ABC002</td>
-                                    <td>Back-end</td>
-                                    <td>60</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>ABC002</td>
-                                    <td>Back-end</td>
-                                    <td>60</td>
-                                </tr>
+                                <tr *ngFor="let item of subjects; let i = index">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{item.subjectname}}</td>
+                                    <td>{{item.numberlesson}}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-success" (click)="checkSelectedSubject(item.subjectId)"><i class="fa fa-plus text-default"></i></button>
+                                    </td>
+                                </tr>                               
                             </tbody>
                         </table>
                     </div>
@@ -175,4 +143,24 @@
             </div>
         </div>
     </div>
+</div>
+
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Confirm</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="deleteModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="deleteModal.hide()">No</button>
+          <button type="button" (click)="delete($event)" class="btn btn-danger">Yes</button>
+        </div>
+      </div>
+  </div>
 </div>

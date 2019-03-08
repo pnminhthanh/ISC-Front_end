@@ -32,12 +32,11 @@ export interface User {
 })
 export class UserService {
 
-  endpoint = 'https://localhost:44324/api/';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    }),
-  };
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json'
+  //   }),
+  // };
 
   constructor(private http: HttpClient, private apiService: ApiService) { }
 
@@ -52,17 +51,17 @@ export class UserService {
 
   addUser(user: User): Observable<UserResponse> {
     console.log(user);
-    return this.http.post<UserResponse>(this.apiService.apiUrl.user, JSON.stringify(user), this.httpOptions);
+    return this.http.post<UserResponse>(this.apiService.apiUrl.user, user);
   }
 
   updateUser(user: User): Observable<UserResponse> {
-    const url = `${this.apiService.apiUrl.academic}/${user.id}`;
+    const url = `${this.apiService.apiUrl.user}/${user.id}`;
     console.log(user);
-    return this.http.put<UserResponse>(url, JSON.stringify(user), this.httpOptions);
+    return this.http.put<UserResponse>(url, user);
   }
 
   deleteUser(id): Observable<UserResponse> {
     const url = `${this.apiService.apiUrl.user}/${id}`;
-    return this.http.delete<UserResponse>(url, this.httpOptions);
+    return this.http.delete<UserResponse>(url);
   }
 }

@@ -1,7 +1,11 @@
-import { Component, OnInit, TemplateRef, ViewChild, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { Major, MajorService } from '../../services/major.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { University, UniversityService } from 'src/app/services/university.service';
+import { Subject } from 'rxjs';
+import { NgForm } from '@angular/forms';
+import { DataTableDirective } from 'angular-datatables';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-universitymajor',
@@ -15,9 +19,12 @@ export class UniversitymajorComponent implements OnInit {
   majors: Major[] = [];
   major: Major = {} as Major;
 
-  @Input() id: string;
-  @Input() maxSize: number;
-  @Output() pageChange: EventEmitter<number>;
+  private alert = new Subject<string>();
+  successMessage: string;
+
+  dtOptions: DataTables.Settings[] = [];
+  dtTriggers: Subject<any>[] = [];
+  @ViewChildren(DataTableDirective) dtElements: DataTableDirective[] = [];
 
   @ViewChild('uniModal') uniModal: ModalDirective;
   @ViewChild('majorModal') majorModal: ModalDirective;
@@ -27,23 +34,48 @@ export class UniversitymajorComponent implements OnInit {
   constructor(private majorService: MajorService, private universityService: UniversityService) { }
 
   ngOnInit() {
+    this.alert.subscribe((message) => this.successMessage = message);
+    this.alert.pipe(
+      debounceTime(3000)
+    ).subscribe(() => this.successMessage = null);
+    this.dtOptions[0] = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+    this.dtOptions[1] = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+    this.dtTriggers[0] = new Subject();
+    this.dtTriggers[1] = new Subject();
     this.loadData();
+  }
+
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTriggers.forEach((dtTrigger: Subject<any>, index: number) => {
+      dtTrigger.unsubscribe();
+    });
   }
 
   loadData() {
     this.universityService.getUniversities().subscribe(result => {
-      console.log(this.universities);
       this.universities = result.data;
+      this.rerender();
     });
     this.majorService.getMajors().subscribe(result => {
       this.majors = result.data;
+      this.rerender();
     });
   }
 
-  showModal(kind: string, event = null, id: number = 0) {
+  showModal(kind: string, form: NgForm, event = null, id: number = 0) {
     if (event) {
       event.preventDefault();
     }
+    form.reset();
+
     if (id > 0) {
       if (kind === 'university') {
         this.universityService.getUniversity(id).subscribe(result => {
@@ -74,11 +106,13 @@ export class UniversitymajorComponent implements OnInit {
         this.universityService.addUniversity(this.university).subscribe(result => {
           this.uniModal.hide();
           this.loadData();
+          this.alertMessage(result.message);
         });
       } else {
         this.universityService.updateUniversity(this.university).subscribe(result => {
           this.uniModal.hide();
           this.loadData();
+          this.alertMessage(result.message);
         });
       }
     } else if (kind === 'major') {
@@ -86,11 +120,13 @@ export class UniversitymajorComponent implements OnInit {
         this.majorService.addMajor(this.major).subscribe(result => {
           this.majorModal.hide();
           this.loadData();
+          this.alertMessage(result.message);
         });
       } else {
         this.majorService.updateMajor(this.major).subscribe(result => {
           this.majorModal.hide();
           this.loadData();
+          this.alertMessage(result.message);
         });
       }
     }
@@ -119,6 +155,8 @@ export class UniversitymajorComponent implements OnInit {
             this.universities.splice(index, 1);
           }
         }
+        this.deleteModal.hide();
+        this.alertMessage(result.message);
       });
     } else if (this.object.nativeElement.value === 'major') {
       this.majorService.deleteMajor(this.major.id).subscribe(result => {
@@ -129,9 +167,30 @@ export class UniversitymajorComponent implements OnInit {
             this.majors.splice(index, 1);
           }
         }
+
+        this.deleteModal.hide();
+        this.alertMessage(result.message);
       });
     }
-    this.deleteModal.hide();
     this.object.nativeElement.value = '';
+  }
+
+// tslint:disable-next-line: use-life-cycle-interface
+  ngAfterViewInit(): void {
+    this.dtTriggers.forEach((dtTrigger: Subject<any>, index: number) => {
+      dtTrigger.next();
+    });
+  }
+
+  rerender(): void {
+    this.dtElements.forEach((dtElement: DataTableDirective, index: number) => {
+      dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTriggers[index].next();
+      });
+    });
+  }
+  alertMessage(message) {
+    this.alert.next(message);
   }
 }
