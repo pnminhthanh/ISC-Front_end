@@ -1,3 +1,6 @@
 .btn-cancel {
     float: left !important;
 }
+.options-width {
+    width: 20px;
+}

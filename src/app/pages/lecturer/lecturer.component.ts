@@ -8,6 +8,7 @@ import { DatetimeService } from '../../services/datetime.service';
 import { Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-lecturer',
@@ -23,6 +24,11 @@ export class LecturerComponent implements OnInit {
   lecturers: LecturerFull[] = [];
   lecturer: Lecturer = {} as Lecturer;
 
+  private _success = new Subject<string>();
+
+  staticAlertClosed = false;
+  successMessage: string;
+
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   @ViewChild(DataTableDirective) dtElement: DataTableDirective;
@@ -35,6 +41,10 @@ export class LecturerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._success.subscribe((message) => this.successMessage = message);
+    this._success.pipe(
+      debounceTime(5000)
+    ).subscribe(() => this.successMessage = null);
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10
@@ -110,6 +120,7 @@ export class LecturerComponent implements OnInit {
       this.userService.updateUser(this.user).subscribe( result => {
         this.lecturerService.updateLecturer(this.lecturer).subscribe(aresult => {
           this.modal.hide();
+          this._success.next(aresult.message);
           this.loadData();
         });
       });
