@@ -19,7 +19,10 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { TestResultComponent } from './pages/testresult/testresult.component';
 import { StudentComponent } from './pages/student/student.component';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 54e06f554ce6604430e5b2aaa8e0889b458c80f9
 
 const routes: Routes = [
   { path: '', component: LoginComponent, data: { title: 'Login Page' }},
