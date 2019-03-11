@@ -26,9 +26,7 @@ export class ApiService {
     university: this.baseUrl + 'universities',
     worktracks: this.baseUrl + 'worktracks',
     classes: this.baseUrl + 'classes',
-<<<<<<< HEAD
-    testresult: this.baseUrl + 'testresult'
-=======
+    testresult: this.baseUrl + 'testresult',
     student: this.baseUrl + 'students'
   };
 }

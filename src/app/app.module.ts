@@ -52,7 +52,7 @@ import { StudentComponent } from './pages/student/student.component';
     CompanyComponent,
     SubjectComponent,
     WorktrackComponent,
-    TestResultComponent
+    TestResultComponent,
     StudentComponent
 
   ],

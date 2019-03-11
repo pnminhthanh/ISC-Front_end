@@ -20,6 +20,7 @@ import { AuthGuard } from './auth.guard';
 import { TestResultComponent } from './pages/testresult/testresult.component';
 import { StudentComponent } from './pages/student/student.component';
 
+
 const routes: Routes = [
   { path: '', component: LoginComponent, data: { title: 'Login Page' }},
   {
@@ -40,9 +41,7 @@ const routes: Routes = [
     {path: 'company', component: CompanyComponent},
     {path: 'subject', component: SubjectComponent},
     {path: 'worktrack', component: WorktrackComponent},
-<<<<<<< HEAD
-    {path: 'testresult', component: TestResultComponent}
-=======
+    {path: 'testresult', component: TestResultComponent},
     {path: 'student', component: StudentComponent}
 
   ]
