@@ -18,15 +18,15 @@ export class ApiService {
     learnresult: this.baseUrl + 'LearResult',
     lecturer: this.baseUrl + 'lecturers',
     login: this.baseUrl + 'admin/login',
-
     trainingsubject: this.baseUrl + 'trainingsubjects',
-
     major: this.baseUrl + 'majors',
     specializedtraining: this.baseUrl + 'specializedtrainings',
     subjects: this.baseUrl + 'subjects',
     user: this.baseUrl + 'users',
     university: this.baseUrl + 'universities',
     worktracks: this.baseUrl + 'worktracks',
-    classes: this.baseUrl + 'classes'
+    classes: this.baseUrl + 'classes',
+    testresult: this.baseUrl + 'testresult',
+    student: this.baseUrl + 'students'
   };
 }

@@ -7,12 +7,12 @@ import { ApiService } from './api.service';
 export interface CompaniesResponse {
   data: Company[];
   errorCode: number;
-  errorMessage: string;
+  message: string;
 }
 export interface CompanyResponse {
   data: Company;
   errorCode: number;
-  errorMessage: string;
+  message: string;
 }
 export interface Company {
   companyid: number;

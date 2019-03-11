@@ -4,16 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { ApiService } from './api.service';
 
 export interface SubjectsResponse {
-  data: Subject[];
+  data: SubjectInterface[];
   errorCode: number;
-  errorMessage: string;
+  message: string;
 }
 export interface SubjectResponse {
-  data: Subject;
+  data: SubjectInterface;
   errorCode: number;
-  errorMessage: string;
+  message: string;
 }
-export interface Subject {
+export interface SubjectInterface {
   subjectId: number;
   subjectname: string;
   numberlesson: number;
@@ -30,11 +30,11 @@ export class SubjectService {
   get(id): Observable<SubjectResponse> {
     return this.http.get<SubjectResponse>(`${this.api.apiUrl.subjects}/${id}`);
   }
-  add(data: Subject): Observable<SubjectResponse> {
+  add(data: SubjectInterface): Observable<SubjectResponse> {
     console.log(data);
     return this.http.post<SubjectResponse>(this.api.apiUrl.subjects, data);
   }
-  update(data: Subject): Observable<SubjectResponse> {
+  update(data: SubjectInterface): Observable<SubjectResponse> {
     // const url = this.api.apiUrl.major + '?id=' + data.id;
     const url = `${this.api.apiUrl.subjects}/${data.subjectId}`;
     return this.http.put<SubjectResponse>(url, data);

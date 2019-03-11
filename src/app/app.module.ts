@@ -20,7 +20,6 @@ import { EntranceTestComponent } from './pages/entrancetest/entrancetest.compone
 
 import { LecturerComponent } from './pages/lecturer/lecturer.component';
 import { UniversitymajorComponent } from './pages/universitymajor/universitymajor.component';
-import { StudentComponent } from './pages/student/student.component';
 import { CompanyComponent } from './pages/company/company.component';
 import { SubjectComponent } from './pages/subject/subject.component';
 import { WorktrackComponent } from './pages/worktrack/worktrack.component';
@@ -31,6 +30,8 @@ import { DataTablesModule } from 'angular-datatables';
 import { Select2Module } from 'ng2-select2';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClassesComponent } from './pages/classes/classes.component' ;
+import { TestResultComponent } from './pages/testresult/testresult.component' ;
+import { StudentComponent } from './pages/student/student.component';
 
 @NgModule({
   declarations: [
@@ -49,11 +50,12 @@ import { ClassesComponent } from './pages/classes/classes.component' ;
 
     LecturerComponent,
     UniversitymajorComponent,
-    StudentComponent,
     CompanyComponent,
     SubjectComponent,
     WorktrackComponent,
-    ClassesComponent
+    ClassesComponent,
+    TestResultComponent,
+    StudentComponent
 
   ],
   imports: [

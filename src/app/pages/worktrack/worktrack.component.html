@@ -12,11 +12,11 @@
                 <input id="id" hidden />
                 <div class="row" style="margin-bottom:30px;">
                     <div class="col-md-1">
-                        <a class="btn btn-success" (click)="showModal($event,modalAdd)"><i class="fa fa-plus"></i> <span>Add New Worktrack</span></a>
+                        <a class="btn btn-success" (click)="showModal($event)"><i class="fa fa-plus"></i> <span>Add New Worktrack</span></a>
                     </div>
                 </div>
                 <div class="row">
-                    <table id="datatable" class="display">
+                    <table datatable class="table table-bordered table-hover table-striped">
                       <thead>
                         <tr>
                           <th>No.</th>
@@ -36,11 +36,11 @@
                           <td>{{row.idstudent}}</td>
                           <td>{{row.startdate}}</td>
                           <td>{{row.contractdate}}</td>
-                          <td>{{row.status}}</td>
+                          <td>{{row.status === 1 ? 'Working' : 'Stopped'}}</td>
                           <td>{{row.note}}</td>
                           <td>
-                            <a class="edit" (click)="showModal($event,modalAdd,row.id)"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
-                            <a class="delete" (click)="showModal($event,modalDelete,row.id)" style="margin-left: 20px;"><i class="fa fa-trash-o" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
+                            <a class="edit" (click)="showModal($event,row.id)"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
+                            <a class="delete" (click)="showDeleteModal($event,row.id)" style="margin-left: 20px;"><i class="fa fa-trash-o" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
                           </td>
                         </tr>
                       </tbody>
@@ -51,94 +51,161 @@
     </form>
 </div>
 
-<!-- Modal Add, Edit-->
-<div bsModal #modalAdd="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 id="dialog-sizes-name1" class="modal-title">{{worktrack.id === undefined || worktrack.id === 0 ? 'Add New' : 'Edit'}}</h4>
-                  <button type="button" class="close pull-right" (click)="modalAdd.hide()" aria-label="Close">
-                    <span aria-hidden ="true">&times;</span>
-                  </button>
+<form #frm="ngForm">
+  <div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 id="dialog-sizes-name1" class="modal-title">{{worktrack.id === undefined || worktrack.id === 0 ? 'Add New Worktrack' : 'Edit worktrack information'}}</h4>
+            <!-- <button type="button" class="close pull-right" (click)="modal.hide()" aria-label="Close">
+              <span aria-hidden ="true">&times;</span>
+            </button> -->
+          </div>
+          <div class="modal-body">
+            <!-- WORKTRACK COMPANY ID -->
+            <!-- code mau cai select nhe -->
+            <div class="row form-group">
+              <div class="col-md-3">
+                  <label for="selectCompany">Company ID</label>
+              </div>
+              <div class="col-md-9">
+                  <select 
+                      class="form-control" name="WorktrackCompany" id="selectCompany" 
+                      [(ngModel)]="worktrack.companyid"
+                      (ngModelChange)="selectCompanyName()"
+                  >
+                    <option value="" selected>Choose company name</option>
+                    <option *ngFor="let opt of companies" [ngValue]="opt.companyid">{{opt.companyname}}</option>
+                  </select>
                 </div>
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="col-md-3 form-group">
-                      <label for="txtCompanyId">Company ID</label>
-                    </div>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" id="txtCompanyId" placeholder="Enter company ID" [(ngModel)]="worktrack.companyid">
-                    </div>
-                  </div><!-- txtCompanyId -->
-                  <div class="row">
-                    <div class="col-md-3 form-group">
-                      <label for="txtIdStudent">ID Student</label>
-                    </div>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" id="txtIdStudent" placeholder="Enter ID student" [(ngModel)]="worktrack.idstudent">
-                    </div>
-                  </div><!-- txtIdStudent -->
-                  <div class="row">
-                    <div class="col-md-3 form-group">
-                      <label for="txtStartDate">Start date</label>
-                    </div>
-                    <div class="col-md-9">
-                      <input type="date" class="form-control" id="txtStartDate" placeholder="Enter start date" [(ngModel)]="worktrack.startdate">
-                    </div>
-                  </div><!-- txtStartDate -->
-                  <div class="row">
-                    <div class="col-md-3 form-group">
-                      <label for="txtContractDate">Contract date</label>
-                    </div>
-                    <div class="col-md-9">
-                      <input type="date" class="form-control" id="txtContractDate" placeholder="Enter contract date" [(ngModel)]="worktrack.contractdate">
-                    </div>
-                  </div><!-- txtContractDate -->
-                  <div class="row">
-                    <div class="col-md-3 form-group">
-                      <label for="txtStatus">Status</label>
-                    </div>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" id="txtStatus" placeholder="Enter status" [(ngModel)]="worktrack.status">
-                    </div>
-                  </div><!-- txtStatus -->
-                  <div class="row">
-                    <div class="col-md-3 form-group">
-                      <label for="txtNote">Note</label>
-                    </div>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" id="txtNote" placeholder="Enter note" [(ngModel)]="worktrack.note">
-                    </div>
-                  </div><!-- txtNote -->
+            </div>
+            <!-- WORKTRACK STUDENT ID -->
+            <!-- code mau cai select nhe -->
+            <div class="row form-group">
+                <div class="col-md-3">
+                    <label for="selectStudent">Student ID</label>
                 </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-success" (click)="save()" value="{{worktrack.id === undefined || worktrack.id === 0 ? 'Add' : 'Save'}}">
-                    <input type="submit" class="btn btn-default" (click)="modalAdd.hide()"  value="Cancel">
+                <div class="col-md-9">
+                    <select class="form-control" name="WorktrackCompany" id="selectStudent" [(ngModel)]="worktrack.idstudent">
+                      <option value="1">Co-operate</option>
+                      <option value="0">Stop cooperating</option>
+                    </select>
+                  </div>
+              </div>
+            <!-- WORKTRACK START DATE -->
+            <div class="row form-group">
+              <div class="col-md-3">
+                <label for="labelStartDate">Start Date</label>
+              </div>
+              <div class="col-md-9">
+                <input 
+                    type="text"
+                    required
+                    class="form-control" id="labelStartDate" name="WorktrackStartDate" placeholder="Enter start date" 
+                    [(ngModel)]="worktrack.startdate"
+                    #txtStartDate="ngModel"  
+                />
+                <div class="row">
+                  <div class="col-md-9 text-danger" *ngIf="txtStartDate.touched">
+                    <div *ngIf="txtStartDate.errors?.required">
+                      Start date is required!
+                    </div>
+                  </div>
+                  <div class="col-md-3"></div>
                 </div>
               </div>
             </div>
+            <!-- WORKTRACK CONTRACT DATE -->
+            <div class="row form-group">
+              <div class="col-md-3">
+                <label for="labelContractDate">Start Date</label>
+              </div>
+              <div class="col-md-9">
+                <input 
+                    type="text"
+                    required
+                    class="form-control" id="labelContractDate" name="WorktrackStartDate" placeholder="Enter contract date" 
+                    [(ngModel)]="worktrack.contractdate"
+                    #txtContractDate="ngModel"  
+                />
+                <div class="row">
+                  <div class="col-md-9 text-danger" *ngIf="txtContractDate.touched">
+                    <div *ngIf="txtContractDate.errors?.required">
+                      Contract date is required!
+                    </div>
+                  </div>
+                  <div class="col-md-3"></div>
+                </div>
+              </div>
+            </div>
+            <!-- WORKTRACK STATUS -->
+            <div class="row form-group">
+              <div class="col-md-3">
+                  <label for="selectStatus">Status</label>
+              </div>
+              <div class="col-md-9">
+                  <select 
+                      class="form-control" name="WorktrackStatus" id="selectStatus" 
+                      [(ngModel)]="worktrack.status"
+                  >
+                    <option value="1">Working</option>
+                    <option value="0">Stopped</option>
+                  </select>
+                </div>
+            </div>
+            <!-- WORKTRACK NOTE -->
+            <div class="row form-group">
+              <div class="col-md-3">
+                <label for="labelNote">Start Date</label>
+              </div>
+              <div class="col-md-9">
+                <textarea 
+                    required
+                    cols="10"
+                    class="form-control" id="labelNote" name="WorktrackNote" placeholder="Enter your note" 
+                    [(ngModel)]="worktrack.note"
+                    #txtnote="ngModel"  
+                ></textarea>
+              </div>
+            </div>
+
           </div>
+          <div class="modal-footer">
+              <input 
+                  type="submit" 
+                  class="btn btn-success" 
+                  (click)="save()" [disabled]="frm.invalid"
+                  value="{{worktrack.id === undefined || worktrack.id === 0 ? 'Add' : 'Update'}}"
+              />
+              <input 
+                  type="button" 
+                  class="btn btn-default" 
+                  (click)="modal.hide()" 
+                  value="Cancel"
+              />
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
 <!-- Delete Modal HTML -->
-<div bsModal #modalDelete="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
     <div class="modal-dialog">
       <div class="modal-content">
             <form>
                 <div class="modal-header">
                     <h4 class="modal-title">Delete Company</h4>
-                    <button type="button" class="close" (click)="modalDelete.hide()" data-dismiss="modal" aria-hidden="true">×</button>
+                    <!-- <button type="button" class="close" (click)="deleteModal.hide()" data-dismiss="modal" aria-hidden="true">×</button> -->
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete these Records?</p>
-                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                    <p class="text-warning">Are you sure you want to delete this Record?</p>
+                    <!-- <p class="text-warning"><small>This action cannot be undone.</small></p> -->
                 </div>
                 <div class="modal-footer">
-                    <input type="button" (click)="modalDelete.hide()" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" (click)="delete($event,worktrack.id)" class="btn btn-danger" value="Delete">
+                    <button (click)="delete(worktrack.id)" class="btn btn-danger">Delete</button>
+                    <button (click)="deleteModal.hide()" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<script>
-  $('.datepicker').datepicker();
-</script>
