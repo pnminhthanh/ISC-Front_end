@@ -16,12 +16,9 @@ export class EntranceTestComponent implements OnInit {
   test: string;
   courses: Course[] = [];
   course: Course = {} as Course;
-<<<<<<< HEAD
-=======
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   @ViewChild(DataTableDirective) dtElement: DataTableDirective;
->>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   constructor(private entrancetestService: EntranceTestService, private courseService: CourseService)  {  }

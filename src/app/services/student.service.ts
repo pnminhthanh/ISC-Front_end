@@ -37,7 +37,7 @@ export interface Student {
   userid: number;
   id: number;
   majorid: number;
-  universityid: number;
+  univerid: number;
   readyworkdate: Date;
   deposit: boolean;
   certificate: boolean;
