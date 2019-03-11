@@ -1,27 +1,25 @@
-<h4>Entrance Tests</h4>
+<h4>Test Results</h4>
 <div class="text-right mb-2" style="margin-bottom: 10px;">
   <button type="button" class="btn btn-success" (click)="showModal()"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
 </div>
 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
   <thead>
     <tr>
-      <th>Course Name</th>
-      <th>Test Date</th>
+      <th>Subject ID</th>
+      <th>User ID</th>
+      <th>Entrance Test ID</th>
+      <th>Score</th>
+      <th>IsPassing</th>
       <th style="width: 70px;">Options</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of entrancetests">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-      <td>{{row.coureName}}</td>
-=======
-      <td>{{row.courseid}}</td>
->>>>>>> c86fa0088228cfc5554738b63cbd3729c490c717
-      <td>{{row.courseName}}</td>
->>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
-      <td>{{row.testdate | date : 'dd-MM-yyyy'}}</td>
+    <tr *ngFor="let row of testresults">
+      <td>{{row.subjecname}}</td>
+      <td>{{row.userid}}</td>
+      <td>{{row.entrancetestid</td>
+      <td>{{row.score}}</td>
+      <td>{{row.ispassing}}</td>
       <td>
         <div class="row">
           <div class="col-md-3 text-center">
@@ -46,7 +44,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p> You want to delete this entrance test ?</p>
+          <p> You want to delete this test result ?</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" (click)="deleteModal.hide()">Cancel</button>
@@ -60,34 +58,59 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">New Entrance Test</h4>
+        <h4 class="modal-title pull-left">New Test Result</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modal.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+
         <div class="form-group row">
-          <label class="col-sm-5 col-form-label" style="margin-top: 7px;">Course Name : </label>
+          <label class="col-sm-5 col-form-label" style="margin-top: 7px;">Subject Name: </label>
+          <div class="col-sm-7">
+            <select class="form-control" [(ngModel)]="testresult.subjectid">
+              <option *ngFor="let item of subjects" [value]="item.subjectid">{{item.name}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label" style="margin-top: 7px;">User Name: </label>
           <div class="col-sm-7">
             <select class="form-control" [(ngModel)]="entrancetest.courseid">
               <option *ngFor="let item of courses" [value]="item.courseId">{{item.name}}</option>
             </select>
           </div>
         </div>
-
+        
         <div class="form-group row">
-            <label class="col-sm-5 col-form-label" style="margin-top: 7px;">Test Date : </label>
+          <label class="col-sm-5 col-form-label" style="margin-top: 7px;">Entrance Test Name: </label>
+          <div class="col-sm-7">
+            <select class="form-control" [(ngModel)]="entrancetest.courseid">
+              <option *ngFor="let item of courses" [value]="item.courseId">{{item.name}}</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-sm-5 col-form-label" style="margin-top: 7px;">Score: </label>
             <div class="col-sm-7">
-                <div class="form-group">
-                    <div class="input-group date">
-                        <input type="date" class="form-control" [(ngModel)]="entrancetest.testdate"id="dtpTestDate">
-                    </div>
-                </div>
+                <input type="text" class="form-control" [(ngModel)]="testresult.Score" placeholder="Enter Score">
             </div>
           </div>
-      </div>
+        
+        <div class="form-group row">
+          <label class="col-sm-5 col-form-label" style="margin-top: 7px;">Is Passing : </label>
+          <div class="col-sm-7">
+            <select class="form-control" [(ngModel)]="entrancetest.courseid">
+              <option *ngFor="let item of courses" [value]="item.courseId">{{item.name}}</option>
+            </select>
+          </div>
+        </div>
+    </div>
+
       <div class="modal-footer">
-        <button type="button" (click)="save()" class="btn btn-success">{{ (entrancetest.id === undefined || entrancetest.id === 0) ? 'Add':'Save'}}</button>
+        <button type="button" (click)="save()" class="btn btn-success">{{ (testresult.id === undefined || testresult.id === 0) ? 'Add':'Save'}}</button>
       </div>
     </div>
   </div>

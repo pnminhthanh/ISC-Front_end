@@ -18,9 +18,7 @@ export class ApiService {
     learnresult: this.baseUrl + 'LearResult',
     lecturer: this.baseUrl + 'lecturers',
     login: this.baseUrl + 'admin/login',
-
     trainingsubject: this.baseUrl + 'trainingsubjects',
-
     major: this.baseUrl + 'majors',
     specializedtraining: this.baseUrl + 'specializedtrainings',
     subjects: this.baseUrl + 'subjects',
@@ -28,6 +26,10 @@ export class ApiService {
     university: this.baseUrl + 'universities',
     worktracks: this.baseUrl + 'worktracks',
     classes: this.baseUrl + 'classes',
+<<<<<<< HEAD
+    testresult: this.baseUrl + 'testresult'
+=======
     student: this.baseUrl + 'students'
+>>>>>>> c86fa0088228cfc5554738b63cbd3729c490c717
   };
 }
