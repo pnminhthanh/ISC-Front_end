@@ -27,6 +27,7 @@ export class ApiService {
     user: this.baseUrl + 'users',
     university: this.baseUrl + 'universities',
     worktracks: this.baseUrl + 'worktracks',
-    classes: this.baseUrl + 'classes'
+    classes: this.baseUrl + 'classes',
+    student: this.baseUrl + 'students'
   };
 }

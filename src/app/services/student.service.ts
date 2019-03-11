@@ -1,13 +1,4 @@
 import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class StudentService {
-
-  constructor() { }
-}
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './user.service';
@@ -24,6 +15,7 @@ export interface StudentsResponse {
   data: Student[];
   message: string;
 }
+
 export interface StudentResponse {
   errorCode: number;
   data: Student;
@@ -32,21 +24,23 @@ export interface StudentResponse {
 
 export interface StudentFull {
   userid: number;
-  usE_USERID: number;
-  studentid: number;
-  academicrank: number;
-  startdate: Date;
-  student: object;
-  academic: object;
+  id: number;
+  major: object;
+  university: object;
+  readyworkdate: Date;
+  deposit: boolean;
+  certificate: boolean;
   user: User;
 }
 
 export interface Student {
   userid: number;
-  usE_USERID: number;
-  studentid: number;
-  academicrank: number;
-  startday: Date;
+  id: number;
+  majorid: number;
+  universityid: number;
+  readyworkdate: Date;
+  deposit: boolean;
+  certificate: boolean;
 }
 
 @Injectable({
