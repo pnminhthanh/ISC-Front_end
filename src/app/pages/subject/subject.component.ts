@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
-import { SubjectService, Subject } from 'src/app/services/subject.service';
+import { SubjectService, SubjectInterface } from 'src/app/services/subject.service';
 
 @Component({
   selector: 'app-subject',
@@ -9,10 +9,10 @@ import { SubjectService, Subject } from 'src/app/services/subject.service';
 })
 export class SubjectComponent implements OnInit {
 
-  subjects: Subject[] = [];
-  subject: Subject = {} as Subject;
-  @ViewChild('modalAdd') modalAdd: ModalDirective;
-  @ViewChild('modalDelete') modalDelete: ModalDirective;
+  subjects: SubjectInterface[] = [];
+  subject: SubjectInterface = {} as SubjectInterface;
+  @ViewChild('modal') modal: ModalDirective;
+  @ViewChild('deleteModal') deleteModal: ModalDirective;
   constructor(private subjectService: SubjectService) { }
 
   ngOnInit() {
@@ -20,50 +20,51 @@ export class SubjectComponent implements OnInit {
   }
   loadData() { this.subjectService.getAll().subscribe(result => { this.subjects = result.data; }); }
 
-  showModal(event = null, modal: ModalDirective, id: number = 0) {
+  showModal(event = null, id: number = 0) {
     if (event) {
       event.preventDefault();
     }
     if (id > 0) {
       this.subjectService.get(id).subscribe(result => {
         this.subject = result.data;
-        modal.show();
+        this.modal.show();
       });
     } else {
-      this.subject = {} as Subject;
-      modal.show();
+      this.subject = {} as SubjectInterface;
+      this.modal.show();
     }
   }
 
   showDeleteModal(event, id) {
+    if (event) {
+      event.preventDefault();
+    }
     this.subject.subjectId = id;
-    event.preventDefault();
-    this.modalDelete.show();
+    this.deleteModal.show();
   }
 
   save() {
     if (this.subject.subjectId === undefined || this.subject.subjectId === 0) {
       this.subjectService.add(this.subject).subscribe(result => {
-        this.modalAdd.hide();
+        this.modal.hide();
         this.loadData();
       });
     } else {
       this.subjectService.update(this.subject).subscribe(result => {
-        this.modalAdd.hide();
+        this.modal.hide();
         this.loadData();
       });
     }
   }
-  delete(event = null) {
+  delete(id) {
     event.preventDefault();
-    console.log(this.subject);
-    this.subjectService.delete(this.subject.subjectId).subscribe(result => {
+    this.subjectService.delete(id).subscribe(result => {
       if (result.errorCode === 0) {
-        const deleteSubject = this.subjects.find(x => x.subjectId === this.subject.subjectId);
+        const deleteSubject = this.subjects.find(x => x.subjectId === id);
         if (deleteSubject) {
           const index = this.subjects.indexOf(deleteSubject);
           this.subjects.splice(index, 1);
-          this.modalDelete.hide();
+          this.deleteModal.hide();
         }
       }
     });

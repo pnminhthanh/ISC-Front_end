@@ -8,7 +8,6 @@ import { EntranceTestComponent } from './pages/entrancetest/entrancetest.compone
 import {  } from 'rxjs';
 import { LecturerComponent } from './pages/lecturer/lecturer.component';
 import { UniversitymajorComponent } from './pages/universitymajor/universitymajor.component';
-import { StudentComponent } from './pages/student/student.component';
 import { TimetableComponent } from './pages/timetable/timetable.component';
 import { AddtimetableComponent } from './pages/addtimetable/addtimetable.component';
 import { LearningResultComponent } from './pages/learning-result/learning-result.component';
@@ -18,7 +17,11 @@ import { SubjectComponent } from './pages/subject/subject.component';
 import { WorktrackComponent } from './pages/worktrack/worktrack.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
+<<<<<<< HEAD
 import { TestResultComponent } from './pages/testresult/testresult.component';
+=======
+import { StudentComponent } from './pages/student/student.component';
+>>>>>>> c86fa0088228cfc5554738b63cbd3729c490c717
 
 const routes: Routes = [
   { path: '', component: LoginComponent, data: { title: 'Login Page' }},
@@ -33,7 +36,6 @@ const routes: Routes = [
     {path: 'entrancetest', component: EntranceTestComponent},
     {path: 'lecturer', component: LecturerComponent},
     {path: 'university', component: UniversitymajorComponent},
-    {path: 'student', component: StudentComponent},
     {path: 'timetable', component: TimetableComponent},
     {path: 'addtimetable', component: AddtimetableComponent},
     {path: 'learnresult', component: LearningResultComponent},
@@ -41,7 +43,11 @@ const routes: Routes = [
     {path: 'company', component: CompanyComponent},
     {path: 'subject', component: SubjectComponent},
     {path: 'worktrack', component: WorktrackComponent},
+<<<<<<< HEAD
     {path: 'testresult', component: TestResultComponent}
+=======
+    {path: 'student', component: StudentComponent}
+>>>>>>> c86fa0088228cfc5554738b63cbd3729c490c717
 
   ]
   }
