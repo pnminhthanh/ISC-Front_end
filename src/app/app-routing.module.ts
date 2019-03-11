@@ -17,11 +17,8 @@ import { SubjectComponent } from './pages/subject/subject.component';
 import { WorktrackComponent } from './pages/worktrack/worktrack.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
-<<<<<<< HEAD
 import { TestResultComponent } from './pages/testresult/testresult.component';
-=======
 import { StudentComponent } from './pages/student/student.component';
->>>>>>> c86fa0088228cfc5554738b63cbd3729c490c717
 
 const routes: Routes = [
   { path: '', component: LoginComponent, data: { title: 'Login Page' }},
@@ -47,12 +44,10 @@ const routes: Routes = [
     {path: 'testresult', component: TestResultComponent}
 =======
     {path: 'student', component: StudentComponent}
->>>>>>> c86fa0088228cfc5554738b63cbd3729c490c717
 
   ]
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
