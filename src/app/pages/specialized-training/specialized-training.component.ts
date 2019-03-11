@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective, BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { SpecialiazedTraining, SpecializedTrainingService } from 'src/app/services/specialized-training.service';
-import { SubjectService, Subject } from 'src/app/services/subject.service';
+import { SubjectService, SubjectInterface } from 'src/app/services/subject.service';
 import { TrainingSubject, TrainingsubjectService } from 'src/app/services/trainingsubject.service';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
+
 @Component({
   selector: 'app-specialized-training',
   templateUrl: './specialized-training.component.html',
@@ -14,12 +19,19 @@ export class SpecializedTrainingComponent implements OnInit {
   test: string;
   specializedTraining: SpecialiazedTraining = {} as SpecialiazedTraining;
   specializedTrainings: SpecialiazedTraining[] = [];
-  subjects: Subject[] = [];
-  subject: Subject = {} as Subject;
-  selectedSubjects: Subject[] = [];
+  subjects: SubjectInterface[] = [];
+  subject: SubjectInterface = {} as SubjectInterface;
+  selectedSubjects: SubjectInterface[] = [];
   trainingSubject: TrainingSubject = {} as TrainingSubject;
   listTrainingSubjectsDeleted: number[] = [];
-  
+
+
+  private alert = new Subject<string>();
+  successMessage: string;
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
 
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
@@ -28,9 +40,36 @@ export class SpecializedTrainingComponent implements OnInit {
      private modalService: BsModalService) { }
 
   ngOnInit() {
+    this.alert.subscribe((message) => this.successMessage = message);
+    this.alert.pipe(
+      debounceTime(3000)
+    ).subscribe(() => this.successMessage = null);
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+
     this.loadData();
   }
 
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
+  ngAfterViewInit(): void {this.dtTrigger.next(); }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+       dtInstance.destroy();
+       this.dtTrigger.next();
+   });
+  }
+
+  alertMessage(message) {
+    this.alert.next(message);
+  }
+  
   loadData() {
     this.sptrainingService.getAll().subscribe(
       result => {
@@ -69,16 +108,13 @@ export class SpecializedTrainingComponent implements OnInit {
         this.sptrainingService.getTheLast().subscribe(result => {
           if (this.selectedSubjects.length > 0) {
             this.selectedSubjects.forEach(item => {
-<<<<<<< HEAD
-              this.trainingSubject.subjectId = item.subjectid;
-=======
               this.trainingSubject.subjectId = item.subjectId;
->>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
               this.trainingSubject.trainingId = result.data.trainingId;
               console.log(this.trainingSubject);
               this.trainingSubjectService.add(this.trainingSubject).subscribe();
             });
           }
+          this.alertMessage(result.message);
         });
         this.modal.hide();
         this.loadData();
@@ -96,11 +132,7 @@ export class SpecializedTrainingComponent implements OnInit {
         if (this.selectedSubjects.length > 0) {
           this.selectedSubjects.forEach(item => {
             const addSubject = {} as TrainingSubject;
-<<<<<<< HEAD
-            addSubject.subjectId = item.subjectid;
-=======
             addSubject.subjectId = item.subjectId;
->>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
             addSubject.trainingId = this.specializedTraining.trainingId;
             console.log(addSubject);
             this.trainingSubjectService.getTrainingSubject(this.trainingSubject).subscribe(result => {
@@ -108,6 +140,7 @@ export class SpecializedTrainingComponent implements OnInit {
                 console.log(result.data);
                 this.trainingSubjectService.add(addSubject).subscribe();
               }
+              this.alertMessage(result.message);
             });
           });
         } else {
@@ -123,7 +156,8 @@ export class SpecializedTrainingComponent implements OnInit {
     this.specializedTraining.trainingId = id;
     this.sptrainingService.get(id).subscribe( result => {
       this.specializedTraining.listSubjects =  result.data.listSubjects;
-    })
+      this.alertMessage(result.message);
+    });
     event.preventDefault();
     this.deleteModal.show();
   }
@@ -142,22 +176,19 @@ export class SpecializedTrainingComponent implements OnInit {
           this.specializedTrainings.splice(index);
         }
       }
+      this.alertMessage(result.message);
     });
     this.deleteModal.hide();
     this.loadData();
   }
 
-  addSubjectToTraining(data: Subject) {
+  addSubjectToTraining(data: SubjectInterface) {
       this.selectedSubjects.push(data);
   }
 
   // Xoa mon hoc khoi danh sach mon hoc cua chuong trinh hoc tren modal
   removeFromSelectedSubjects(index) {
-<<<<<<< HEAD
-    const deleteSubjectId = this.selectedSubjects[index].subjectid;
-=======
     const deleteSubjectId = this.selectedSubjects[index].subjectId;
->>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
     const item = {} as TrainingSubject;
     item.subjectId = deleteSubjectId;
     item.trainingId = this.specializedTraining.trainingId;
@@ -176,21 +207,18 @@ export class SpecializedTrainingComponent implements OnInit {
   }
 
   checkSelectedSubject(id) {
+    console.log(id);
     console.log(this.selectedSubjects);
     this.subjectService.get(id).subscribe(
       result => {
         console.log(result.data);
         const index = this.selectedSubjects.filter(function(el) {
-<<<<<<< HEAD
-          if (el.subjectid === id) {
-=======
           if (el.subjectId === id) {
->>>>>>> d9fa6700289bb26db9199ccf9463f05e79403f28
             return el;
           }
         });
         console.log(index);
-        if(index.length > 0){
+        if (index.length > 0) {
           alert('Subject has existed in list selected subjects!');
         } else {
           this.addSubjectToTraining(result.data);
