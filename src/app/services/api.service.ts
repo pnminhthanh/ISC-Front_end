@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class ApiService {
 
   constructor() { }
-  baseUrl = 'https://localhost:44356/api/';
+  baseUrl = 'https://localhost:44324/api/';
   apiUrl = {
     academic: this.baseUrl + 'academics',
     companies: this.baseUrl + 'companies',

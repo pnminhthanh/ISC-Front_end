@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { Subject } from 'src/app/services/subject.service';
+import { SubjectInterface } from 'src/app/services/subject.service';
 
 export interface SpecialiazedTraining {
   trainingId: number;
   name: string;
   numberofWeeks: number;
-  listSubjects: Subject[];
+  listSubjects: SubjectInterface[];
 }
 
 export interface TrainingSubjectInfo {
