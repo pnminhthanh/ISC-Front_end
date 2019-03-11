@@ -21,7 +21,7 @@ export class StudentComponent implements OnInit {
   majors: Major[] = [];
   user: User = {gender: 1} as User;
   students: StudentFull[] = [];
-  student: Student = { certification: false, deposits: false } as Student;
+  student: Student = {} as Student;
 
   private alert = new Subject<string>();
   successMessage: string;
@@ -33,9 +33,9 @@ export class StudentComponent implements OnInit {
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
 
-
-  constructor(public datetimeService: DatetimeService, public majorService: MajorService,
-              public universityService: UniversityService, public studentService: StudentService, public userService: UserService) { }
+// tslint:disable-next-line: max-line-length
+  constructor(public datetimeService: DatetimeService, public majorService: MajorService, public universityService: UniversityService, public studentService: StudentService, public userService: UserService) {
+  }
 
   ngOnInit() {
     this.user = {gender: 1} as User;
@@ -83,7 +83,7 @@ export class StudentComponent implements OnInit {
         });
       });
     } else {
-      this.student = {certification: false, deposits: false} as Student;
+      this.student = {} as Student;
       this.user = {gender: 1} as User;
       this.modal.show();
     }
@@ -154,4 +154,5 @@ export class StudentComponent implements OnInit {
   alertMessage(message) {
     this.alert.next(message);
   }
+
 }
