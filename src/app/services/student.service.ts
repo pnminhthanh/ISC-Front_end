@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './user.service';
 import { ApiService } from './api.service';
+import { University } from './university.service';
+import { Major } from './major.service';
 
 export interface StudentsFullResponse {
   errorCode: number;
@@ -25,11 +27,11 @@ export interface StudentResponse {
 export interface StudentFull {
   userid: number;
   id: number;
-  major: object;
-  university: object;
+  major: Major;
+  university: University;
   readyworkdate: Date;
-  deposit: boolean;
-  certificate: boolean;
+  deposits: boolean;
+  certification: boolean;
   user: User;
 }
 
@@ -39,14 +41,14 @@ export interface Student {
   majorid: number;
   univerid: number;
   readyworkdate: Date;
-  deposit: boolean;
-  certificate: boolean;
+  deposits: boolean;
+  certification: boolean;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class StudentsService {
+export class StudentService {
 
   endpoint = 'https://localhost:44324/api/';
   httpOptions = {

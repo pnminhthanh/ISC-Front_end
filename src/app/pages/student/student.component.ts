@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { StudentsService, Student, StudentFull } from '../../services/student.service';
+import { StudentService, Student, StudentFull } from '../../services/student.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserService, User } from '../../services/user.service';
-import { DegreeService, Degree } from '../../services/degree.service';
-import { AcademicService, Academic } from '../../services/academic.service';
+import { UniversityService, University } from '../../services/university.service';
+import { MajorService, Major } from '../../services/major.service';
 import { DatetimeService } from '../../services/datetime.service';
 import { Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
@@ -18,8 +18,8 @@ import { debounceTime } from 'rxjs/operators';
 
 export class StudentComponent implements OnInit {
 
-  degrees: Degree[] = [];
-  academics: Academic[] = [];
+  universities: University[] = [];
+  majors: Major[] = [];
   user: User = {gender: 1} as User;
   students: StudentFull[] = [];
   student: Student = {} as Student;
@@ -35,7 +35,7 @@ export class StudentComponent implements OnInit {
   @ViewChild('deleteModal') deleteModal: ModalDirective;
 
 // tslint:disable-next-line: max-line-length
-  constructor(public datetimeService: DatetimeService, public academicService: AcademicService, public degreeService: DegreeService, public studentService: StudentsService, public userService: UserService) {
+  constructor(public datetimeService: DatetimeService, public majorService: MajorService, public universityService: UniversityService, public studentService: StudentService, public userService: UserService) {
   }
 
   ngOnInit() {
@@ -49,12 +49,12 @@ export class StudentComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10
     };
-    this.degreeService.getDegrees().subscribe(result => {
-      this.degrees = result.data;
+    this.universityService.getUniversities().subscribe(result => {
+      this.universities = result.data;
       console.log(result.data);
     });
-    this.academicService.getAcademics().subscribe(result => {
-      this.academics = result.data;
+    this.majorService.getMajors().subscribe(result => {
+      this.majors = result.data;
       console.log(result.data);
     });
     this.loadData();
