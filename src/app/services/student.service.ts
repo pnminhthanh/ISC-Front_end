@@ -39,7 +39,7 @@ export interface Student {
   userid: number;
   id: number;
   majorid: number;
-  univerid: number;
+  univerId: number;
   readyworkdate: Date;
   deposits: boolean;
   certification: boolean;
