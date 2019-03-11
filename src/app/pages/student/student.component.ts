@@ -1,28 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { StudentsService, Student, StudentFull } from '../../services/student.service';
-import { ModalDirective } from 'ngx-bootstrap/modal';
-import { UserService, User } from '../../services/user.service';
-import { DegreeService, Degree } from '../../services/degree.service';
-import { AcademicService, Academic } from '../../services/academic.service';
-import { DatetimeService } from '../../services/datetime.service';
+import { University, UniversityService } from 'src/app/services/university.service';
+import { Major, MajorService } from 'src/app/services/major.service';
+import { User, UserService } from 'src/app/services/user.service';
+import { StudentFull, Student, StudentService } from 'src/app/services/student.service';
 import { Subject } from 'rxjs';
-import { NgForm } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
+import { ModalDirective } from 'ngx-bootstrap';
+import { DatetimeService } from 'src/app/services/datetime.service';
 import { debounceTime } from 'rxjs/operators';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-student',
   templateUrl: './student.component.html',
   styleUrls: ['./student.component.css']
 })
-
 export class StudentComponent implements OnInit {
 
-  degrees: Degree[] = [];
-  academics: Academic[] = [];
+  universities: University[] = [];
+  majors: Major[] = [];
   user: User = {gender: 1} as User;
   students: StudentFull[] = [];
-  student: Student = {} as Student;
+  student: Student = { certification: false, deposits: false } as Student;
 
   private alert = new Subject<string>();
   successMessage: string;
@@ -34,9 +33,9 @@ export class StudentComponent implements OnInit {
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
 
-// tslint:disable-next-line: max-line-length
-  constructor(public datetimeService: DatetimeService, public academicService: AcademicService, public degreeService: DegreeService, public studentService: StudentsService, public userService: UserService) {
-  }
+
+  constructor(public datetimeService: DatetimeService, public majorService: MajorService,
+              public universityService: UniversityService, public studentService: StudentService, public userService: UserService) { }
 
   ngOnInit() {
     this.user = {gender: 1} as User;
@@ -49,12 +48,12 @@ export class StudentComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10
     };
-    this.degreeService.getDegrees().subscribe(result => {
-      this.degrees = result.data;
+    this.universityService.getUniversities().subscribe(result => {
+      this.universities = result.data;
       console.log(result.data);
     });
-    this.academicService.getAcademics().subscribe(result => {
-      this.academics = result.data;
+    this.majorService.getMajors().subscribe(result => {
+      this.majors = result.data;
       console.log(result.data);
     });
     this.loadData();
@@ -84,7 +83,7 @@ export class StudentComponent implements OnInit {
         });
       });
     } else {
-      this.student = {} as Student;
+      this.student = {certification: false, deposits: false} as Student;
       this.user = {gender: 1} as User;
       this.modal.show();
     }
