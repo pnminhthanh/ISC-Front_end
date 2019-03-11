@@ -29,11 +29,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { DataTablesModule } from 'angular-datatables';
 import { Select2Module } from 'ng2-select2';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-<<<<<<< HEAD
 import { TestResultComponent } from './pages/testresult/testresult.component' ;
-=======
 import { StudentComponent } from './pages/student/student.component';
->>>>>>> c86fa0088228cfc5554738b63cbd3729c490c717
 
 @NgModule({
   declarations: [
@@ -55,11 +52,8 @@ import { StudentComponent } from './pages/student/student.component';
     CompanyComponent,
     SubjectComponent,
     WorktrackComponent,
-<<<<<<< HEAD
-    TestResultComponent
-=======
+    TestResultComponent,
     StudentComponent
->>>>>>> c86fa0088228cfc5554738b63cbd3729c490c717
 
   ],
   imports: [
