@@ -29,7 +29,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { CookieService } from 'ngx-cookie-service';
 import { DataTablesModule } from 'angular-datatables';
 import { Select2Module } from 'ng2-select2';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap' ;
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TestResultComponent } from './pages/testresult/testresult.component' ;
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap' ;
     StudentComponent,
     CompanyComponent,
     SubjectComponent,
-    WorktrackComponent
+    WorktrackComponent,
+    TestResultComponent
 
   ],
   imports: [

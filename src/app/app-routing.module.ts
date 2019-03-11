@@ -18,6 +18,7 @@ import { SubjectComponent } from './pages/subject/subject.component';
 import { WorktrackComponent } from './pages/worktrack/worktrack.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
+import { TestResultComponent } from './pages/testresult/testresult.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, data: { title: 'Login Page' }},
@@ -39,7 +40,8 @@ const routes: Routes = [
     {path: 'classroom', component: ClassroomComponent},
     {path: 'company', component: CompanyComponent},
     {path: 'subject', component: SubjectComponent},
-    {path: 'worktrack', component: WorktrackComponent}
+    {path: 'worktrack', component: WorktrackComponent},
+    {path: 'testresult', component: TestResultComponent}
 
   ]
   }
