@@ -15,8 +15,8 @@ import { EntranceTest, EntranceTestService } from 'src/app/services/entrancetest
 export class TestResultComponent implements OnInit {
   testresults: TestResult[] = [];
   testresult: TestResult = {} as TestResult;
-  subjects: Subject[] = [];
-  subject: Subject = {} as Subject;
+  // subjects: Subject[] = [];
+  // subject: Subject = {} as Subject;
   entrancetests: EntranceTest[] = [];
   entrancetest: EntranceTest = {} as EntranceTest;
   users: User[] = [];

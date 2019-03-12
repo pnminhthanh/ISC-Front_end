@@ -17,6 +17,7 @@ import { SubjectComponent } from './pages/subject/subject.component';
 import { WorktrackComponent } from './pages/worktrack/worktrack.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
+import { ClassesComponent } from './pages/classes/classes.component';
 import { TestResultComponent } from './pages/testresult/testresult.component';
 import { StudentComponent } from './pages/student/student.component';
 
@@ -40,13 +41,13 @@ const routes: Routes = [
     {path: 'company', component: CompanyComponent},
     {path: 'subject', component: SubjectComponent},
     {path: 'worktrack', component: WorktrackComponent},
+    {path: 'classes', component: ClassesComponent},
     {path: 'testresult', component: TestResultComponent},
     {path: 'student', component: StudentComponent}
 
   ]
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

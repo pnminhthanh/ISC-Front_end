@@ -7,7 +7,6 @@ import { load } from '@angular/core/src/render3';
 import { DataTableDirective } from 'angular-datatables';
 //import { settings } from 'cluster';
 import { Subject } from 'rxjs';
-declare var $;
 @Component({
   selector: 'app-classroom',
   templateUrl: './classroom.component.html',
@@ -84,8 +83,8 @@ export class ClassroomComponent implements OnInit {
           this.classrooms.splice(index, 1);
           this.modalDelete.hide();
         }
-        this.loadData();
-      }
+      };
+      this.loadData();
     });
     this.classroom.id = null;
   }

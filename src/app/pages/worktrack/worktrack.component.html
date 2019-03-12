@@ -20,10 +20,10 @@
                       <thead>
                         <tr>
                           <th>No.</th>
-                          <th>CompanyId</th>
-                          <th>IdStudent</th>
-                          <th>StartDate</th>
-                          <th>ContractDate</th>
+                          <th>Company Name</th>
+                          <th>Student Name</th>
+                          <th>Start Date</th>
+                          <th>Contract Date</th>
                           <th>Status</th>
                           <th>Note</th>
                           <th></th>
@@ -56,17 +56,17 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 id="dialog-sizes-name1" class="modal-title">{{worktrack.id === undefined || worktrack.id === 0 ? 'Add New Worktrack' : 'Edit worktrack information'}}</h4>
-            <!-- <button type="button" class="close pull-right" (click)="modal.hide()" aria-label="Close">
-              <span aria-hidden ="true">&times;</span>
-            </button> -->
+              <button type="button" class="close pull-right" (click)="modal.hide()" aria-label="Close">
+                  <span aria-hidden ="true">&times;</span>
+                </button>
+            <h4 id="dialog-sizes-name1" class="modal-title">{{worktrack.id === undefined || worktrack.id === 0 ? 'Add New Worktrack' : 'Edit worktrack information'}}</h4>           
           </div>
           <div class="modal-body">
             <!-- WORKTRACK COMPANY ID -->
             <!-- code mau cai select nhe -->
             <div class="row form-group">
               <div class="col-md-3">
-                  <label for="selectCompany">Company ID</label>
+                  <label for="selectCompany">Company</label>
               </div>
               <div class="col-md-9">
                   <select 
