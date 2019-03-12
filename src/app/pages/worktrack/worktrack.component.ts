@@ -3,6 +3,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { Worktrack, WorktrackService } from 'src/app/services/worktrack.service';
 import { DatetimeService } from 'src/app/services/datetime.service';
 import { CompanyService, Company } from 'src/app/services/company.service';
+import { StudentService, Student, StudentFull} from 'src/app/services/student.service';
 
 @Component({
   selector: 'app-worktrack',
@@ -15,12 +16,13 @@ export class WorktrackComponent implements OnInit {
   worktracks: Worktrack[] = [];
   company: Company = {} as Company;
   companies: Company[] = [];
+  students: StudentFull[] = [];
   companyname: string;
   studentname: string;
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   constructor(private worktrackService: WorktrackService, private datetimeService: DatetimeService,
-              private companyService: CompanyService) { }
+              private companyService: CompanyService, private studentService: StudentService) { }
 
   ngOnInit() {
     this.loadData();
@@ -31,6 +33,12 @@ export class WorktrackComponent implements OnInit {
   loadData() {
     this.worktrackService.getAll().subscribe(result => {
       this.worktracks = result.data;
+    });
+    this.companyService.getAll().subscribe(result => {
+      this.companies = result.data;
+    });
+    this.studentService.getStudents().subscribe(result => {
+      this.students = result.data;
     });
   }
   showModal(event = null, id: number = 0) {

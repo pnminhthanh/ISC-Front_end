@@ -117,6 +117,7 @@ export class SpecializedTrainingComponent implements OnInit {
             });
           }
           this.alertMessage(result.message);
+          this.selectedSubjects = null;
         });
         this.modal.hide();
       });
@@ -148,13 +149,13 @@ export class SpecializedTrainingComponent implements OnInit {
                 }
               });
             });
+          this.selectedSubjects = null;
         } else {
           this.trainingSubjectService.deleteAllByTrainingId(this.specializedTraining.trainingId).subscribe(result => {
             this.alertMessage(result.message);
             this.loadData();
           });
         }
-        this.loadData();
         this.modal.hide();
       });
     }
@@ -174,19 +175,32 @@ export class SpecializedTrainingComponent implements OnInit {
     event.preventDefault();
     if(this.specializedTraining.listSubjects.length > 0)
     {
-      this.trainingSubjectService.deleteAllByTrainingId(this.specializedTraining.trainingId).subscribe();
-    }
-    this.sptrainingService.delete(this.specializedTraining.trainingId).subscribe(result => {
-      const deletedTraining = this.specializedTrainings.find(x => x.trainingId === this.specializedTraining.trainingId);
-      if (result.errorCode === 0) {
-        const index = this.specializedTrainings.indexOf(deletedTraining);
-        if (deletedTraining) {
-          this.specializedTrainings.splice(index);
+      this.trainingSubjectService.deleteAllByTrainingId(this.specializedTraining.trainingId).subscribe(result => {
+        this.sptrainingService.delete(this.specializedTraining.trainingId).subscribe(item => {
+          const deletedTraining = this.specializedTrainings.find(x => x.trainingId === this.specializedTraining.trainingId);
+          if (item.errorCode === 0) {
+            const index = this.specializedTrainings.indexOf(deletedTraining);
+            if (deletedTraining) {
+              this.specializedTrainings.splice(index);
+            }
+          }
+          this.loadData();
+          this.alertMessage(result.message);
+        });
+      });
+    } else {
+      this.sptrainingService.delete(this.specializedTraining.trainingId).subscribe(result => {
+        const deletedTraining = this.specializedTrainings.find(x => x.trainingId === this.specializedTraining.trainingId);
+        if (result.errorCode === 0) {
+          const index = this.specializedTrainings.indexOf(deletedTraining);
+          if (deletedTraining) {
+            this.specializedTrainings.splice(index);
+          }
         }
-      }
-      this.loadData();
-      this.alertMessage(result.message);
-    });
+        this.loadData();
+        this.alertMessage(result.message);
+      });
+    }
     this.deleteModal.hide();
   }
 
@@ -211,6 +225,7 @@ export class SpecializedTrainingComponent implements OnInit {
   deleteSelectedSubject(TrainingSubjectId) {
     this.trainingSubjectService.delete(TrainingSubjectId).subscribe(result => {
         console.log(result.message);
+        this.loadData();
     });
   }
 
