@@ -222,14 +222,14 @@
                                       <label for="rbtnDeposit" class="col-sm-6 control-label">Deposit</label>
               
                                       <div class="col-sm-6">
-                                          <input type="checkbox" id="rbtnDeposit" value="true" [(ngModel)]="student.deposits" name="deposits"/>
+                                          <input type="checkbox" id="rbtnDeposit" value="true" [(ngModel)]="student.deposits" name="deposits" ng-check="student.deposits"/>
                                       </div>
                                   </div>
               
                                   <div class="col-sm-6">
                                       <label for="rbtnCertification" class="col-sm-6 control-label pl-0" style="padding-left: 0;">Certification</label>
                                       <div class="col-sm-6">
-                                          <input type="checkbox" id="rbtnCertification" value="true" [(ngModel)]="student.certification" name="certification"/>
+                                          <input type="checkbox" id="rbtnCertification" value="true" [(ngModel)]="student.certification" name="certification" ng-check="student.certification"/>
                                       </div>
                                   </div>
                               </div>
