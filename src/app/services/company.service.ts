@@ -15,8 +15,8 @@ export interface CompanyResponse {
   message: string;
 }
 export interface Company {
-  companyid: number;
-  companyname: string;
+  id: number;
+  name: string;
   diachi: string;
   contectperson: string;
   phone: string;
@@ -40,12 +40,11 @@ export class CompanyService {
     return this.http.post<CompanyResponse>(this.api.apiUrl.companies, data);
   }
   update(data: Company): Observable<CompanyResponse> {
-    // const url = this.api.apiUrl.major + '?id=' + data.id;
-    const url = `${this.api.apiUrl.companies}/${data.companyid}`;
+    const url = `${this.api.apiUrl.companies}/${data.id}`;
     return this.http.put<CompanyResponse>(url, data);
   }
-  delete(companyid): Observable<CompanyResponse> {
-    const url = `${this.api.apiUrl.companies}/${companyid}`;
+  delete(id): Observable<CompanyResponse> {
+    const url = `${this.api.apiUrl.companies}/${id}`;
     return this.http.delete<CompanyResponse>(url);
   }
 }

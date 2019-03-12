@@ -2,6 +2,20 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Company } from './company.service';
+import { Student } from './student.service';
+import { User } from './user.service';
+
+export interface WorktrackInfo {
+  id: number;
+  startDate: Date;
+  contractDate: Date;
+  status: boolean;
+  note: string;
+  student: Student;
+  company: Company;
+  user: User;
+}
 
 export interface Worktrack {
   id: number;
@@ -9,16 +23,23 @@ export interface Worktrack {
   idstudent: number;
   startdate: Date;
   contractdate: Date;
-  status: boolean;
-  note: string;
+  status: number;
 }
+
 export interface WorktrackResponse {
   data: Worktrack;
   errorCode: number;
   message: string;
 }
+
 export interface WorktracksResponse {
   data: Worktrack[];
+  errorCode: number;
+  message: string;
+}
+
+export interface WorktracksInfoResponse {
+  data: WorktrackInfo[];
   errorCode: number;
   message: string;
 }
@@ -28,8 +49,8 @@ export interface WorktracksResponse {
 export class WorktrackService {
 
   constructor(private api: ApiService, private http: HttpClient) { }
-  getAll(): Observable<WorktracksResponse> {
-    return this.http.get<WorktracksResponse>(this.api.apiUrl.worktracks);
+  getAll(): Observable<WorktracksInfoResponse> {
+    return this.http.get<WorktracksInfoResponse>(this.api.apiUrl.worktracks);
   }
   get(id): Observable<WorktrackResponse> {
     return this.http.get<WorktrackResponse>(`${this.api.apiUrl.worktracks}/${id}`);

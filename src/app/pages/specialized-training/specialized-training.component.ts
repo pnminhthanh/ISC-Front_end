@@ -95,6 +95,7 @@ export class SpecializedTrainingComponent implements OnInit {
       });
     } else {
       this.specializedTraining = {} as SpecialiazedTraining;
+      this.selectedSubjects = [] as SubjectInterface[];
       this.modal.show();
     }
     console.log(this.listTrainingSubjectsDeleted);
@@ -117,7 +118,6 @@ export class SpecializedTrainingComponent implements OnInit {
             });
           }
           this.alertMessage(result.message);
-          this.selectedSubjects = null;
         });
         this.modal.hide();
       });
@@ -129,7 +129,7 @@ export class SpecializedTrainingComponent implements OnInit {
           this.listTrainingSubjectsDeleted.forEach(item => {
             this.deleteSelectedSubject(item);
           });
-          this.listTrainingSubjectsDeleted = null;
+          this.listTrainingSubjectsDeleted = [] as number[];
           this.loadData();
         }
         if (this.selectedSubjects.length > 0) {
@@ -184,7 +184,6 @@ export class SpecializedTrainingComponent implements OnInit {
               this.specializedTrainings.splice(index);
             }
           }
-          this.loadData();
           this.alertMessage(result.message);
         });
       });
@@ -197,7 +196,6 @@ export class SpecializedTrainingComponent implements OnInit {
             this.specializedTrainings.splice(index);
           }
         }
-        this.loadData();
         this.alertMessage(result.message);
       });
     }

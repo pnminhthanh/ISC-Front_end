@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="/assets/css/dataTables.min.css" />
 <h2>Worktrack</h2>
-<div class="box box-info">
+<div class="box">
     <div class="box-header with-border">
         <h3 class="box-title">Information</h3>
+        <button class="btn btn-success pull-right" (click)="showModal($event)"><i class="fa fa-plus"></i> <span>Add New Worktrack</span></button>
     </div>
     <!-- /.box-header -->
     <!-- form start -->
@@ -10,42 +11,36 @@
         <div class="container-fluid">
             <div class="box-body">
                 <input id="id" hidden />
-                <div class="row" style="margin-bottom:30px;">
-                    <div class="col-md-1">
-                        <a class="btn btn-success" (click)="showModal($event)"><i class="fa fa-plus"></i> <span>Add New Worktrack</span></a>
-                    </div>
-                </div>
-                <div class="row">
-                    <table datatable class="table table-bordered table-hover table-striped">
+                    <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover table-striped">
                       <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>Company Name</th>
-                          <th>Student Name</th>
-                          <th>Start Date</th>
-                          <th>Contract Date</th>
-                          <th>Status</th>
-                          <th>Note</th>
-                          <th></th>
+                          <th  class="text-center">#</th>
+                          <th  class="text-center">Company Name</th>
+                          <th  class="text-center">Student Name</th>
+                          <th  class="text-center">Start Date</th>
+                          <th  class="text-center">Contract Date</th>
+                          <th  class="text-center">Status</th>
+                          <th  class="text-center col-md-3">Note</th>
+                          <th style="width: 70px;"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let row of worktracks">
-                          <th>{{row.id}}</th>
-                          <th>{{row.companyid}}</th>
-                          <td>{{row.idstudent}}</td>
-                          <td>{{row.startdate}}</td>
-                          <td>{{row.contractdate}}</td>
-                          <td>{{row.status === 1 ? 'Working' : 'Stopped'}}</td>
+                        <tr *ngFor="let row of worktracks; let i = index">
+                          <td class="text-center">{{i + 1}}</td>
+                          <td>{{row.company.name}}</td>
+                          <td>{{row.user.lastname + " " + row.user.firstname}}</td>
+                          <td>{{row.startDate | date : 'dd-MM-yyyy'}}</td>
+                          <td>{{row.contractDate | date : 'dd-MM-yyyy'}}</td>
+                          <td class="text-center">{{row.status === 1 ? 'Working' : 'Stopped'}}</td>
                           <td>{{row.note}}</td>
-                          <td>
-                            <a class="edit" (click)="showModal($event,row.id)"><i class="fa fa-pencil-square-o" data-toggle="tooltip" title="" data-original-title="Edit"></i></a>
-                            <a class="delete" (click)="showDeleteModal($event,row.id)" style="margin-left: 20px;"><i class="fa fa-trash-o" data-toggle="tooltip" title="" data-original-title="Delete"></i></a>
+                          <td class="text-center"> 
+                            <button class="btn btn-default" (click)="showModal($event, row.id)"><i class="fa fa-edit text-primary"></i></button>
+                            <button class="btn btn-default" (click)="showDeleteModal($event, row.id)"><i class="fa fa-trash-o text-danger"></i></button> 
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                </div>
             </div>
         </div>
     </form>
@@ -69,28 +64,39 @@
                   <label for="selectCompany">Company</label>
               </div>
               <div class="col-md-9">
-                  <select 
-                      class="form-control" name="WorktrackCompany" id="selectCompany" 
-                      [(ngModel)]="worktrack.companyid"
-                      (ngModelChange)="selectCompanyName()"
-                  >
-                    <option value="" selected>Choose company name</option>
-                    <option *ngFor="let opt of companies" [ngValue]="opt.companyid">{{opt.companyname}}</option>
-                  </select>
-                </div>
+                <select required #company="ngModel" class="form-control" name="WorktrackCompany" id="selectCompany" [(ngModel)]="worktrack.companyid">
+                  <option [ngValue]="undefined" disabled  selected> Please select one option </option>
+                  <option *ngFor="let opt of companies" [ngValue]="opt.id">{{opt.name}}</option>
+                </select>
+                <div class="row">
+                    <div class="col-md-9 text-danger" *ngIf="txtContractDate.touched">
+                      <div *ngIf="company.errors?.required">
+                        Company is required!
+                      </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                  </div>
+              </div>
             </div>
             <!-- WORKTRACK STUDENT ID -->
-            <!-- code mau cai select nhe -->
             <div class="row form-group">
                 <div class="col-md-3">
-                    <label for="selectStudent">Student ID</label>
+                    <label for="selectStudent">Student</label>
                 </div>
                 <div class="col-md-9">
-                    <select class="form-control" name="WorktrackCompany" id="selectStudent" [(ngModel)]="worktrack.idstudent">
-                      <option value="1">Co-operate</option>
-                      <option value="0">Stop cooperating</option>
-                    </select>
+                  <select required #student="ngModel" class="form-control" name="WorktrackCompany" id="selectStudent" [(ngModel)]="worktrack.idstudent">
+                    <option [ngValue]="undefined" disabled  selected> Please select one option </option>
+                    <option *ngFor="let opt of students" [ngValue]="opt.id">{{opt.user.lastname + " " + opt.user.firstname}}</option>
+                  </select>
+                  <div class="row">
+                    <div class="col-md-9 text-danger" *ngIf="txtContractDate.touched">
+                      <div *ngIf="student.errors?.required">
+                        Student is required!
+                      </div>
+                    </div>
+                    <div class="col-md-3"></div>
                   </div>
+                </div>                 
               </div>
             <!-- WORKTRACK START DATE -->
             <div class="row form-group">
@@ -99,7 +105,7 @@
               </div>
               <div class="col-md-9">
                 <input 
-                    type="text"
+                    type="date"
                     required
                     class="form-control" id="labelStartDate" name="WorktrackStartDate" placeholder="Enter start date" 
                     [(ngModel)]="worktrack.startdate"
@@ -118,24 +124,23 @@
             <!-- WORKTRACK CONTRACT DATE -->
             <div class="row form-group">
               <div class="col-md-3">
-                <label for="labelContractDate">Start Date</label>
+                <label for="labelContractDate">Contract Date</label>
               </div>
               <div class="col-md-9">
                 <input 
-                    type="text"
-                    required
+                    type="date"                    
                     class="form-control" id="labelContractDate" name="WorktrackStartDate" placeholder="Enter contract date" 
                     [(ngModel)]="worktrack.contractdate"
                     #txtContractDate="ngModel"  
                 />
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-md-9 text-danger" *ngIf="txtContractDate.touched">
                     <div *ngIf="txtContractDate.errors?.required">
                       Contract date is required!
                     </div>
                   </div>
                   <div class="col-md-3"></div>
-                </div>
+                </div> -->
               </div>
             </div>
             <!-- WORKTRACK STATUS -->
@@ -156,11 +161,10 @@
             <!-- WORKTRACK NOTE -->
             <div class="row form-group">
               <div class="col-md-3">
-                <label for="labelNote">Start Date</label>
+                <label for="labelNote">Note</label>
               </div>
               <div class="col-md-9">
                 <textarea 
-                    required
                     cols="10"
                     class="form-control" id="labelNote" name="WorktrackNote" placeholder="Enter your note" 
                     [(ngModel)]="worktrack.note"
