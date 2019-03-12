@@ -48,7 +48,6 @@ export class WorktrackComponent implements OnInit {
     if (id > 0) {
       this.worktrackService.get(id).subscribe(result => {
         this.worktrack = result.data;
-        this.companyService.get(this.worktrack.companyid).subscribe(r => this.companyname = r.data.companyname);
         this.worktrack.startdate = this.datetimeService.formatDatetimeData(this.worktrack.startdate);
         this.worktrack.contractdate = this.datetimeService.formatDatetimeData(this.worktrack.contractdate);
         this.modal.show();
