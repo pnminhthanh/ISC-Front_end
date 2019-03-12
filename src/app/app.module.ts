@@ -29,6 +29,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { DataTablesModule } from 'angular-datatables';
 import { Select2Module } from 'ng2-select2';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ClassesComponent } from './pages/classes/classes.component' ;
+import { TestResultComponent } from './pages/testresult/testresult.component' ;
 import { StudentComponent } from './pages/student/student.component';
 
 @NgModule({
@@ -51,6 +53,8 @@ import { StudentComponent } from './pages/student/student.component';
     CompanyComponent,
     SubjectComponent,
     WorktrackComponent,
+    ClassesComponent,
+    TestResultComponent,
     StudentComponent
 
   ],

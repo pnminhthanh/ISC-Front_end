@@ -1,29 +1,33 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { EntranceTest, EntranceTestService } from 'src/app/services/entrancetest.service';
-import { Course, CourseService } from 'src/app/services/course.service';
+import { TestResult, TestResultService } from 'src/app/services/testresult.service';
+import { User, UserService } from 'src/app/services/user.service';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { DatetimeService } from 'src/app/services/datetime.service';
+import { EntranceTest, EntranceTestService } from 'src/app/services/entrancetest.service';
 
 @Component({
-  selector: 'app-entracetest',
-  templateUrl: './entrancetest.component.html',
-  styleUrls: ['./entrancetest.component.css']
+  selector: 'app-testresult',
+  templateUrl: './testresult.component.html',
+  styleUrls: ['./testresult.component.css']
 })
-export class EntranceTestComponent implements OnInit {
+export class TestResultComponent implements OnInit {
+  testresults: TestResult[] = [];
+  testresult: TestResult = {} as TestResult;
+  // subjects: Subject[] = [];
+  // subject: Subject = {} as Subject;
   entrancetests: EntranceTest[] = [];
   entrancetest: EntranceTest = {} as EntranceTest;
-  test: string;
-  courses: Course[] = [];
-  course: Course = {} as Course;
+  users: User[] = [];
+  user: User = {} as User;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   @ViewChild(DataTableDirective) dtElement: DataTableDirective;
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   // tslint:disable-next-line:max-line-length
-  constructor(private entrancetestService: EntranceTestService, private courseService: CourseService, public datetimeService: DatetimeService)  {  }
+  constructor(private testresultService: TestResultService, private entrancetestService: EntranceTestService, private userService: UserService)  {  }
 
   ngOnInit() {
     this.dtOptions = {
@@ -33,12 +37,18 @@ export class EntranceTestComponent implements OnInit {
     this.loadData();
   }
   loadData() {
+    this.testresultService.getAll().subscribe(result => {
+      this.testresults = result.data;
+    });
+    // this.subjectService.getAll().subscribe(result => {
+    //   this.subjects = result.data;
+    // });
     this.entrancetestService.getAll().subscribe(result => {
       this.entrancetests = result.data;
     });
-    this.courseService.getAll().subscribe(result => {
-      this.courses = result.data;
-    });
+    // this.userService.getAll().subscribe(result => {
+    //   this.users = result.data;
+    // });
     this.rerender();
   }
   showModal(event = null, id: number = 0) {
@@ -46,43 +56,42 @@ export class EntranceTestComponent implements OnInit {
       event.preventDefault();
     }
     if (id > 0) {
-      this.entrancetestService.get(id).subscribe(result => {
-        this.entrancetest = result.data;
-        this.entrancetest.testdate = this.datetimeService.formatDatetimeData(this.entrancetest.testdate);
+      this.testresultService.get(id).subscribe(result => {
+        this.testresult = result.data;
         this.modal.show();
       });
     } else {
-      this.entrancetest = {} as EntranceTest;
+      this.testresult = {} as TestResult;
       this.modal.show();
-      console.log(this.entrancetest);
+      console.log(this.testresult);
     }
     console.log(id);
   }
   save() {
-    if (this.entrancetest.id === undefined || this.entrancetest.id === 0) {
-      this.entrancetestService.add(this.entrancetest).subscribe(result => {
+    if (this.testresult.id === undefined || this.testresult.id === 0) {
+      this.testresultService.add(this.testresult).subscribe(result => {
         this.modal.hide();
         this.loadData();
       });
     } else {
-      this.entrancetestService.update(this.entrancetest).subscribe(result => {
+      this.testresultService.update(this.testresult).subscribe(result => {
         this.modal.hide();
         this.loadData();
       });
     }
   }
   showDeleteModal(event, id) {
-    this.entrancetest.id = id;
+    this.testresult.id = id;
     event.preventDefault();
     this.deleteModal.show();
   }
   delete() {
-    this.entrancetestService.delete(this.entrancetest.id).subscribe(result => {
+    this.testresultService.delete(this.testresult.id).subscribe(result => {
       if (result.errorCode === 0) {
-        const deletedEntranceTest = this.entrancetests.find( x => x.id === this.entrancetest.id);
-        if (deletedEntranceTest) {
-          const index = this.entrancetests.indexOf(deletedEntranceTest);
-          this.entrancetests.splice(index, 1);
+        const deletedTestResult = this.testresults.find( x => x.id === this.testresult.id);
+        if (deletedTestResult) {
+          const index = this.testresults.indexOf(deletedTestResult);
+          this.testresults.splice(index, 1);
         }
         this.deleteModal.hide();
       }

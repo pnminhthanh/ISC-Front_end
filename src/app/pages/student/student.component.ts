@@ -21,7 +21,7 @@ export class StudentComponent implements OnInit {
   majors: Major[] = [];
   user: User = {gender: 1} as User;
   students: StudentFull[] = [];
-  student: Student = { certification: false, deposits: false } as Student;
+  student: Student = {} as Student;
 
   private alert = new Subject<string>();
   successMessage: string;
@@ -33,9 +33,9 @@ export class StudentComponent implements OnInit {
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
 
-
-  constructor(public datetimeService: DatetimeService, public majorService: MajorService,
-              public universityService: UniversityService, public studentService: StudentService, public userService: UserService) { }
+// tslint:disable-next-line: max-line-length
+  constructor(public datetimeService: DatetimeService, public majorService: MajorService, public universityService: UniversityService, public studentService: StudentService, public userService: UserService) {
+  }
 
   ngOnInit() {
     this.user = {gender: 1} as User;
@@ -74,6 +74,7 @@ export class StudentComponent implements OnInit {
     if (id > 0) {
       this.studentService.getStudent(id).subscribe(result => {
         this.student = result.data;
+        console.log(this.student);
         this.student.readyworkdate = this.datetimeService.formatDatetimeData(this.student.readyworkdate);
         this.userService.getUser(this.student.userid).subscribe(aresult => {
           this.user = aresult.data;
@@ -83,14 +84,14 @@ export class StudentComponent implements OnInit {
         });
       });
     } else {
-      this.student = {certification: false, deposits: false} as Student;
+      this.student = {} as Student;
       this.user = {gender: 1} as User;
       this.modal.show();
     }
   }
 
   showDeleteModal(event, id) {
-    this.student.userid = id;
+    this.student.id = id;
     event.preventDefault();
     this.deleteModal.show();
   }
@@ -103,8 +104,8 @@ export class StudentComponent implements OnInit {
   }
 
   save() {
-    if (this.student.userid === undefined || this.student.userid === 0) {
-      this.user.isStudent = false;
+    if (this.student.id === undefined || this.student.id === 0) {
+      this.user.isStudent = true;
       this.userService.addUser(this.user).subscribe(result => {
         console.log(result);
         this.student.userid = result.data.id;
@@ -116,7 +117,7 @@ export class StudentComponent implements OnInit {
       });
 
     } else {
-      this.user.isStudent = false;
+      this.user.isStudent = true;
       this.userService.updateUser(this.user).subscribe( result => {
         this.studentService.updateStudent(this.student).subscribe(aresult => {
           this.modal.hide();
@@ -128,9 +129,9 @@ export class StudentComponent implements OnInit {
   }
 
   delete() {
-    this.studentService.deleteStudent(this.student.userid).subscribe(result => {
+    this.studentService.deleteStudent(this.student.id).subscribe(result => {
       if (result.errorCode === 0) {
-        const deleteStudent = this.students.find( x => x.userid === this.student.userid);
+        const deleteStudent = this.students.find( x => x.id === this.student.id);
         if (deleteStudent) {
           const index = this.students.indexOf(deleteStudent);
           this.students.splice(index, 1);
@@ -154,4 +155,5 @@ export class StudentComponent implements OnInit {
   alertMessage(message) {
     this.alert.next(message);
   }
+
 }
