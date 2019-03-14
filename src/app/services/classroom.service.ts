@@ -6,12 +6,12 @@ import { Observable } from 'rxjs';
 export interface ClassroomRespone{
   errorCode:number;
   data:Classroom;
-  Message:string;
+  message:string;
 }
 export interface ClassroomsRespone{
   errorCode:number;
   data:Classroom [];
-  Message:string;
+  message:string;
 }
 export interface Classroom{
   id:number;

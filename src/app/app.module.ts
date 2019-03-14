@@ -55,7 +55,7 @@ import { StudentComponent } from './pages/student/student.component';
     WorktrackComponent,
     ClassesComponent,
     TestResultComponent,
-    StudentComponent
+    StudentComponent,
 
   ],
   imports: [

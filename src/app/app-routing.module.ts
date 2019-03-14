@@ -43,7 +43,8 @@ const routes: Routes = [
     {path: 'worktrack', component: WorktrackComponent},
     {path: 'classes', component: ClassesComponent},
     {path: 'testresult', component: TestResultComponent},
-    {path: 'student', component: StudentComponent}
+    {path: 'student', component: StudentComponent},
+    
 
   ]
   }
