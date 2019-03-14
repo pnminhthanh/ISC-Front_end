@@ -107,7 +107,7 @@
                 <input 
                     type="date"
                     required
-                    class="form-control" id="labelStartDate" name="WorktrackStartDate" placeholder="Enter start date" 
+                    class="form-control" id="labelStartDate" name="startdate" placeholder="Enter start date" 
                     [(ngModel)]="worktrack.startdate"
                     #txtStartDate="ngModel"  
                 />
@@ -129,7 +129,7 @@
               <div class="col-md-9">
                 <input 
                     type="date"                    
-                    class="form-control" id="labelContractDate" name="WorktrackStartDate" placeholder="Enter contract date" 
+                    class="form-control" id="labelContractDate" name="contractdate" placeholder="Enter contract date" 
                     [(ngModel)]="worktrack.contractdate"
                     #txtContractDate="ngModel"  
                 />
@@ -198,7 +198,7 @@
       <div class="modal-content">
             <form>
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete Company</h4>
+                    <h4 class="modal-title">Delete worktrack</h4>
                     <!-- <button type="button" class="close" (click)="deleteModal.hide()" data-dismiss="modal" aria-hidden="true">×</button> -->
                 </div>
                 <div class="modal-body">

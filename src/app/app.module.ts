@@ -32,6 +32,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClassesComponent } from './pages/classes/classes.component' ;
 import { TestResultComponent } from './pages/testresult/testresult.component' ;
 import { StudentComponent } from './pages/student/student.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { StudentComponent } from './pages/student/student.component';
     WorktrackComponent,
     ClassesComponent,
     TestResultComponent,
-    StudentComponent
+    StudentComponent,
+    AdminComponent
 
   ],
   imports: [
