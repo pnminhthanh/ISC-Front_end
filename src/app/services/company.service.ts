@@ -18,7 +18,7 @@ export interface Company {
   id: number;
   name: string;
   diachi: string;
-  contectperson: string;
+  contactperson: string;
   phone: string;
   status: number;
 }

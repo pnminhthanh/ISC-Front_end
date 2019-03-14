@@ -20,6 +20,7 @@ import { AuthGuard } from './auth.guard';
 import { ClassesComponent } from './pages/classes/classes.component';
 import { TestResultComponent } from './pages/testresult/testresult.component';
 import { StudentComponent } from './pages/student/student.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, data: { title: 'Login Page' }},
@@ -41,6 +42,7 @@ const routes: Routes = [
     {path: 'company', component: CompanyComponent},
     {path: 'subject', component: SubjectComponent},
     {path: 'worktrack', component: WorktrackComponent},
+    {path: 'admin', component: AdminComponent},
     {path: 'classes', component: ClassesComponent},
     {path: 'testresult', component: TestResultComponent},
     {path: 'student', component: StudentComponent}
