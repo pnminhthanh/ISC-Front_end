@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { SubjectService, SubjectInterface } from 'src/app/services/subject.service';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-subject',
@@ -11,14 +14,56 @@ export class SubjectComponent implements OnInit {
 
   subjects: SubjectInterface[] = [];
   subject: SubjectInterface = {} as SubjectInterface;
+
+  private alert = new Subject<string>();
+  successMessage: string;
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
+
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   constructor(private subjectService: SubjectService) { }
 
   ngOnInit() {
+    this.alert.subscribe((message) => this.successMessage = message);
+    this.alert.pipe(
+      debounceTime(3000)
+    ).subscribe(() => this.successMessage = null);
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
     this.loadData();
   }
-  loadData() { this.subjectService.getAll().subscribe(result => { this.subjects = result.data; }); }
+
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngAfterViewInit(): void {this.dtTrigger.next(); }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+       dtInstance.destroy();
+       this.dtTrigger.next();
+   });
+  }
+
+  alertMessage(message) {
+    this.alert.next(message);
+  }
+
+  loadData() {
+     this.subjectService.getAll().subscribe(result => {
+        this.subjects = result.data;
+        this.rerender();
+      });
+  }
 
   showModal(event = null, id: number = 0) {
     if (event) {

@@ -69,9 +69,9 @@
                   <option *ngFor="let opt of companies" [ngValue]="opt.id">{{opt.name}}</option>
                 </select>
                 <div class="row">
-                    <div class="col-md-9 text-danger" *ngIf="txtContractDate.touched">
+                    <div class="col-md-9 text-danger" *ngIf="student.touched">
                       <div *ngIf="company.errors?.required">
-                        Company is required!
+                        Company required!
                       </div>
                     </div>
                     <div class="col-md-3"></div>
@@ -89,9 +89,9 @@
                     <option *ngFor="let opt of students" [ngValue]="opt.id">{{opt.user.lastname + " " + opt.user.firstname}}</option>
                   </select>
                   <div class="row">
-                    <div class="col-md-9 text-danger" *ngIf="txtContractDate.touched">
+                    <div class="col-md-9 text-danger" *ngIf="txtStartDate.touched">
                       <div *ngIf="student.errors?.required">
-                        Student is required!
+                        Student required!
                       </div>
                     </div>
                     <div class="col-md-3"></div>
@@ -112,9 +112,9 @@
                     #txtStartDate="ngModel"  
                 />
                 <div class="row">
-                  <div class="col-md-9 text-danger" *ngIf="txtStartDate.touched">
+                  <div class="col-md-9 text-danger" *ngIf="status.touched">
                     <div *ngIf="txtStartDate.errors?.required">
-                      Start date is required!
+                      Start date required!
                     </div>
                   </div>
                   <div class="col-md-3"></div>
@@ -151,11 +151,19 @@
               <div class="col-md-9">
                   <select 
                       class="form-control" name="WorktrackStatus" id="selectStatus" 
-                      [(ngModel)]="worktrack.status"
+                      [(ngModel)]="worktrack.status" #status="ngModel" 
                   >
                     <option value="1">Working</option>
                     <option value="0">Stopped</option>
                   </select>
+                  <div class="row">
+                      <div class="col-md-9 text-danger" *ngIf="txtnote.touched">
+                        <div *ngIf="txtStartDate.errors?.required">
+                          Status required!
+                        </div>
+                      </div>
+                      <div class="col-md-3"></div>
+                    </div>
                 </div>
             </div>
             <!-- WORKTRACK NOTE -->

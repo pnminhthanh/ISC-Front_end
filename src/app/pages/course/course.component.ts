@@ -3,6 +3,11 @@ import { ModalDirective, BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Course, CourseService } from 'src/app/services/course.service';
 import { SpecialiazedTraining, SpecializedTrainingService } from 'src/app/services/specialized-training.service';
 import { DatetimeService } from 'src/app/services/datetime.service';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
+
 
 @Component({
   selector: 'app-course',
@@ -17,32 +22,61 @@ export class CourseComponent implements OnInit {
   courses: Course [] = [];
   trainings: SpecialiazedTraining[] = [];
 
+  private alert = new Subject<string>();
+  successMessage: string;
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
+
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   
   constructor(private courseService: CourseService, private modalService: BsModalService
-    , private trainingService: SpecializedTrainingService, private datetimeService: DatetimeService) { }
+            , private trainingService: SpecializedTrainingService, private datetimeService: DatetimeService) { }
   ngOnInit() {
-    this.courseService.getAll().subscribe(
-      result => {
-        console.log(result);
-        this.courses = result.data;
-        console.log(this.courses);
-    });
-    this.trainingService.getAll().subscribe(
-      result => {
-        console.log(result);
-        this.trainings = result.data;
-        console.log(this.trainings);
-      });
+    this.alert.subscribe((message) => this.successMessage = message);
+    this.alert.pipe(
+      debounceTime(3000)
+    ).subscribe(() => this.successMessage = null);
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
+
+    this.loadData();
   }
 
   loadData() {
     this.courseService.getAll().subscribe(
       result => {
-        console.log(result);
         this.courses = result.data;
+        this.rerender();
     });
+    this.trainingService.getAll().subscribe(
+      result => {
+        this.trainings = result.data;
+      });
+  }
+
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngAfterViewInit(): void {this.dtTrigger.next(); }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+       dtInstance.destroy();
+       this.dtTrigger.next();
+   });
+  }
+
+  alertMessage(message) {
+    this.alert.next(message);
   }
 
   showModal(event = null, Id: number = 0) {

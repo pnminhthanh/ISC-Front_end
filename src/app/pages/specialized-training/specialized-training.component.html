@@ -55,6 +55,7 @@
     <!-- /.row -->
 </section>
 
+<form #frm="ngForm">
 <div bsModal #modal='bs-modal' class="modal fade" tabindex="-1"
   role="dialog" aria-labelledby="dialog-sizes-name1">
     <div class="modal-dialog modal-lg">
@@ -75,7 +76,21 @@
                                     <label for="lastName" class="col-sm-2 col control-label">Name</label>
 
                                     <div class="col-8">
-                                        <input required [(ngModel)]="specializedTraining.name" type="text" class="form-control" id="txtName" placeholder="Type training's name here ...">
+                                        <input required 
+                                        [(ngModel)]="specializedTraining.name" 
+                                        type="text" class="form-control"
+                                        id="txtName" 
+                                        name="txtTrainingname"
+                                        #trainingName="ngModel" 
+                                        placeholder="Type training's name here ...">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-9 text-danger" *ngIf="trainingName.touched">
+                                            <div *ngIf="trainingName.errors?.required">
+                                                Training name required!
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3"></div>
                                     </div>
                                 </div>
                             </div>
@@ -84,8 +99,31 @@
                                     <label for="gender" class="col-sm-4 col control-label">Duration </label>
 
                                     <div class="col-8">
-                                        <input required [(ngModel)]="specializedTraining.numberofWeeks" type="number" class="form-control col-xs-6" id="txtNumber" style="border: 1px solid #ccc; width: 30%">
+                                        <input
+                                         required [(ngModel)]="specializedTraining.numberofWeeks" 
+                                         type="number" class="form-control col-xs-6" 
+                                         id="txtNumber" 
+                                         style="border: 1px solid #ccc; width: 30%"
+                                         #duration="ngModel" 
+                                         min="5"
+                                         max="99"
+                                         type="text" 
+                                         name="txtDuration" >
                                         <span class="col" style="margin-left: 0.75em">week(s)</span>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-md-9 text-danger" *ngIf="duration.touched">
+                                              <div *ngIf="duration.errors?.required">Duration required!</div></div>
+                                            <div class="col-md-3"></div>
+                                          <div class="row">
+                                            <div class="col-md-9 text-danger" *ngIf="duration.touched">
+                                              <div [hidden]="!duration?.hasError('min')">Invalid! Min duration is 5 weeks</div>
+                                            </div>
+                                            <div class="col-md-9 text-danger" *ngIf="duration.touched">
+                                                <div [hidden]="!duration?.hasError('max')">Invalid! Max duration is 99 weeks</div>
+                                            </div>
+                                            <div class="col-md-3"></div>
+                                          </div>
                                     </div>
                                 </div>
                             </div>
@@ -142,12 +180,19 @@
                 </div>
                 <div class="modal-footer">
                     <!-- <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-eraser" aria-hidden="true"></i>Clear</button> -->
-                    <button type="submit" class="btn btn-success" (click)="save()">{{(specializedTraining.trainingId === undefined || specializedTraining.trainingId === 0) ? 'Add' : 'Save'}}</button>
+                    <input 
+                        type="submit" 
+                        class="btn btn-success" 
+                        (click)="save()" [disabled]="frm.invalid"
+                        value="{{specializedTraining.trainingId === undefined || specializedTraining.trainingId === 0 ? 'Add' : 'Update'}}"
+                    />
                 </div>
             </div>
         </div>
     </div>
 </div>
+</form>
+
 
 <div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm">

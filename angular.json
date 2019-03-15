@@ -30,11 +30,10 @@
               "src/styles.css"
             ],
             "scripts": [
+			        "src/assets/bower_components/jquery/dist/jquery.min.js",
               "./node_modules/datatables.net/js/jquery.dataTables.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",             
-              "src/assets/admin-lte/bower_component/select2/dist/js/select2.min.js",
-			  
-			  "src/assets/bower_components/jquery/dist/jquery.min.js",
+              "src/assets/admin-lte/bower_component/select2/dist/js/select2.min.js",			  
               "src/assets/bower_components/bootstrap/dist/js/bootstrap.min.js",
               "src/assets/plugins/iCheck/icheck.min.js",
               "src/assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js",
