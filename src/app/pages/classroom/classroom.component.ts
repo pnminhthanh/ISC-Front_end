@@ -7,6 +7,7 @@ import { load } from '@angular/core/src/render3';
 import { DataTableDirective } from 'angular-datatables';
 //import { settings } from 'cluster';
 import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 @Component({
   selector: 'app-classroom',
   templateUrl: './classroom.component.html',
@@ -14,25 +15,36 @@ import { Subject } from 'rxjs';
 })
 export class ClassroomComponent implements OnInit {
 
+  private alert = new Subject<string>();
   classrooms: Classroom[];
   classroom: Classroom = {} as Classroom;
   @ViewChild(DataTableDirective) dtElement : DataTableDirective;
    @ViewChild('modalAdd') modalAdd : ModalDirective;
    @ViewChild('modalDelete') modalDelete : ModalDirective;
    @ViewChild('modalMessage') modalMessage : ModalDirective;
+   @ViewChild('modalMessageError') modalMessageError : ModalDirective;
    dtOptions : DataTables.Settings = {};
    dtTrigger : Subject<any> = new Subject();
+   message: string;
+   messageError: string;
    today : Date;
 
   constructor(private classroomservice: ClassroomService) { 
   }
 
   ngOnInit() {
+    this.alert.subscribe((message) => this.message = message);
+    this.alert.pipe(
+      debounceTime(3000)
+    ).subscribe(() => this.message = null);
     this.dtOptions = {
       pagingType : 'full_numbers',
       pageLength: 10
     };
     this.loadData();
+  }
+  alertMessage(message) {
+    this.alert.next(message);
   }
 
   ngOnDestroy(){
@@ -57,8 +69,14 @@ export class ClassroomComponent implements OnInit {
         this.classroom.dateadded = this.today;
         this.classroom.addedperson = 1;
         this.classroomservice.add(this.classroom).subscribe(result => {
-        this.modalAdd.hide();
-        this.loadData();
+          if(result.errorCode === 0){
+            this.loadData();
+            this.modalAdd.hide();
+            this.alertMessage(result.message);
+          }else{
+            this.messageError = result.message;
+            this.modalMessageError.show();
+          }
       });
       }
     }else if(this.classroom.name === undefined || this.classroom.capacity === undefined ||this.classroom.name === "" || this.classroom.capacity === null)
@@ -67,8 +85,14 @@ export class ClassroomComponent implements OnInit {
       }
      else {
         this.classroomservice.update(this.classroom).subscribe(result => {
-        this.modalAdd.hide();
-        this.loadData();
+          if(result.errorCode === 0){
+            this.modalAdd.hide();
+            this.loadData();
+            this.alertMessage(result.message);
+          }else{
+            this.messageError = result.message;
+            this.modalMessageError.show();
+          }
       });
     }
   }
@@ -85,6 +109,7 @@ export class ClassroomComponent implements OnInit {
         }
       };
       this.loadData();
+      this.alertMessage(result.message);
     });
     this.classroom.id = null;
   }

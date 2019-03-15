@@ -45,7 +45,8 @@ const routes: Routes = [
     {path: 'admin', component: AdminComponent},
     {path: 'classes', component: ClassesComponent},
     {path: 'testresult', component: TestResultComponent},
-    {path: 'student', component: StudentComponent}
+    {path: 'student', component: StudentComponent},
+    
 
   ]
   }

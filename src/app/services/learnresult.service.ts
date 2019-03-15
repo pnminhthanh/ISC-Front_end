@@ -21,6 +21,18 @@ export interface LearnResult{
   classId: number;
   firstName: string;
   lastName: string;
+  doB: Date;
+}
+export interface LearnRespone{
+  errorCode:number;
+  data:Learn;
+  Message:string;
+}
+export interface Learn{
+  id: number;
+  classid: number;
+  idstudent: number;
+  avgscore: number;
 }
 @Injectable({
   providedIn: 'root'
@@ -32,5 +44,8 @@ export class LearnresultService {
   getall(couseiId : number, classId: number):Observable<LearnResultsRespone>{
     
     return this.http.get<LearnResultsRespone>(this.api.apiUrl.learnresult + "?ClassId=" + classId + "&CourseId=" + couseiId);
+  }
+  get(id):Observable<LearnRespone>{
+    return this.http.get<LearnRespone>(this.api.apiUrl.learnresult + '/' + id);
   }
 }
