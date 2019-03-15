@@ -48,4 +48,8 @@ export class LearnresultService {
   get(id):Observable<LearnRespone>{
     return this.http.get<LearnRespone>(this.api.apiUrl.learnresult + '/' + id);
   }
+  update(data : Learn):Observable<LearnRespone>{
+    const url = this.api.apiUrl.classes + '/' + data.id;
+    return this.http.put<LearnRespone>(url,data);
+  }
 }

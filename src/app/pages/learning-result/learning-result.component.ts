@@ -86,6 +86,11 @@ export class LearningResultComponent implements OnInit {
       });
     } 
   }
+  // save(){
+  //   this.learnResultService.update(this.learn).subscribe(res=>{
+  //     this.
+  //   });
+  // }
   onChangeCourse(newValue){ 
       this.course.courseId = newValue;
       this.classesService.getCourse(this.course.courseId).subscribe(result=> {
