@@ -15,6 +15,7 @@ export class AdminComponent implements OnInit {
 
   admins: Admin[] = [];
   admin: Admin = {} as Admin;
+  Data: FormData = {} as FormData;
 
   // private alert = new Subject<string>();
   // successMessage: string;
@@ -62,6 +63,7 @@ export class AdminComponent implements OnInit {
   loadData() {
     this.adminService.getAll().subscribe(result => {
       this.admins = result.data;
+      console.log(this.admins);
       // this.modal.show();
     });
   }
@@ -90,7 +92,12 @@ export class AdminComponent implements OnInit {
   save() {
     console.log(this.admin);
     if (this.admin.adminid === undefined || this.admin.adminid === 0) {
-      this.adminService.add(this.admin).subscribe(result => {
+      this.Data = new FormData();
+      this.Data.append('Image', this.admin.image);
+      this.Data.append('Username', this.admin.username);
+      this.Data.append('Password', this.admin.password);
+      this.Data.append('Fullname', this.admin.fullname);
+      this.adminService.add(this.Data).subscribe(result => {
         this.modal.hide();
         this.loadData();
       });
@@ -115,5 +122,9 @@ export class AdminComponent implements OnInit {
         }
       }
     });
+  }
+
+  handleFileInput(files: FileList) {
+    this.admin.image = files.item(0);
   }
 }

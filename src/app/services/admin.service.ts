@@ -18,6 +18,8 @@ export interface Admin {
   username: string;
   password: string;
   fullname: string;
+  imageName: string;
+  image: File;
 }
 @Injectable({
   providedIn: 'root'
@@ -32,8 +34,8 @@ export class AdminService {
   getAll(): Observable<ListAdminResponse> {
     return this.http.get<ListAdminResponse>(this.api.apiUrl.admins);
   }
-  add(data: Admin): Observable<AdminResponse> {
-    // console.log(data);
+  add(data: FormData): Observable<AdminResponse> {
+    console.log(data);
     return this.http.post<AdminResponse>(this.api.apiUrl.admins, data);
   }
   update(data: Admin): Observable<AdminResponse> {

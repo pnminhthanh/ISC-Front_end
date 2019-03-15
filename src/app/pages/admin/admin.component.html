@@ -20,7 +20,6 @@
                         <tr>
                           <th class="text-center">No.</th>
                           <th class="text-center">Username</th>
-                          <th class="text-center">Password</th>
                           <th class="text-center">Name</th>
                           <th class="text-center">Image</th>
                           <th style="width: 80px;"></th>
@@ -30,9 +29,8 @@
                         <tr *ngFor="let row of admins; let i = index">
                           <th class="text-center">{{i + 1}}</th>
                           <td>{{row.username}}</td>
-                          <td>{{row.password}}</td>
                           <td>{{row.fullname}}</td>
-                          <td>{{row.imagePath}}</td>
+                          <td>{{row.imageName}}</td>
                           <td class="text-center"> 
                               <button class="btn btn-default" (click)="showModal($event, row.adminid)"><i class="fa fa-edit text-primary"></i></button>
                               <button class="btn btn-default" (click)="showDeleteModal($event, row.adminid)"><i class="fa fa-trash-o text-danger"></i></button> 
@@ -47,7 +45,7 @@
 </div>
 
 <!-- Modal Add, Edit-->
-<form #frm="ngForm">
+<form #frm="ngForm" enctype = "multipart/form-data" method="POST">
         <div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -84,7 +82,7 @@
                       required 
                       #txtPassword="ngModel"
                       minlength="6"
-                      type="text" 
+                      type="password" 
                       name="Password" 
                       class="form-control" 
                       id="txtPassword" 
@@ -126,7 +124,7 @@
                         <label for="selectImage">Image</label>
                     </div>
                     <div class="col-md-9">
-                        <input type="file" class="form-control" id="selectImage" placeholder="Choose image">
+                        <input type="file" class="form-control" id="Image" placeholder="Choose image" (change)="handleFileInput($event.target.files)">
                       </div>
                   </div>
                   <!-- /imageFile -->
