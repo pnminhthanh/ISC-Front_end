@@ -54,7 +54,6 @@ export class ClassesService {
 
   constructor(private http: HttpClient, private api: ApiService) { }
 
-<<<<<<< HEAD
   getall(): Observable<classeFullsRespone>{
     return this.http.get<classeFullsRespone>(this.api.apiUrl.classes);
   }
@@ -76,16 +75,6 @@ export class ClassesService {
   delete(id):Observable<classeRespone>{
     const url = this.api.apiUrl.classes + '/' + id;
     return this.http.delete<classeRespone>(url);
-=======
-  getall(): Observable<ClassessRespone>{
-    return this.http.get<ClassessRespone>(this.api.apiUrl.classes);
-  }
-  getone(id): Observable<ClassesRespone>{
-    return this.http.get<ClassesRespone>(this.api.apiUrl.classes + '/' + id);
-  }
-  get(id): Observable<ClassessRespone>{
-    return this.http.get<ClassessRespone>(this.api.apiUrl.classes + '/' + id);
->>>>>>> 3a210a93785e2f0099a2a1f4b62552a2b451aacf
   }
   
 }
