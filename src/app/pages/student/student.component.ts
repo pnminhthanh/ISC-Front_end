@@ -21,7 +21,7 @@ export class StudentComponent implements OnInit {
   majors: Major[] = [];
   user: User = {gender: 1} as User;
   students: StudentFull[] = [];
-  student: Student = {} as Student;
+  student: Student = { certification: false, deposits: false } as Student;
 
   private alert = new Subject<string>();
   successMessage: string;
@@ -84,7 +84,7 @@ export class StudentComponent implements OnInit {
         });
       });
     } else {
-      this.student = {} as Student;
+      this.student = { certification: false, deposits: false } as Student;
       this.user = {gender: 1} as User;
       this.modal.show();
     }
